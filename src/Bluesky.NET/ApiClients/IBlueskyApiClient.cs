@@ -1,4 +1,5 @@
 ﻿using Bluesky.NET.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bluesky.NET.ApiClients;
@@ -13,5 +14,6 @@ public interface IBlueskyApiClient
     /// <param name="appPassword">An app password provided by the user.</param>
     /// <returns>An <see cref="AuthResponse"/>.</returns>
     Task<AuthResponse?> AuthenticateAsync(string userHandle, string appPassword);
+    Task<IReadOnlyList<FeedItem>> GetTimelineAsync(string accesstoken);
     Task<AuthResponse?> RefreshAsync(string refreshToken);
 }

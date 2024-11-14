@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bluesky.NET.ApiClients;
 
-public class BlueskyApiClient : IBlueskyApiClient
+public partial class BlueskyApiClient : IBlueskyApiClient
 {
     private readonly HttpClient _httpClient = new();
 
@@ -35,7 +35,7 @@ public class BlueskyApiClient : IBlueskyApiClient
 
         HttpRequestMessage message = new(HttpMethod.Post, authUrl)
         {
-            Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json")
+            Content = new StringContent(JsonSerializer.Serialize(requestBody, ModelSerializerContext.CaseInsensitive.AuthRequestBody), Encoding.UTF8, "application/json")
         };
 
         return await PostAuthMessageAsync(message);

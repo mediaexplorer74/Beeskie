@@ -11,4 +11,6 @@ public sealed class UrlConstants
     public const string AuthPath = "xrpc/com.atproto.server.createSession";
 
     public const string RefreshAuthPath = "xrpc/com.atproto.server.refreshSession";
+
+    public const string TimelinePath = "xrpc/app.bsky.feed.getTimeline";
 }

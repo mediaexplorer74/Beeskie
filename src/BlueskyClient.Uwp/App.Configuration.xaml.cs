@@ -86,5 +86,7 @@ partial class App
     /// <param name="services">The target <see cref="IServiceCollection"/> instance to register services with.</param>
     [Singleton(typeof(BlueskyApiClient), typeof(IBlueskyApiClient))]
     [Singleton(typeof(AuthenticationService), typeof(IAuthenticationService))]
+    [Singleton(typeof(TimelineService), typeof(ITimelineService))]
+    [Transient(typeof(HomePageViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 }

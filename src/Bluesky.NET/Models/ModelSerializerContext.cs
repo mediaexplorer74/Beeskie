@@ -8,6 +8,10 @@ namespace Bluesky.NET.Models;
 
 [JsonSerializable(typeof(AuthResponse))]
 [JsonSerializable(typeof(AuthRequestBody))]
+[JsonSerializable(typeof(FeedItem[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(FeedPost[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(FeedRecord[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(FeedResponse), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 public sealed partial class ModelSerializerContext : JsonSerializerContext
 {
     /// <summary>
@@ -18,6 +22,9 @@ public sealed partial class ModelSerializerContext : JsonSerializerContext
     /// <summary>
     /// A case insensitive variant of <see cref="Default"/>.
     /// </summary>
-    public static ModelSerializerContext CaseInsensitive => _caseInsensitive ??= new ModelSerializerContext(new JsonSerializerOptions(s_defaultOptions) { PropertyNameCaseInsensitive = true });
-
+    public static ModelSerializerContext CaseInsensitive => _caseInsensitive ??= new ModelSerializerContext(new JsonSerializerOptions(s_defaultOptions) 
+    { 
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    });
 }
