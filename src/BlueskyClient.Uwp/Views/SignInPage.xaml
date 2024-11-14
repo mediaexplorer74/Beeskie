@@ -18,7 +18,10 @@
 
         <Grid>
             <StackPanel Margin="20,0" VerticalAlignment="Center">
-                <TextBox PlaceholderText="Bluesky handle or email" Text="{x:Bind ViewModel.UserHandleInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox
+                    IsSpellCheckEnabled="False"
+                    PlaceholderText="Bluesky handle or email"
+                    Text="{x:Bind ViewModel.UserHandleInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <PasswordBox
                     Margin="0,8,0,0"
                     Password="{x:Bind ViewModel.AppPasswordInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

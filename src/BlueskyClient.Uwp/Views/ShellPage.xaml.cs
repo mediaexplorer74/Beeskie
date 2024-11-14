@@ -1,4 +1,6 @@
-﻿using BlueskyClient.ViewModels;
+﻿using BlueskyClient.Constants;
+using BlueskyClient.ViewModels;
+using JeniusApps.Common.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -28,4 +30,10 @@ public sealed partial class ShellPage : Page
     }
 
     public ShellPageViewModel ViewModel { get; }
+
+    protected override async void OnNavigatedTo(NavigationEventArgs e)
+    {
+        App.Services.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey).SetFrame(ContentFrame);
+        await ViewModel.InitializeAsync();
+    }
 }
