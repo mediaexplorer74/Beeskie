@@ -87,6 +87,7 @@ partial class App
     [Singleton(typeof(BlueskyApiClient), typeof(IBlueskyApiClient))]
     [Singleton(typeof(AuthenticationService), typeof(IAuthenticationService))]
     [Singleton(typeof(TimelineService), typeof(ITimelineService))]
+    [Singleton(typeof(FeedItemViewModelFactory), typeof(IFeedItemViewModelFactory))]
     [Transient(typeof(HomePageViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 }

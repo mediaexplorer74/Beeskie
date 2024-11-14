@@ -21,4 +21,6 @@ public class FeedPost
     public int QuoteCount { get; init; }
 
     public required FeedRecord Record { get; init; }
+
+    public required Author Author { get; init; }
 }
