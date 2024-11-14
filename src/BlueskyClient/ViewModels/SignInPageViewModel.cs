@@ -1,6 +1,8 @@
-﻿using BlueskyClient.Services;
+﻿using BlueskyClient.Constants;
+using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using JeniusApps.Common.Tools;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.ViewModels;
@@ -8,10 +10,14 @@ namespace BlueskyClient.ViewModels;
 public partial class SignInPageViewModel : ObservableObject
 {
     private readonly IAuthenticationService _blueskyApiClient;
+    private readonly INavigator _navigator;
 
-    public SignInPageViewModel(IAuthenticationService blueskyApiClient)
+    public SignInPageViewModel(
+        IAuthenticationService blueskyApiClient,
+        INavigator navigator)
     {
         _blueskyApiClient = blueskyApiClient;
+        _navigator = navigator;
     }
 
     [ObservableProperty]
@@ -37,7 +43,7 @@ public partial class SignInPageViewModel : ObservableObject
 
         if (result?.Success is true)
         {
-            // navigate to shell
+            _navigator.NavigateTo(NavigationConstants.ShellPage);
         }
     }
 }

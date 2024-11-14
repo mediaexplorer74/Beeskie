@@ -1,4 +1,7 @@
-﻿using BlueskyClient.Views;
+﻿using BlueskyClient.Constants;
+using BlueskyClient.Views;
+using JeniusApps.Common.Tools;
+using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -49,6 +52,8 @@ sealed partial class App : Application
         }
 
         AppFrame = rootFrame;
+        var navigator = Services.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey);
+        navigator.SetFrame(rootFrame);
 
         if (args.PrelaunchActivated is false)
         {
