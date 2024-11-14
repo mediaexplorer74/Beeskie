@@ -1,18 +1,15 @@
-﻿using Bluesky.NET.ApiClients;
+﻿using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.ViewModels;
 
 public partial class SignInPageViewModel : ObservableObject
 {
-    private readonly IBlueskyApiClient _blueskyApiClient;
+    private readonly IAuthenticationService _blueskyApiClient;
 
-    public SignInPageViewModel(IBlueskyApiClient blueskyApiClient)
+    public SignInPageViewModel(IAuthenticationService blueskyApiClient)
     {
         _blueskyApiClient = blueskyApiClient;
     }
@@ -32,18 +29,15 @@ public partial class SignInPageViewModel : ObservableObject
     [RelayCommand]
     private async Task SignInAsync()
     {
-        var handle = UserHandleInput.Trim();
-        var password = AppPasswordInput.Trim();
-        
-        if (string.IsNullOrEmpty(handle) || string.IsNullOrEmpty(password))
-        {
-            return;
-        }
-
-        var result = await _blueskyApiClient.AuthenticateAsync(handle, password);
+        var result = await _blueskyApiClient.SignInAsync(UserHandleInput, AppPasswordInput);
 
         SignInErrorMessage = result?.Success is true
             ? string.Empty
             : result?.ErrorMessage ?? "Null response";
+
+        if (result?.Success is true)
+        {
+            // navigate to shell
+        }
     }
 }

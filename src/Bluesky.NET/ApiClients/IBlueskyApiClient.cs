@@ -13,4 +13,5 @@ public interface IBlueskyApiClient
     /// <param name="appPassword">An app password provided by the user.</param>
     /// <returns>An <see cref="AuthResponse"/>.</returns>
     Task<AuthResponse?> AuthenticateAsync(string userHandle, string appPassword);
+    Task<AuthResponse?> RefreshAsync(string refreshToken);
 }

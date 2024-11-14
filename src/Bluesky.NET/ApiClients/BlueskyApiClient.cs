@@ -3,6 +3,7 @@ using Bluesky.NET.Models;
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,6 +13,14 @@ namespace Bluesky.NET.ApiClients;
 public class BlueskyApiClient : IBlueskyApiClient
 {
     private readonly HttpClient _httpClient = new();
+
+    public async Task<AuthResponse?> RefreshAsync(string refreshToken)
+    {
+        var refreshUrl = $"{UrlConstants.BlueskyBaseUrl}/{UrlConstants.RefreshAuthPath}";
+        HttpRequestMessage message = new(HttpMethod.Post, refreshUrl);
+        message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", refreshToken);
+        return await PostAuthMessageAsync(message);
+    }
 
     /// <inheritdoc/>
     public async Task<AuthResponse?> AuthenticateAsync(string userHandle, string appPassword)
@@ -29,6 +38,11 @@ public class BlueskyApiClient : IBlueskyApiClient
             Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json")
         };
 
+        return await PostAuthMessageAsync(message);
+    }
+
+    private async Task<AuthResponse?> PostAuthMessageAsync(HttpRequestMessage message)
+    {
         try
         {
             var response = await _httpClient.SendAsync(message);

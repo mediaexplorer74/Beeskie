@@ -6,7 +6,9 @@ namespace Bluesky.NET.Constants;
 
 public sealed class UrlConstants
 {
-    public const string BlueskyBaseUrl = "https://bsky.social/xrpc";
+    public const string BlueskyBaseUrl = "https://bsky.social";
 
-    public const string AuthPath = "com.atproto.server.createSession";
+    public const string AuthPath = "xrpc/com.atproto.server.createSession";
+
+    public const string RefreshAuthPath = "xrpc/com.atproto.server.refreshSession";
 }
