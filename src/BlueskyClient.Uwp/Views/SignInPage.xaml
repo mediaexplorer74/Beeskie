@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:JeniusApps.Common.UI.Uwp"
     xmlns:local="using:BlueskyClient.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
@@ -19,11 +20,13 @@
         <Grid>
             <StackPanel Margin="20,0" VerticalAlignment="Center">
                 <TextBox
+                    IsEnabled="{x:Bind ex:UIExtensions.Not(ViewModel.SigningIn), Mode=OneWay}"
                     IsSpellCheckEnabled="False"
                     PlaceholderText="Bluesky handle or email"
                     Text="{x:Bind ViewModel.UserHandleInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <PasswordBox
                     Margin="0,8,0,0"
+                    IsEnabled="{x:Bind ex:UIExtensions.Not(ViewModel.SigningIn), Mode=OneWay}"
                     Password="{x:Bind ViewModel.AppPasswordInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     PlaceholderText="Your special app password" />
                 <Button
@@ -31,7 +34,8 @@
                     Margin="0,8,0,0"
                     HorizontalAlignment="Stretch"
                     Command="{x:Bind ViewModel.SignInCommand}"
-                    Content="Sign in" />
+                    Content="Sign in"
+                    IsEnabled="{x:Bind ex:UIExtensions.Not(ViewModel.SigningIn), Mode=OneWay}" />
             </StackPanel>
 
             <winui:InfoBar

@@ -1,10 +1,14 @@
 ﻿using Bluesky.NET.ApiClients;
 using BlueskyClient.Constants;
 using BlueskyClient.Services;
+using BlueskyClient.Tools;
+using BlueskyClient.Tools.Uwp;
 using BlueskyClient.ViewModels;
 using BlueskyClient.Views;
 using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Extensions.DependencyInjection;
+using JeniusApps.Common.Settings;
+using JeniusApps.Common.Settings.Uwp;
 using JeniusApps.Common.Tools;
 using JeniusApps.Common.Tools.Uwp;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,7 +71,8 @@ partial class App
         {
             return new SignInPageViewModel(
                 serviceProvider.GetRequiredService<IAuthenticationService>(),
-                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey));
+                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey),
+                serviceProvider.GetRequiredService<IUserSettings>());
         });
 
         collection.AddTransient((serviceProvider) =>
@@ -75,6 +80,8 @@ partial class App
             return new ShellPageViewModel(
                 serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey));
         });
+
+        collection.AddSingleton<IUserSettings>(_ => new LocalSettings(UserSettingsConstants.Defaults));
 
         IServiceProvider provider = collection.BuildServiceProvider();
         return provider;
@@ -88,6 +95,7 @@ partial class App
     [Singleton(typeof(AuthenticationService), typeof(IAuthenticationService))]
     [Singleton(typeof(TimelineService), typeof(ITimelineService))]
     [Singleton(typeof(FeedItemViewModelFactory), typeof(IFeedItemViewModelFactory))]
+    [Singleton(typeof(SecureCredentialStorage), typeof(ISecureCredentialStorage))]
     [Transient(typeof(HomePageViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 }

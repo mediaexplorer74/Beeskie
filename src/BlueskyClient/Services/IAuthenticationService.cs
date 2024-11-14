@@ -7,4 +7,5 @@ public interface IAuthenticationService
 {
     Task<AuthResponse?> SignInAsync(string rawUserHandle, string rawPassword);
     Task<string?> TryGetFreshTokenAsync();
+    Task<bool> TrySilentSignInAsync(string storedUserHandle);
 }

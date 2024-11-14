@@ -2,6 +2,7 @@
 using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using JeniusApps.Common.Settings;
 using JeniusApps.Common.Tools;
 using System.Threading.Tasks;
 
@@ -9,16 +10,24 @@ namespace BlueskyClient.ViewModels;
 
 public partial class SignInPageViewModel : ObservableObject
 {
-    private readonly IAuthenticationService _blueskyApiClient;
+    private readonly IAuthenticationService _authService;
     private readonly INavigator _navigator;
+    private readonly IUserSettings _userSettings;
 
     public SignInPageViewModel(
-        IAuthenticationService blueskyApiClient,
-        INavigator navigator)
+        IAuthenticationService authenticationService,
+        INavigator navigator,
+        IUserSettings userSettings)
     {
-        _blueskyApiClient = blueskyApiClient;
+        _authService = authenticationService;
         _navigator = navigator;
+        _userSettings = userSettings;
+
+        UserHandleInput = userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey) ?? string.Empty;
     }
+
+    [ObservableProperty]
+    private bool _signingIn;
 
     [ObservableProperty]
     private string _userHandleInput = string.Empty;
@@ -32,10 +41,28 @@ public partial class SignInPageViewModel : ObservableObject
 
     public bool ErrorBannerVisible => SignInErrorMessage.Length > 0;
 
+    public async Task InitializeAsync()
+    {
+        if (UserHandleInput.Length > 0)
+        {
+            SigningIn = true;
+            var silentSignInSuccess = await _authService.TrySilentSignInAsync(UserHandleInput);
+
+            if (silentSignInSuccess)
+            {
+                OnSuccessfulSignIn(UserHandleInput);
+            }
+
+            SigningIn = false;
+        }
+    }
+
     [RelayCommand]
     private async Task SignInAsync()
     {
-        var result = await _blueskyApiClient.SignInAsync(UserHandleInput, AppPasswordInput);
+        SigningIn = true;
+
+        var result = await _authService.SignInAsync(UserHandleInput, AppPasswordInput);
 
         SignInErrorMessage = result?.Success is true
             ? string.Empty
@@ -43,7 +70,19 @@ public partial class SignInPageViewModel : ObservableObject
 
         if (result?.Success is true)
         {
-            _navigator.NavigateTo(NavigationConstants.ShellPage);
+            OnSuccessfulSignIn(UserHandleInput);
         }
+
+        SigningIn = false;
+    }
+
+    private void OnSuccessfulSignIn(string userHandle)
+    {
+        if (userHandle.Trim() is { Length: > 0 } handle)
+        {
+            _userSettings.Set(UserSettingsConstants.LastUsedUserHandleKey, handle);
+        }
+
+        _navigator.NavigateTo(NavigationConstants.ShellPage);
     }
 }
