@@ -175,6 +175,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bluesky.NET\Bluesky.NET.csproj">
+      <Project>{0c16abbf-64f4-4880-9dfd-5ec48247c0b2}</Project>
+      <Name>Bluesky.NET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlueskyClient\BlueskyClient.csproj">
       <Project>{1ef2e316-2ad5-434f-b6bb-5cfa8013b874}</Project>
       <Name>BlueskyClient</Name>

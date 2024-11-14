@@ -1,4 +1,5 @@
-﻿using BlueskyClient.ViewModels;
+﻿using Bluesky.NET.ApiClients;
+using BlueskyClient.ViewModels;
 using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,5 +48,6 @@ partial class App
     /// </summary>
     /// <param name="services">The target <see cref="IServiceCollection"/> instance to register services with.</param>
     [Transient(typeof(SignInPageViewModel))]
+    [Singleton(typeof(BlueskyApiClient), typeof(IBlueskyApiClient))]
     private static partial void ConfigureServices(IServiceCollection services);
 }
