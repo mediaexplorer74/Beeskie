@@ -54,7 +54,7 @@
                                     <TextBlock
                                         Margin="4,0,0,0"
                                         Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                        Text="{x:Bind AuthorHandle}" />
+                                        Text="{x:Bind FeedItem.Post.Author.AtHandle}" />
                                 </StackPanel>
 
                                 <TextBlock
