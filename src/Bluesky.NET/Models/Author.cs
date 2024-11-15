@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace Bluesky.NET.Models;
 
@@ -13,4 +11,15 @@ public class Author
     public required string DisplayName { get; init; }
 
     public required string Avatar { get; init; }
+
+    public string? Description { get; init; }
+
+    public int? FollowersCount { get; init; }
+
+    public int? FollowsCount { get; init; }
+
+    public int? PostsCount { get; init; }
+
+    [JsonIgnore]
+    public string AtHandle => $"@{Handle}";
 }

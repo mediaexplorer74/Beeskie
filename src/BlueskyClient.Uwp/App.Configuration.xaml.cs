@@ -1,4 +1,6 @@
 ﻿using Bluesky.NET.ApiClients;
+using Bluesky.NET.Models;
+using BlueskyClient.Caches;
 using BlueskyClient.Constants;
 using BlueskyClient.Services;
 using BlueskyClient.Tools;
@@ -78,7 +80,8 @@ partial class App
         collection.AddTransient((serviceProvider) =>
         {
             return new ShellPageViewModel(
-                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey));
+                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey),
+                serviceProvider.GetRequiredService<IProfileService>());
         });
 
         collection.AddSingleton<IUserSettings>(_ => new LocalSettings(UserSettingsConstants.Defaults));
@@ -96,6 +99,8 @@ partial class App
     [Singleton(typeof(TimelineService), typeof(ITimelineService))]
     [Singleton(typeof(FeedItemViewModelFactory), typeof(IFeedItemViewModelFactory))]
     [Singleton(typeof(SecureCredentialStorage), typeof(ISecureCredentialStorage))]
+    [Singleton(typeof(ProfileCache), typeof(ICache<Author>))]
+    [Singleton(typeof(ProfileService), typeof(IProfileService))]
     [Transient(typeof(HomePageViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 }

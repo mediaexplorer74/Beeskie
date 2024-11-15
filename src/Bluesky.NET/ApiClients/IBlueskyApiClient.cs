@@ -16,4 +16,6 @@ public interface IBlueskyApiClient
     Task<AuthResponse?> AuthenticateAsync(string userHandle, string appPassword);
     Task<IReadOnlyList<FeedItem>> GetTimelineAsync(string accesstoken);
     Task<AuthResponse?> RefreshAsync(string refreshToken);
+
+    Task<Author?> GetAuthorAsync(string accessToken, string handle);
 }

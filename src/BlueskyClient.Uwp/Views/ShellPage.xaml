@@ -42,8 +42,41 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid>
-            <ItemsControl Margin="0,24,0,0" ItemsSource="{x:Bind ViewModel.MenuItems}">
+        <Grid Margin="0,40,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Margin="20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <winui:PersonPicture
+                    Width="40"
+                    PreferSmallImage="True"
+                    ProfilePicture="{x:Bind ViewModel.CurrentUser.Avatar, Mode=OneWay}" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center">
+                    <TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.CurrentUser.DisplayName, Mode=OneWay}" />
+                    <TextBlock
+                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                        Text="{x:Bind ViewModel.CurrentUser.AtHandle, Mode=OneWay}"
+                        TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+            </Grid>
+
+            <ItemsControl
+                Grid.Row="1"
+                Margin="0,24,0,0"
+                ItemsSource="{x:Bind ViewModel.MenuItems}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="models:MenuItem">
                         <Grid>

@@ -11,20 +11,22 @@
     <Grid>
         <ListView
             Grid.Column="1"
+            Margin="0,40,0,0"
             ItemsSource="{x:Bind ViewModel.FeedItems}"
             SelectionMode="None">
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Padding" Value="0,0,0,20" />
+                    <Setter Property="Padding" Value="20,0,20,20" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:FeedItemViewModel">
-                    <Grid>
+                    <Grid MaxWidth="600">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
                         <!--  Retweet banner goes here in row 0  -->
@@ -61,6 +63,14 @@
                                     TextWrapping="WrapWholeWords" />
                             </Grid>
                         </Grid>
+
+                        <Rectangle
+                            Grid.Row="2"
+                            Height="1"
+                            Margin="40,20,40,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Bottom"
+                            Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
