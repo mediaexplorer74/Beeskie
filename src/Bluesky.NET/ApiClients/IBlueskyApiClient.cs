@@ -18,4 +18,6 @@ public interface IBlueskyApiClient
     Task<AuthResponse?> RefreshAsync(string refreshToken);
 
     Task<Author?> GetAuthorAsync(string accessToken, string handle);
+
+    Task<IReadOnlyList<Notification>> GetNotificationsAsync(string accessToken);
 }

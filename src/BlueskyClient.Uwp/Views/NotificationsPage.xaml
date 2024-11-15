@@ -5,7 +5,75 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BlueskyClient.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:BlueskyClient.ViewModels"
     mc:Ignorable="d">
 
-    <Grid />
+    <Grid>
+        <ListView
+            Grid.Column="1"
+            Margin="0,40,0,0"
+            ItemsSource="{x:Bind ViewModel.Notifications}"
+            SelectionMode="None">
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="20,0,20,20" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:NotificationViewModel">
+                    <Grid MaxWidth="600">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--  Retweet banner goes here in row 0  -->
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <PersonPicture
+                                Width="48"
+                                Height="48"
+                                VerticalAlignment="Top"
+                                ProfilePicture="{x:Bind Notification.Author.Avatar}" />
+
+                            <Grid Grid.Column="1" Margin="12,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Notification.Author.DisplayName}" />
+                                    <TextBlock
+                                        Margin="4,0,0,0"
+                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                        Text="{x:Bind Notification.Author.AtHandle}" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Text="{x:Bind Notification.Author.Description}"
+                                    TextWrapping="WrapWholeWords" />
+                            </Grid>
+                        </Grid>
+
+                        <Rectangle
+                            Grid.Row="2"
+                            Height="1"
+                            Margin="40,20,40,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Bottom"
+                            Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 </Page>

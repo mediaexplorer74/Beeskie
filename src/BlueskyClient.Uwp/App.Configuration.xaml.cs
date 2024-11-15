@@ -98,9 +98,12 @@ partial class App
     [Singleton(typeof(AuthenticationService), typeof(IAuthenticationService))]
     [Singleton(typeof(TimelineService), typeof(ITimelineService))]
     [Singleton(typeof(FeedItemViewModelFactory), typeof(IFeedItemViewModelFactory))]
+    [Singleton(typeof(NotificationViewModelFactory), typeof(INotificationViewModelFactory))]
     [Singleton(typeof(SecureCredentialStorage), typeof(ISecureCredentialStorage))]
+    [Singleton(typeof(NotificationsService), typeof(INotificationsService))]
     [Singleton(typeof(ProfileCache), typeof(ICache<Author>))]
     [Singleton(typeof(ProfileService), typeof(IProfileService))]
     [Transient(typeof(HomePageViewModel))]
+    [Transient(typeof(NotificationsPageViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 }

@@ -6,5 +6,6 @@ namespace Bluesky.NET.Models;
 
 public class FeedResponse
 {
-    public required FeedItem[] Feed { get; init; }
+    public FeedItem[]? Feed { get; init; }
+    public Notification[]? Notifications { get; init; }
 }

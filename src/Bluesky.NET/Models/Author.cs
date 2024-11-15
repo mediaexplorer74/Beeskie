@@ -8,9 +8,9 @@ public class Author
 
     public required string Handle { get; init; }
 
-    public required string DisplayName { get; init; }
+    public string DisplayName { get; init; } = string.Empty;
 
-    public required string Avatar { get; init; }
+    public string Avatar { get; init; } = string.Empty;
 
     public string? Description { get; init; }
 
