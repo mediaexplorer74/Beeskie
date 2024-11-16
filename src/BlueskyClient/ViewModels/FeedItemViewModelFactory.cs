@@ -1,4 +1,6 @@
 ﻿using Bluesky.NET.Models;
+using BlueskyClient.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace BlueskyClient.ViewModels;
@@ -15,6 +17,7 @@ public class FeedItemViewModelFactory : IFeedItemViewModelFactory
     public FeedItemViewModel CreateViewModel(FeedItem feedItem)
     {
         return new FeedItemViewModel(
-            feedItem);
+            feedItem,
+            _serviceProvider.GetRequiredService<IPostSubmissionService>());
     }
 }

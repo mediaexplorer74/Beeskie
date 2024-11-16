@@ -3,10 +3,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:JeniusApps.Common.UI.Uwp"
     xmlns:local="using:BlueskyClient.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:BlueskyClient.ViewModels"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="PostButtonIconStyle" TargetType="FontIcon">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
+        </Style>
+    </Page.Resources>
 
     <Grid>
         <ListView
@@ -47,6 +56,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Orientation="Horizontal">
@@ -61,13 +71,48 @@
                                     Grid.Row="1"
                                     Text="{x:Bind FeedItem.Post.Record.Text}"
                                     TextWrapping="WrapWholeWords" />
+
+                                <Grid Grid.Row="2" Margin="-12,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <HyperlinkButton>
+                                        <FontIcon Glyph="&#xE8BD;" Style="{StaticResource PostButtonIconStyle}" />
+                                    </HyperlinkButton>
+                                    <HyperlinkButton Grid.Column="1">
+                                        <FontIcon Glyph="&#xE8EE;" Style="{StaticResource PostButtonIconStyle}" />
+                                    </HyperlinkButton>
+                                    <HyperlinkButton
+                                        Grid.Column="2"
+                                        Command="{x:Bind LikeCommand}"
+                                        IsEnabled="{x:Bind ex:UIExtensions.Not(LikeCommand.IsRunning), Mode=OneWay}">
+                                        <Grid>
+                                            <FontIcon
+                                                Glyph="&#xEB51;"
+                                                Style="{StaticResource PostButtonIconStyle}"
+                                                Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(IsLiked), Mode=OneWay}" />
+                                            <FontIcon
+                                                Foreground="LightPink"
+                                                Glyph="&#xEB52;"
+                                                Style="{StaticResource PostButtonIconStyle}"
+                                                Visibility="{x:Bind IsLiked, Mode=OneWay}" />
+                                        </Grid>
+                                    </HyperlinkButton>
+                                    <HyperlinkButton Grid.Column="3">
+                                        <FontIcon Glyph="&#xE712;" Style="{StaticResource PostButtonIconStyle}" />
+                                    </HyperlinkButton>
+                                </Grid>
                             </Grid>
                         </Grid>
 
                         <Rectangle
                             Grid.Row="2"
                             Height="1"
-                            Margin="40,20,40,0"
+                            Margin="40,12,40,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Bottom"
                             Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />

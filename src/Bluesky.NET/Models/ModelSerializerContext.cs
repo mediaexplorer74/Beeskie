@@ -10,13 +10,14 @@ namespace Bluesky.NET.Models;
 [JsonSerializable(typeof(AuthRequestBody))]
 [JsonSerializable(typeof(FeedItem[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(FeedPost[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
-[JsonSerializable(typeof(FeedRecord[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(Notification[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(FeedResponse), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(FeedRecord[]))]
 [JsonSerializable(typeof(Author))]
 [JsonSerializable(typeof(Notification))]
 [JsonSerializable(typeof(CreateRecordBody))]
 [JsonSerializable(typeof(CreateRecordResponse))]
+[JsonSerializable(typeof(RecordSubject))]
 public sealed partial class ModelSerializerContext : JsonSerializerContext
 {
     /// <summary>

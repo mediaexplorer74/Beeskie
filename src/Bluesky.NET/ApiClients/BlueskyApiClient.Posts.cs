@@ -13,8 +13,6 @@ namespace Bluesky.NET.ApiClients;
 
 partial class BlueskyApiClient
 {
-    private readonly string CreateRecordCollection = "app.bsky.feed.post";
-
     public async Task<IReadOnlyList<FeedPost>> GetPostsAsync(string accessToken, IReadOnlyList<string> atUriList)
     {
         if (atUriList.Count == 0)
@@ -45,7 +43,7 @@ partial class BlueskyApiClient
     }
 
     /// <inheritdoc/>
-    public async Task<CreateRecordResponse?> SubmitPostAsync(string accessToken, string handle, FeedRecord record)
+    public async Task<CreateRecordResponse?> SubmitPostAsync(string accessToken, string handle, FeedRecord record, RecordType recordType)
     {
         var url = $"{UrlConstants.BlueskyBaseUrl}/{UrlConstants.CreateRecordPath}";
 
@@ -53,7 +51,7 @@ partial class BlueskyApiClient
         {
             Repo = handle,
             Record = record,
-            Collection = CreateRecordCollection
+            Collection = recordType.ToStringType()
         };
 
         HttpRequestMessage message = new(HttpMethod.Post, url)
