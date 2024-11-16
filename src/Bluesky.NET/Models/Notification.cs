@@ -13,4 +13,6 @@ public class Notification
     public required bool IsRead { get; init; }
 
     public string? ReasonSubject { get; init; }
+
+    public required FeedRecord Record { get; init; }
 }

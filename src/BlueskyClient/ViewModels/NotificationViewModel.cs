@@ -26,6 +26,7 @@ public partial class NotificationViewModel : ObservableObject
         ReasonConstants.Follow => $"{Notification.Author.DisplayName} followed you",
         ReasonConstants.Like => $"{Notification.Author.DisplayName} liked your post",
         ReasonConstants.Repost => $"{Notification.Author.DisplayName} reposted your post",
+        ReasonConstants.Reply => "Posted a reply",
         _ => string.Empty
     };
 

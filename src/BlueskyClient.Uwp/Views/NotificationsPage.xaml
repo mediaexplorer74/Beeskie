@@ -18,7 +18,8 @@
             x:Key="NotifTemplateSelector"
             Fallback="{StaticResource FallbackTemplate}"
             Follow="{StaticResource FollowTemplate}"
-            LikeRepost="{StaticResource LikeRepostTemplate}" />
+            LikeRepost="{StaticResource LikeRepostTemplate}"
+            Reply="{StaticResource ReplyTemplate}" />
 
         <DataTemplate x:Name="FallbackTemplate" x:DataType="vm:NotificationViewModel">
             <StackPanel
@@ -29,6 +30,70 @@
                 <TextBlock Text="{x:Bind Notification.Author.AtHandle}" />
                 <TextBlock Text="{x:Bind Notification.Reason}" />
             </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Name="ReplyTemplate" x:DataType="vm:NotificationViewModel">
+            <Grid MaxWidth="{StaticResource ItemMaxWidth}" ColumnSpacing="{StaticResource GutterGapSpacing}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{StaticResource LeftGutterWidth}" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <PersonPicture
+                    Width="48"
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    ProfilePicture="{x:Bind SafeAvatarUrl}" />
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="SemiBold" Text="{x:Bind Notification.Author.DisplayName}" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                            Text="{x:Bind Notification.Author.AtHandle}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Row="1"
+                        Margin="0,4,0,0"
+                        Orientation="Horizontal">
+                        <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            FontSize="12"
+                            Glyph="&#xE97A;" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            FontSize="12"
+                            Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                            Text="{x:Bind CaptionString}" />
+                    </StackPanel>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Margin="0,4,0,0"
+                        MaxLines="10"
+                        Text="{x:Bind Notification.Record.Text}"
+                        TextWrapping="WrapWholeWords" />
+
+                    <Rectangle
+                        Grid.Row="3"
+                        Height="1"
+                        Margin="0,20,60,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                </Grid>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Name="FollowTemplate" x:DataType="vm:NotificationViewModel">

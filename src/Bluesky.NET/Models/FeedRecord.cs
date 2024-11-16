@@ -8,5 +8,5 @@ public class FeedRecord
 {
     public DateTime CreatedAt { get; init; }
 
-    public required string Text { get; init; }
+    public string Text { get; init; } = string.Empty;
 }
