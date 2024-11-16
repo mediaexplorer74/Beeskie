@@ -103,11 +103,5 @@ public sealed class AuthenticationService : IAuthenticationService
                 _secureCredentialStorage.SetCredential(userHandle, refreshToken);
             }
         }
-        else
-        {
-            _accesToken = null;
-            _refreshToken = null;
-            _expirationTime = null;
-        }
     }
 }
