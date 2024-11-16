@@ -8,6 +8,7 @@ public static class RecordTypes
 
     public static string ToStringType(this RecordType recordType) => recordType switch
     {
+        RecordType.Reply => NewPost,
         RecordType.NewPost => NewPost,
         RecordType.Like => Like,
         RecordType.Repost => Repost,
@@ -20,4 +21,5 @@ public enum RecordType
     NewPost,
     Like,
     Repost,
+    Reply,
 }

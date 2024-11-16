@@ -9,4 +9,6 @@ public class SubmissionRecord
     public string Text { get; init; } = string.Empty;
 
     public RecordSubject? Subject { get; init; }
+
+    public ReplyRecord? Reply { get; init; }
 }

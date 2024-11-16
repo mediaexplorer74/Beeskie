@@ -85,7 +85,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <HyperlinkButton>
+                                    <HyperlinkButton Command="{x:Bind ReplyCommand}" IsEnabled="{x:Bind ex:UIExtensions.Not(ReplyCommand.IsRunning), Mode=OneWay}">
                                         <StackPanel Orientation="Horizontal">
                                             <FontIcon Glyph="&#xE8BD;" Style="{StaticResource PostButtonIconStyle}" />
                                             <TextBlock

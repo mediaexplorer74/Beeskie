@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bluesky.NET.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,9 +26,9 @@ public sealed partial class NewPostDialog : ContentDialog
         this.InitializeComponent();
     }
 
-    public void Initialize()
+    public void Initialize(FeedPost? targetPost = null)
     {
-        _ = NewPostControl.ViewModel.InitializeAsync().ConfigureAwait(false);
+        _ = NewPostControl.ViewModel.InitializeAsync(targetPost).ConfigureAwait(false);
     }
 
     private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

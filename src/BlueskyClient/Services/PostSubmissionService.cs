@@ -27,6 +27,56 @@ public class PostSubmissionService : IPostSubmissionService
     }
 
     /// <inheritdoc/>
+    public async Task<string?> ReplyAsync(string text, FeedPost parent)
+    {
+        text = text.Trim();
+        if (string.IsNullOrEmpty(text))
+        {
+            return null;
+        }
+
+        var token = await _authenticationService.TryGetFreshTokenAsync();
+        var handle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
+
+        if (token is null || handle is null)
+        {
+            return null;
+        }
+
+        var root = parent.Record.Reply?.Root is RecordSubject existingRoot
+            ? existingRoot
+            : new RecordSubject
+            {
+                Cid = parent.Cid,
+                Uri = parent.Uri
+            };
+
+
+        SubmissionRecord newRecord = new()
+        {
+            CreatedAt = DateTime.Now,
+            Text = text,
+            Reply = new ReplyRecord
+            {
+                Parent = new RecordSubject()
+                {
+                    Cid = parent.Cid,
+                    Uri = parent.Uri
+                },
+                Root = root
+            }
+        };
+
+        CreateRecordResponse? result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, RecordType.Reply);
+        if (result is not null)
+        {
+            RecordCreated?.Invoke(this, (newRecord, result));
+        }
+
+        return result?.Uri;
+    }
+
+    /// <inheritdoc/>
     public async Task<bool> LikeOrRepostAsync(RecordType recordType, string targetUri, string targetCid)
     {
         if ((recordType is not RecordType.Like && recordType is not RecordType.Repost) ||

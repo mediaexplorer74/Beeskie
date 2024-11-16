@@ -21,9 +21,18 @@ public partial class NewPostViewModel : ObservableObject
     }
 
     [ObservableProperty]
+    private string _inputText = string.Empty;
+
+    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Avatar))]
     [NotifyPropertyChangedFor(nameof(Handle))]
     private Author? _author;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TargetName))]
+    [NotifyPropertyChangedFor(nameof(TargetText))]
+    [NotifyPropertyChangedFor(nameof(TargetAvatar))]
+    private FeedPost? _targetPost;
 
     public string Avatar => Author?.Avatar is string { Length: > 0 } avatarUri && Uri.IsWellFormedUriString(avatarUri, UriKind.Absolute)
         ? avatarUri
@@ -31,11 +40,17 @@ public partial class NewPostViewModel : ObservableObject
 
     public string Handle => Author?.AtHandle ?? string.Empty;
 
-    [ObservableProperty]
-    private string _inputText = string.Empty;
+    public string TargetName => TargetPost?.Author.DisplayName ?? string.Empty;
 
-    public async Task InitializeAsync()
+    public string TargetText => TargetPost?.Record.Text ?? string.Empty;
+
+    public string TargetAvatar => TargetPost?.Author.Avatar is string { Length: > 0 } avatarUri && Uri.IsWellFormedUriString(avatarUri, UriKind.Absolute)
+        ? avatarUri
+        : "http://localhost";
+
+    public async Task InitializeAsync(FeedPost? targetPost = null)
     {
+        TargetPost = targetPost;
         Author = await _profileService.GetCurrentUserAsync();
     }
 
@@ -48,6 +63,13 @@ public partial class NewPostViewModel : ObservableObject
             return;
         }
 
-        await _postSubmissionService.SubmitPostAsync(input).ConfigureAwait(false);
+        if (TargetPost is { } target)
+        {
+            await _postSubmissionService.ReplyAsync(input, target).ConfigureAwait(false);
+        }
+        else
+        {
+            await _postSubmissionService.SubmitPostAsync(input).ConfigureAwait(false);
+        }
     }
 }

@@ -11,13 +11,16 @@ namespace BlueskyClient.ViewModels;
 public partial class FeedItemViewModel : ObservableObject
 {
     private readonly IPostSubmissionService _postSubmissionService;
+    private readonly IDialogService _dialogService;
 
     public FeedItemViewModel(
         FeedItem feedItem,
-        IPostSubmissionService postSubmissionService)
+        IPostSubmissionService postSubmissionService,
+        IDialogService dialogService)
     {
         FeedItem = feedItem;
         _postSubmissionService = postSubmissionService;
+        _dialogService = dialogService;
         
         IsLiked = feedItem.Post.Viewer?.Like is not null;
         IsReposted = feedItem.Post.Viewer?.Repost is not null;
@@ -42,6 +45,12 @@ public partial class FeedItemViewModel : ObservableObject
 
     [ObservableProperty]
     private string _likeCount = string.Empty;
+
+    [RelayCommand]
+    private async Task ReplyAsync()
+    {
+        await _dialogService.OpenReplyDialogAsync(FeedItem.Post);
+    }
 
     [RelayCommand]
     private async Task LikeAsync()
