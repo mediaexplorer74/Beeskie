@@ -22,5 +22,5 @@ public interface IBlueskyApiClient
 
     Task<IReadOnlyList<Notification>> GetNotificationsAsync(string accessToken);
     Task<IReadOnlyList<FeedPost>> GetPostsAsync(string accessToken, IReadOnlyList<string> atUriList);
-    Task<CreateRecordResponse?> SubmitPostAsync(string accessToken, string handle, FeedRecord record, RecordType recordType);
+    Task<CreateRecordResponse?> SubmitPostAsync(string accessToken, string handle, SubmissionRecord record, RecordType recordType);
 }

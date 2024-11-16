@@ -10,5 +10,5 @@ public class CreateRecordBody
 
     public required string Collection { get; init; }
 
-    public required FeedRecord Record { get; init; }
+    public required SubmissionRecord Record { get; init; }
 }

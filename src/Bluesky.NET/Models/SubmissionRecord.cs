@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Text.Json.Serialization;
 
 namespace Bluesky.NET.Models;
 
-public class FeedRecord
+public class SubmissionRecord
 {
-    [JsonPropertyName("$type")]
-    public required string Type { get; init; }
-
     public DateTime CreatedAt { get; init; }
 
     public string Text { get; init; } = string.Empty;
+
+    public RecordSubject? Subject { get; init; }
 }

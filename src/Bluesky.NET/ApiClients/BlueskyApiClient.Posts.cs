@@ -43,7 +43,7 @@ partial class BlueskyApiClient
     }
 
     /// <inheritdoc/>
-    public async Task<CreateRecordResponse?> SubmitPostAsync(string accessToken, string handle, FeedRecord record, RecordType recordType)
+    public async Task<CreateRecordResponse?> SubmitPostAsync(string accessToken, string handle, SubmissionRecord record, RecordType recordType)
     {
         var url = $"{UrlConstants.BlueskyBaseUrl}/{UrlConstants.CreateRecordPath}";
 

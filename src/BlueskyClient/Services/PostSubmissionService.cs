@@ -44,7 +44,7 @@ public class PostSubmissionService : IPostSubmissionService
         }
 
 
-        FeedRecord newRecord = new()
+        SubmissionRecord newRecord = new()
         {
             CreatedAt = DateTime.Now,
             Subject = new RecordSubject
@@ -81,7 +81,7 @@ public class PostSubmissionService : IPostSubmissionService
         }
 
 
-        FeedRecord newRecord = new()
+        SubmissionRecord newRecord = new()
         {
             CreatedAt = DateTime.Now,
             Text = text
