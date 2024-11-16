@@ -1,4 +1,5 @@
-﻿using Bluesky.NET.Models;
+﻿using Bluesky.NET.Constants;
+using Bluesky.NET.Models;
 using BlueskyClient.Extensions;
 using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,6 +20,7 @@ public partial class FeedItemViewModel : ObservableObject
         _postSubmissionService = postSubmissionService;
         
         IsLiked = feedItem.Post.Viewer?.Like is not null;
+        IsReposted = feedItem.Post.Viewer?.Repost is not null;
         ReplyCount = feedItem.Post.GetReplyCount();
         RepostCount = feedItem.Post.GetRepostCount();
         LikeCount = feedItem.Post.GetLikeCount();
@@ -28,6 +30,9 @@ public partial class FeedItemViewModel : ObservableObject
 
     [ObservableProperty]
     private bool _isLiked;
+
+    [ObservableProperty]
+    private bool _isReposted;
 
     [ObservableProperty]
     private string _replyCount = string.Empty;
@@ -46,7 +51,8 @@ public partial class FeedItemViewModel : ObservableObject
             return;
         }
 
-        var result = await _postSubmissionService.LikeAsync(
+        var result = await _postSubmissionService.LikeOrRepostAsync(
+            RecordType.Like,
             FeedItem.Post.Uri,
             FeedItem.Post.Cid);
 
@@ -56,5 +62,26 @@ public partial class FeedItemViewModel : ObservableObject
         }
 
         IsLiked = result;
+    }
+
+    [RelayCommand]
+    private async Task RepostAsync()
+    {
+        if (IsReposted)
+        {
+            return;
+        }
+
+        var result = await _postSubmissionService.LikeOrRepostAsync(
+            RecordType.Repost,
+            FeedItem.Post.Uri,
+            FeedItem.Post.Cid);
+
+        if (result)
+        {
+            RepostCount = (FeedItem.Post.RepostCount + 1).ToString();
+        }
+
+        IsReposted = result;
     }
 }

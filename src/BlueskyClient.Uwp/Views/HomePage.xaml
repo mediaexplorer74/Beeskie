@@ -94,9 +94,22 @@
                                                 Visibility="{x:Bind ex:UIExtensions.CollapsedIfEmpty(ReplyCount), Mode=OneWay}" />
                                         </StackPanel>
                                     </HyperlinkButton>
-                                    <HyperlinkButton Grid.Column="1">
+                                    <HyperlinkButton
+                                        Grid.Column="1"
+                                        Command="{x:Bind RepostCommand}"
+                                        IsEnabled="{x:Bind ex:UIExtensions.Not(RepostCommand.IsRunning), Mode=OneWay}">
                                         <StackPanel Orientation="Horizontal">
-                                            <FontIcon Glyph="&#xE8EE;" Style="{StaticResource PostButtonIconStyle}" />
+                                            <Grid>
+                                                <FontIcon
+                                                    Glyph="&#xE8EE;"
+                                                    Style="{StaticResource PostButtonIconStyle}"
+                                                    Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(IsReposted), Mode=OneWay}" />
+                                                <FontIcon
+                                                    Foreground="LightGreen"
+                                                    Glyph="&#xE8EE;"
+                                                    Style="{StaticResource PostButtonIconStyle}"
+                                                    Visibility="{x:Bind IsReposted, Mode=OneWay}" />
+                                            </Grid>
                                             <TextBlock
                                                 Style="{StaticResource PostButtonIconTextStyle}"
                                                 Text="{x:Bind RepostCount, Mode=OneWay}"

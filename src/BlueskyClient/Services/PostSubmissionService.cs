@@ -14,8 +14,7 @@ public class PostSubmissionService : IPostSubmissionService
     private readonly IUserSettings _userSettings;
     private readonly IAuthenticationService _authenticationService;
 
-    public event EventHandler? NewPostSubmitted;
-    public event EventHandler? LikeSubmitted;
+    public event EventHandler<(SubmissionRecord, CreateRecordResponse)>? RecordCreated;
 
     public PostSubmissionService(
         IBlueskyApiClient blueskyApiClient,
@@ -28,9 +27,11 @@ public class PostSubmissionService : IPostSubmissionService
     }
 
     /// <inheritdoc/>
-    public async Task<bool> LikeAsync(string targetUri, string targetCid)
+    public async Task<bool> LikeOrRepostAsync(RecordType recordType, string targetUri, string targetCid)
     {
-        if (string.IsNullOrEmpty(targetUri) || string.IsNullOrEmpty(targetCid))
+        if ((recordType is not RecordType.Like && recordType is not RecordType.Repost) ||
+            string.IsNullOrEmpty(targetUri) || 
+            string.IsNullOrEmpty(targetCid))
         {
             return false;
         }
@@ -43,7 +44,6 @@ public class PostSubmissionService : IPostSubmissionService
             return false;
         }
 
-
         SubmissionRecord newRecord = new()
         {
             CreatedAt = DateTime.Now,
@@ -54,10 +54,10 @@ public class PostSubmissionService : IPostSubmissionService
             }
         };
 
-        CreateRecordResponse? result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, RecordType.Like);
+        CreateRecordResponse? result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, recordType);
         if (result is not null)
         {
-            LikeSubmitted?.Invoke(this, EventArgs.Empty);
+            RecordCreated?.Invoke(this, (newRecord, result));
         }
 
         return result is not null;
@@ -90,7 +90,7 @@ public class PostSubmissionService : IPostSubmissionService
         CreateRecordResponse? result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, RecordType.NewPost);
         if (result is not null)
         {
-            NewPostSubmitted?.Invoke(this, EventArgs.Empty);
+            RecordCreated?.Invoke(this, (newRecord, result));
         }
 
         return result?.Uri;

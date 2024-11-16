@@ -1,4 +1,5 @@
-﻿using Bluesky.NET.Models;
+﻿using Bluesky.NET.Constants;
+using Bluesky.NET.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -6,9 +7,9 @@ namespace BlueskyClient.Services;
 
 public interface IPostSubmissionService
 {
-    event EventHandler? NewPostSubmitted;
-    event EventHandler? LikeSubmitted;
+    event EventHandler<(SubmissionRecord, CreateRecordResponse)>? RecordCreated;
 
-    Task<bool> LikeAsync(string targetUri, string targetCid);
+    Task<bool> LikeOrRepostAsync(RecordType recordType, string targetUri, string targetCid);
+    
     Task<string?> SubmitPostAsync(string text);
 }
