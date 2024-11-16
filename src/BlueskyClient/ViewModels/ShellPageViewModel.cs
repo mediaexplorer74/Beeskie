@@ -14,14 +14,17 @@ public partial class ShellPageViewModel : ObservableObject
 {
     private readonly INavigator _contentNavigator;
     private readonly IProfileService _profileService;
+    private readonly IDialogService _dialogService;
     private MenuItem? _lastSelectedMenu;
 
     public ShellPageViewModel(
         INavigator contentNavigator,
-        IProfileService profileService)
+        IProfileService profileService,
+        IDialogService dialogService)
     {
         _contentNavigator = contentNavigator;
         _profileService = profileService;
+        _dialogService = dialogService;
 
         MenuItems.Add(new MenuItem(NavigateContentPageCommand, "Home", "\uEA8A", NavigationConstants.HomePage));
         MenuItems.Add(new MenuItem(NavigateContentPageCommand, "Notifications", "\uEA8F", NavigationConstants.NotificationsPage));
@@ -55,5 +58,11 @@ public partial class ShellPageViewModel : ObservableObject
         item.IsSelected = true;
         _lastSelectedMenu = item;
         _contentNavigator.NavigateTo(key);
+    }
+
+    [RelayCommand]
+    private async Task NewPostAsync()
+    {
+        await _dialogService.OpenPostDialogAsync();
     }
 }

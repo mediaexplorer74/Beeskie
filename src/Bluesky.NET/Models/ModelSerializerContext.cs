@@ -15,6 +15,8 @@ namespace Bluesky.NET.Models;
 [JsonSerializable(typeof(FeedResponse), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(Author))]
 [JsonSerializable(typeof(Notification))]
+[JsonSerializable(typeof(CreateRecordBody))]
+[JsonSerializable(typeof(CreateRecordResponse))]
 public sealed partial class ModelSerializerContext : JsonSerializerContext
 {
     /// <summary>

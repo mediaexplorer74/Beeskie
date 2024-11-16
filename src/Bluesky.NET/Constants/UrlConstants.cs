@@ -13,6 +13,7 @@ public sealed class UrlConstants
     public const string RefreshAuthPath = "xrpc/com.atproto.server.refreshSession";
     public const string TimelinePath = "xrpc/app.bsky.feed.getTimeline";
     public const string ProfilePath = "xrpc/app.bsky.actor.getProfile";
-    public const string NotificationsPath = "xrpc/app.bsky.notification.listNotifications\r\n";
+    public const string NotificationsPath = "xrpc/app.bsky.notification.listNotifications";
     public const string PostsPath = "xrpc/app.bsky.feed.getPosts";
+    public const string CreateRecordPath = "xrpc/com.atproto.repo.createRecord";
 }

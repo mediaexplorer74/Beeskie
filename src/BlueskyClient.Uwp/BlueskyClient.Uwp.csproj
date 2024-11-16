@@ -122,8 +122,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NewPostControl.xaml.cs">
+      <DependentUpon>NewPostControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NewPostDialog.xaml.cs">
+      <DependentUpon>NewPostDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NotificationTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Tools\SecureCredentialStorage.cs" />
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -183,6 +190,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\NewPostControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NewPostDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

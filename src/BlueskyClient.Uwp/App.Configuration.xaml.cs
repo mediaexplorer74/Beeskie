@@ -3,6 +3,7 @@ using Bluesky.NET.Models;
 using BlueskyClient.Caches;
 using BlueskyClient.Constants;
 using BlueskyClient.Services;
+using BlueskyClient.Services.Uwp;
 using BlueskyClient.Tools;
 using BlueskyClient.Tools.Uwp;
 using BlueskyClient.ViewModels;
@@ -81,7 +82,8 @@ partial class App
         {
             return new ShellPageViewModel(
                 serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey),
-                serviceProvider.GetRequiredService<IProfileService>());
+                serviceProvider.GetRequiredService<IProfileService>(),
+                serviceProvider.GetRequiredService<IDialogService>());
         });
 
         collection.AddSingleton<IUserSettings>(_ => new LocalSettings(UserSettingsConstants.Defaults));
@@ -103,7 +105,10 @@ partial class App
     [Singleton(typeof(NotificationsService), typeof(INotificationsService))]
     [Singleton(typeof(ProfileCache), typeof(ICache<Author>))]
     [Singleton(typeof(ProfileService), typeof(IProfileService))]
+    [Singleton(typeof(PostSubmissionService), typeof(IPostSubmissionService))]
+    [Singleton(typeof(DialogService), typeof(IDialogService))]
     [Transient(typeof(HomePageViewModel))]
     [Transient(typeof(NotificationsPageViewModel))]
+    [Transient(typeof(NewPostViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 }

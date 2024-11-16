@@ -46,6 +46,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
@@ -104,6 +105,25 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+
+            <Button
+                Grid.Row="2"
+                MinHeight="48"
+                Margin="24,12,24,0"
+                HorizontalAlignment="Stretch"
+                Command="{x:Bind ViewModel.NewPostCommand}"
+                CornerRadius="18">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon
+                        VerticalAlignment="Center"
+                        FontFamily="Segoe Fluent Icons"
+                        Glyph="&#xE929;" />
+                    <TextBlock
+                        Margin="12,0,12,0"
+                        VerticalAlignment="Center"
+                        Text="New Post" />
+                </StackPanel>
+            </Button>
         </Grid>
 
         <Rectangle
