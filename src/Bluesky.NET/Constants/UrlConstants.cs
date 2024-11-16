@@ -14,4 +14,5 @@ public sealed class UrlConstants
     public const string TimelinePath = "xrpc/app.bsky.feed.getTimeline";
     public const string ProfilePath = "xrpc/app.bsky.actor.getProfile";
     public const string NotificationsPath = "xrpc/app.bsky.notification.listNotifications\r\n";
+    public const string PostsPath = "xrpc/app.bsky.feed.getPosts";
 }

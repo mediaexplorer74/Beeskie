@@ -26,6 +26,7 @@ public partial class NotificationsPageViewModel : ObservableObject
         foreach (var n in notifications)
         {
             var vm = _notificationViewModelFactory.CreateViewModel(n);
+            _ = _notificationsService.HydrateAsync(vm);
             Notifications.Add(vm);
         }
     }

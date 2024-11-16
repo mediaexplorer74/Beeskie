@@ -20,4 +20,5 @@ public interface IBlueskyApiClient
     Task<Author?> GetAuthorAsync(string accessToken, string handle);
 
     Task<IReadOnlyList<Notification>> GetNotificationsAsync(string accessToken);
+    Task<IReadOnlyList<FeedPost>> GetPostsAsync(string accessToken, IReadOnlyList<string> atUriList);
 }

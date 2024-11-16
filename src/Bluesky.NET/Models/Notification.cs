@@ -11,4 +11,6 @@ public class Notification
     public required string Reason { get; init; }
 
     public required bool IsRead { get; init; }
+
+    public string? ReasonSubject { get; init; }
 }

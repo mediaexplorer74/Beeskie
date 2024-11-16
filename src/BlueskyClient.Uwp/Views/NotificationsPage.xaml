@@ -17,7 +17,8 @@
         <controls:NotificationTemplateSelector
             x:Key="NotifTemplateSelector"
             Fallback="{StaticResource FallbackTemplate}"
-            Follow="{StaticResource FollowTemplate}" />
+            Follow="{StaticResource FollowTemplate}"
+            LikeRepost="{StaticResource LikeRepostTemplate}" />
 
         <DataTemplate x:Name="FallbackTemplate" x:DataType="vm:NotificationViewModel">
             <StackPanel
@@ -60,7 +61,7 @@
                     <TextBlock
                         Grid.Row="1"
                         Margin="0,8,0,0"
-                        Text="{x:Bind FollowString}" />
+                        Text="{x:Bind CaptionString}" />
 
                     <Rectangle
                         Grid.Row="2"
@@ -70,6 +71,70 @@
                         VerticalAlignment="Bottom"
                         Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
 
+                </Grid>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Name="LikeRepostTemplate" x:DataType="vm:NotificationViewModel">
+            <Grid MaxWidth="{StaticResource ItemMaxWidth}" ColumnSpacing="{StaticResource GutterGapSpacing}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{StaticResource LeftGutterWidth}" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    x:Name="LikeIcon"
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    x:Load="{x:Bind IsLike}"
+                    FontFamily="Segoe Fluent Icons"
+                    FontSize="24"
+                    Foreground="Pink"
+                    Glyph="&#xEB52;" />
+                <FontIcon
+                    x:Name="RepostIcon"
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    x:Load="{x:Bind IsRepost}"
+                    FontFamily="Segoe Fluent Icons"
+                    FontSize="24"
+                    Foreground="LightGreen"
+                    Glyph="&#xE8EE;" />
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <PersonPicture
+                        Width="32"
+                        HorizontalAlignment="Left"
+                        ProfilePicture="{x:Bind SafeAvatarUrl}" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Margin="0,8,0,0"
+                        Text="{x:Bind CaptionString}" />
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Margin="0,4,0,0"
+                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                        MaxLines="4"
+                        Text="{x:Bind SubjectText, Mode=OneWay}"
+                        TextWrapping="WrapWholeWords" />
+
+                    <Rectangle
+                        Grid.Row="3"
+                        Height="1"
+                        Margin="0,20,60,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom"
+                        Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -88,62 +153,6 @@
                     <Setter Property="Padding" Value="20,0,20,20" />
                 </Style>
             </ListView.ItemContainerStyle>
-            <!--<ListView.ItemTemplate>
-                <DataTemplate x:DataType="vm:NotificationViewModel">
-                    <Grid MaxWidth="600">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
-
-            -->
-            <!--  Retweet banner goes here in row 0  -->
-            <!--
-
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <PersonPicture
-                                Width="48"
-                                Height="48"
-                                VerticalAlignment="Top"
-                                ProfilePicture="{x:Bind Notification.Author.Avatar}" />
-
-                            <Grid Grid.Column="1" Margin="12,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="auto" />
-                                </Grid.RowDefinitions>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontWeight="SemiBold" Text="{x:Bind Notification.Author.DisplayName}" />
-                                    <TextBlock
-                                        Margin="4,0,0,0"
-                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                        Text="{x:Bind Notification.Author.AtHandle}" />
-                                </StackPanel>
-
-                                <TextBlock
-                                    Grid.Row="1"
-                                    Text="{x:Bind Notification.Author.Description}"
-                                    TextWrapping="WrapWholeWords" />
-                            </Grid>
-                        </Grid>
-
-                        <Rectangle
-                            Grid.Row="2"
-                            Height="1"
-                            Margin="40,20,40,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Bottom"
-                            Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>-->
         </ListView>
     </Grid>
 </Page>
