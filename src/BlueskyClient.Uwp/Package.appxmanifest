@@ -8,14 +8,14 @@
 
   <Identity
     Name="3f0e2c34-cf68-46e7-a834-87bed10fad7d"
-    Publisher="CN=kid_j"
-    Version="1.0.0.0" />
+    Publisher="CN=0B44CA61-7898-42FE-825C-ADA43BC01A93"
+    Version="0.5.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="3f0e2c34-cf68-46e7-a834-87bed10fad7d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="37ca6a7c-c70c-48bb-8290-04de0c8cf186" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>BlueskyClient.Uwp</DisplayName>
-    <PublisherDisplayName>kid_j</PublisherDisplayName>
+    <DisplayName>Beeskie</DisplayName>
+    <PublisherDisplayName>Jenius Apps</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="BlueskyClient.Uwp.App">
       <uap:VisualElements
-        DisplayName="BlueskyClient.Uwp"
+        DisplayName="Beeskie"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="BlueskyClient.Uwp"
