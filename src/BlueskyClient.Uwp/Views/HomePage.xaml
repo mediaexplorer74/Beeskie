@@ -15,6 +15,11 @@
             <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
             <Setter Property="Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
         </Style>
+        <Style x:Key="PostButtonIconTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="8,0,0,0" />
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
+        </Style>
     </Page.Resources>
 
     <Grid>
@@ -81,26 +86,44 @@
                                     </Grid.ColumnDefinitions>
 
                                     <HyperlinkButton>
-                                        <FontIcon Glyph="&#xE8BD;" Style="{StaticResource PostButtonIconStyle}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon Glyph="&#xE8BD;" Style="{StaticResource PostButtonIconStyle}" />
+                                            <TextBlock
+                                                Style="{StaticResource PostButtonIconTextStyle}"
+                                                Text="{x:Bind ReplyCount, Mode=OneWay}"
+                                                Visibility="{x:Bind ex:UIExtensions.CollapsedIfEmpty(ReplyCount), Mode=OneWay}" />
+                                        </StackPanel>
                                     </HyperlinkButton>
                                     <HyperlinkButton Grid.Column="1">
-                                        <FontIcon Glyph="&#xE8EE;" Style="{StaticResource PostButtonIconStyle}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon Glyph="&#xE8EE;" Style="{StaticResource PostButtonIconStyle}" />
+                                            <TextBlock
+                                                Style="{StaticResource PostButtonIconTextStyle}"
+                                                Text="{x:Bind RepostCount, Mode=OneWay}"
+                                                Visibility="{x:Bind ex:UIExtensions.CollapsedIfEmpty(RepostCount), Mode=OneWay}" />
+                                        </StackPanel>
                                     </HyperlinkButton>
                                     <HyperlinkButton
                                         Grid.Column="2"
                                         Command="{x:Bind LikeCommand}"
                                         IsEnabled="{x:Bind ex:UIExtensions.Not(LikeCommand.IsRunning), Mode=OneWay}">
-                                        <Grid>
-                                            <FontIcon
-                                                Glyph="&#xEB51;"
-                                                Style="{StaticResource PostButtonIconStyle}"
-                                                Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(IsLiked), Mode=OneWay}" />
-                                            <FontIcon
-                                                Foreground="LightPink"
-                                                Glyph="&#xEB52;"
-                                                Style="{StaticResource PostButtonIconStyle}"
-                                                Visibility="{x:Bind IsLiked, Mode=OneWay}" />
-                                        </Grid>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Grid>
+                                                <FontIcon
+                                                    Glyph="&#xEB51;"
+                                                    Style="{StaticResource PostButtonIconStyle}"
+                                                    Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(IsLiked), Mode=OneWay}" />
+                                                <FontIcon
+                                                    Foreground="LightPink"
+                                                    Glyph="&#xEB52;"
+                                                    Style="{StaticResource PostButtonIconStyle}"
+                                                    Visibility="{x:Bind IsLiked, Mode=OneWay}" />
+                                            </Grid>
+                                            <TextBlock
+                                                Style="{StaticResource PostButtonIconTextStyle}"
+                                                Text="{x:Bind LikeCount, Mode=OneWay}"
+                                                Visibility="{x:Bind ex:UIExtensions.CollapsedIfEmpty(LikeCount), Mode=OneWay}" />
+                                        </StackPanel>
                                     </HyperlinkButton>
                                     <HyperlinkButton Grid.Column="3">
                                         <FontIcon Glyph="&#xE712;" Style="{StaticResource PostButtonIconStyle}" />

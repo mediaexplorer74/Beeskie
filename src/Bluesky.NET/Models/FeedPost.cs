@@ -16,9 +16,13 @@ public class FeedPost
 
     public int RepostCount { get; init; }
 
+    public int LikeCount { get; init; }
+
     public int QuoteCount { get; init; }
 
     public required FeedRecord Record { get; init; }
 
     public required Author Author { get; init; }
+
+    public Viewer? Viewer { get; init; }
 }
