@@ -22,6 +22,8 @@ public class FeedPost
 
     public FeedRecord? Record { get; init; }
 
+    public PostEmbed? Embed { get; init; }
+
     public Author? Author { get; init; }
 
     public Viewer? Viewer { get; init; }

@@ -17,11 +17,13 @@ namespace Bluesky.NET.Models;
 [JsonSerializable(typeof(Notification))]
 [JsonSerializable(typeof(CreateRecordBody))]
 [JsonSerializable(typeof(CreateRecordResponse))]
-[JsonSerializable(typeof(RecordSubject))]
+[JsonSerializable(typeof(PostEmbed))]
 [JsonSerializable(typeof(Viewer))]
 [JsonSerializable(typeof(SubmissionRecord))]
 [JsonSerializable(typeof(ReplyRecord))]
 [JsonSerializable(typeof(FeedPostReason))]
+[JsonSerializable(typeof(ImageEmbed))]
+[JsonSerializable(typeof(AspectRatio))]
 public sealed partial class ModelSerializerContext : JsonSerializerContext
 {
     /// <summary>

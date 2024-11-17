@@ -42,6 +42,8 @@ public partial class FeedItemViewModel : ObservableObject
         ? $"Reposted by {ReposterName}"
         : string.Empty;
 
+    public PostEmbed? PostEmbed => FeedItem.Post?.Embed;
+
     [ObservableProperty]
     private bool _isLiked;
 
