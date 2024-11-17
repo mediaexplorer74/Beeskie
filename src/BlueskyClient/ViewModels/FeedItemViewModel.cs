@@ -4,6 +4,7 @@ using BlueskyClient.Extensions;
 using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.ViewModels;
@@ -30,6 +31,16 @@ public partial class FeedItemViewModel : ObservableObject
     }
 
     public FeedItem FeedItem { get; }
+
+    public bool IsRepost => FeedItem.Reason?.Type.EndsWith("#reasonRepost", StringComparison.OrdinalIgnoreCase) ?? false;
+
+    public string ReposterName => IsRepost
+        ? FeedItem.Reason?.By?.DisplayName ?? string.Empty
+        : string.Empty;
+
+    public string RepostCaption => IsRepost
+        ? $"Reposted by {ReposterName}"
+        : string.Empty;
 
     [ObservableProperty]
     private bool _isLiked;

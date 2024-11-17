@@ -45,6 +45,30 @@
 
                         <!--  Retweet banner goes here in row 0  -->
 
+                        <Grid
+                            x:Name="RepostBanner"
+                            Margin="0,0,0,4"
+                            Visibility="{x:Bind IsRepost}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Margin="0,0,-8,0"
+                                HorizontalAlignment="Right"
+                                FontFamily="Segoe Fluent Icons"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                Glyph="&#xE8EE;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="12,0,0,0"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                Text="{x:Bind RepostCaption}" />
+                        </Grid>
+
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />

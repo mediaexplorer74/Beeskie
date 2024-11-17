@@ -21,6 +21,7 @@ namespace Bluesky.NET.Models;
 [JsonSerializable(typeof(Viewer))]
 [JsonSerializable(typeof(SubmissionRecord))]
 [JsonSerializable(typeof(ReplyRecord))]
+[JsonSerializable(typeof(FeedPostReason))]
 public sealed partial class ModelSerializerContext : JsonSerializerContext
 {
     /// <summary>
