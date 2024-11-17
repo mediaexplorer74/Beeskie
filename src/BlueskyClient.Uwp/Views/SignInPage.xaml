@@ -18,8 +18,13 @@
         </Grid.ColumnDefinitions>
 
         <Grid>
-            <StackPanel Margin="20,0" VerticalAlignment="Center">
+            <StackPanel Margin="20,0,20,40" VerticalAlignment="Center">
+                <Image
+                    Width="100"
+                    HorizontalAlignment="Center"
+                    Source="ms-appx:///Assets/AppLogo300.png" />
                 <TextBox
+                    Margin="0,20,0,0"
                     IsEnabled="{x:Bind ex:UIExtensions.Not(ViewModel.SigningIn), Mode=OneWay}"
                     IsSpellCheckEnabled="False"
                     PlaceholderText="Bluesky handle or email"
