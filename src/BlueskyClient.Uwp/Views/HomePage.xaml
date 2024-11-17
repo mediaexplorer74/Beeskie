@@ -43,12 +43,10 @@
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
-                        <!--  Retweet banner goes here in row 0  -->
-
                         <Grid
                             x:Name="RepostBanner"
                             Margin="0,0,0,4"
-                            Visibility="{x:Bind IsRepost}">
+                            x:Load="{x:Bind IsRepost}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="48" />
                                 <ColumnDefinition Width="*" />
