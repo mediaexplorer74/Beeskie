@@ -82,8 +82,10 @@ partial class App
         {
             return new ShellPageViewModel(
                 serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey),
+                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey),
                 serviceProvider.GetRequiredService<IProfileService>(),
-                serviceProvider.GetRequiredService<IDialogService>());
+                serviceProvider.GetRequiredService<IDialogService>(),
+                serviceProvider.GetRequiredService<IAuthenticationService>());
         });
 
         collection.AddSingleton<IUserSettings>(_ => new LocalSettings(UserSettingsConstants.Defaults));

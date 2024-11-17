@@ -8,4 +8,6 @@ public interface IDialogService
     Task OpenPostDialogAsync();
 
     Task OpenReplyDialogAsync(FeedPost target);
+
+    Task OpenSignInRequiredAsync();
 }

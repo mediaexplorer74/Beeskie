@@ -41,20 +41,9 @@ public partial class SignInPageViewModel : ObservableObject
 
     public bool ErrorBannerVisible => SignInErrorMessage.Length > 0;
 
-    public async Task InitializeAsync()
+    public Task InitializeAsync()
     {
-        if (UserHandleInput.Length > 0)
-        {
-            SigningIn = true;
-            var silentSignInSuccess = await _authService.TrySilentSignInAsync(UserHandleInput);
-
-            if (silentSignInSuccess)
-            {
-                OnSuccessfulSignIn(UserHandleInput);
-            }
-
-            SigningIn = false;
-        }
+        return Task.CompletedTask;
     }
 
     [RelayCommand]

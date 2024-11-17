@@ -1,5 +1,6 @@
 ﻿using BlueskyClient.Constants;
 using BlueskyClient.Views;
+using JeniusApps.Common.Settings;
 using JeniusApps.Common.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
@@ -15,9 +16,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace BlueskyClient;
 
-/// <summary>
-/// Provides application-specific behavior to supplement the default Application class.
-/// </summary>
 sealed partial class App : Application
 {
     private static Frame? AppFrame;
@@ -61,7 +59,16 @@ sealed partial class App : Application
 
             if (rootFrame.Content is null)
             {
-                rootFrame.Navigate(typeof(SignInPage));
+                var storedHandle = Services.GetRequiredService<IUserSettings>().Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
+
+                if (string.IsNullOrEmpty(storedHandle))
+                {
+                    rootFrame.Navigate(typeof(SignInPage));
+                }
+                else
+                {
+                    rootFrame.Navigate(typeof(ShellPage), storedHandle);
+                }
             }
 
             Window.Current.Activate();
