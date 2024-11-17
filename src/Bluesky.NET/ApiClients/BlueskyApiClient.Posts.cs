@@ -2,6 +2,7 @@
 using Bluesky.NET.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -36,7 +37,7 @@ partial class BlueskyApiClient
         }
         catch (Exception e)
         {
-
+            Debug.WriteLine(e);
         }
 
         return [];
@@ -70,10 +71,15 @@ partial class BlueskyApiClient
                 var responseRecord = JsonSerializer.Deserialize(contentStream, ModelSerializerContext.CaseInsensitive.CreateRecordResponse);
                 return responseRecord;
             }
+            else
+            {
+                var errorText = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(errorText);
+            }
         }
         catch (Exception e)
         {
-
+            Debug.WriteLine(e);
         }
 
         return null;

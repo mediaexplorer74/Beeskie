@@ -7,4 +7,6 @@ public class FeedItem
     public required FeedPost Post { get; init; }
 
     public FeedPostReason? Reason { get; init; }
+
+    public ReplyRecord? Reply { get; init; }
 }

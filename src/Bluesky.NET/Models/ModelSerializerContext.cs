@@ -36,5 +36,6 @@ public sealed partial class ModelSerializerContext : JsonSerializerContext
     { 
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     });
 }

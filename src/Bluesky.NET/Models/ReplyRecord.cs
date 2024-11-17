@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bluesky.NET.Models;
+﻿namespace Bluesky.NET.Models;
 
 public class ReplyRecord
 {
-    public RecordSubject? Parent { get; init; }
+    public FeedPost? Parent { get; init; }
 
-    public RecordSubject? Root { get; init; }
+    public FeedPost? Root { get; init; }
 }

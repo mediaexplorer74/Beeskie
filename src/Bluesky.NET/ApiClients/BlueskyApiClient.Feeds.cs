@@ -2,6 +2,7 @@
 using Bluesky.NET.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -30,7 +31,7 @@ partial class BlueskyApiClient
         }
         catch (Exception e)
         {
-
+            Debug.WriteLine(e);
         }
 
         return [];

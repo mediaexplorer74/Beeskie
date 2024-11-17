@@ -43,9 +43,9 @@ public class PostSubmissionService : IPostSubmissionService
             return null;
         }
 
-        var root = parent.Record.Reply?.Root is RecordSubject existingRoot
+        var root = parent.Record?.Reply?.Root is FeedPost existingRoot
             ? existingRoot
-            : new RecordSubject
+            : new FeedPost
             {
                 Cid = parent.Cid,
                 Uri = parent.Uri
@@ -58,7 +58,7 @@ public class PostSubmissionService : IPostSubmissionService
             Text = text,
             Reply = new ReplyRecord
             {
-                Parent = new RecordSubject()
+                Parent = new FeedPost()
                 {
                     Cid = parent.Cid,
                     Uri = parent.Uri
@@ -97,7 +97,7 @@ public class PostSubmissionService : IPostSubmissionService
         SubmissionRecord newRecord = new()
         {
             CreatedAt = DateTime.Now,
-            Subject = new RecordSubject
+            Subject = new FeedPost
             {
                 Uri = targetUri,
                 Cid = targetCid

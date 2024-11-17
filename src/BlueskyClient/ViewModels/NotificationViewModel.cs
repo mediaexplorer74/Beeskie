@@ -38,5 +38,5 @@ public partial class NotificationViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SubjectText))]
     private FeedPost? _subjectPost;
 
-    public string SubjectText => SubjectPost?.Record.Text ?? string.Empty;
+    public string SubjectText => SubjectPost?.Record?.Text ?? string.Empty;
 }

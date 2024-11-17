@@ -40,11 +40,11 @@ public partial class NewPostViewModel : ObservableObject
 
     public string Handle => Author?.AtHandle ?? string.Empty;
 
-    public string TargetName => TargetPost?.Author.DisplayName ?? string.Empty;
+    public string TargetName => TargetPost?.Author?.DisplayName ?? string.Empty;
 
-    public string TargetText => TargetPost?.Record.Text ?? string.Empty;
+    public string TargetText => TargetPost?.Record?.Text ?? string.Empty;
 
-    public string TargetAvatar => TargetPost?.Author.Avatar is string { Length: > 0 } avatarUri && Uri.IsWellFormedUriString(avatarUri, UriKind.Absolute)
+    public string TargetAvatar => TargetPost?.Author?.Avatar is string { Length: > 0 } avatarUri && Uri.IsWellFormedUriString(avatarUri, UriKind.Absolute)
         ? avatarUri
         : "http://localhost";
 

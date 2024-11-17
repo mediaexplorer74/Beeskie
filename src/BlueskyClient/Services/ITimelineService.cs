@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BlueskyClient.Services
+namespace BlueskyClient.Services;
+
+public interface ITimelineService
 {
-    public interface ITimelineService
-    {
-        Task<IReadOnlyList<FeedItem>> GetTimelineAsync();
-    }
+    Task<IReadOnlyList<FeedItem>> GetTimelineAsync();
 }
