@@ -4,9 +4,9 @@ namespace Bluesky.NET.Models;
 
 public class Author
 {
-    public required string Did { get; init; }
+    public string Did { get; init; } = string.Empty;
 
-    public required string Handle { get; init; }
+    public string Handle { get; init; } = string.Empty;
 
     public string DisplayName { get; init; } = string.Empty;
 
