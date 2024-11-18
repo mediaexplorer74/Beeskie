@@ -11,7 +11,7 @@ pool:
   vmImage: 'windows-2022'
 
 variables:
-  - group: beeski-variables
+  - group: beeskie-variables
   - name: solution
     value: '**/*.sln'
   - name: buildPlatform
@@ -28,7 +28,7 @@ steps:
     targetType: 'inline'
     script: |
       [xml]$xmlDoc = Get-Content $(Build.SourcesDirectory)\src\BlueskyClient.Uwp\Package.appxmanifest
-      $xmlDoc.Package.Identity.Name="43891JeniusApps.Beeskie"
+      $xmlDoc.Package.Identity.Name="$(BeeskieIdentityName)"
       $xmlDoc.Save('$(Build.SourcesDirectory)\src\BlueskyClient.Uwp\Package.appxmanifest')
     failOnStderr: true
 
