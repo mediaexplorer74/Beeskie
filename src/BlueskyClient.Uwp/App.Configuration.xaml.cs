@@ -109,6 +109,7 @@ partial class App
     [Singleton(typeof(ProfileService), typeof(IProfileService))]
     [Singleton(typeof(PostSubmissionService), typeof(IPostSubmissionService))]
     [Singleton(typeof(DialogService), typeof(IDialogService))]
+    [Singleton(typeof(AppSettings), typeof(IAppSettings))]
     [Transient(typeof(HomePageViewModel))]
     [Transient(typeof(NotificationsPageViewModel))]
     [Transient(typeof(NewPostViewModel))]

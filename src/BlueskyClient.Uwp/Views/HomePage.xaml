@@ -102,7 +102,7 @@
                                     TextWrapping="WrapWholeWords" />
 
                                 <controls:PostEmbeds
-                                    Grid.Row="2" 
+                                    Grid.Row="2"
                                     Margin="0,12,0,0"
                                     Embed="{x:Bind PostEmbed}"
                                     Visibility="{x:Bind ex:UIExtensions.CollapsedIfNull(PostEmbed)}" />

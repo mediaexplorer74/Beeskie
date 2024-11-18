@@ -134,6 +134,7 @@
     <Compile Include="Controls\NotificationTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Tools\AppSettings.cs" />
     <Compile Include="Tools\SecureCredentialStorage.cs" />
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -277,6 +278,11 @@
       <Project>{1ef2e316-2ad5-434f-b6bb-5cfa8013b874}</Project>
       <Name>BlueskyClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="appsettings.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
