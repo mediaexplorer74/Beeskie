@@ -1,7 +1,10 @@
 ﻿using Bluesky.NET.ApiClients;
 using Bluesky.NET.Constants;
 using Bluesky.NET.Models;
+using BlueskyClient.Constants;
 using BlueskyClient.ViewModels;
+using JeniusApps.Common.Telemetry;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,13 +14,16 @@ public class NotificationsService : INotificationsService
 {
     private readonly IBlueskyApiClient _blueskyApiClient;
     private readonly IAuthenticationService _authenticationService;
+    private readonly ITelemetry _telemetry;
 
     public NotificationsService(
         IBlueskyApiClient blueskyApiClient,
-        IAuthenticationService authenticationService)
+        IAuthenticationService authenticationService,
+        ITelemetry telemetry)
     {
         _blueskyApiClient = blueskyApiClient;
         _authenticationService = authenticationService;
+        _telemetry = telemetry;
     }
 
     public async Task<IReadOnlyList<Notification>> GetNotificationsAsync()
@@ -28,7 +34,21 @@ public class NotificationsService : INotificationsService
             return [];
         }
 
-        return await _blueskyApiClient.GetNotificationsAsync(token);
+        try
+        {
+            return await _blueskyApiClient.GetNotificationsAsync(token);
+        }
+        catch (Exception e)
+        {
+            var dict = new Dictionary<string, string>
+            {
+                { "method", "GetNotificationsAsync" },
+                { "message", e.Message },
+            };
+            _telemetry.TrackError(e, dict);
+            _telemetry.TrackEvent(TelemetryConstants.ApiError, dict);
+            return [];
+        }
     }
 
     public async Task HydrateAsync(NotificationViewModel notification)
@@ -42,7 +62,25 @@ public class NotificationsService : INotificationsService
         if (notification.Reason is ReasonConstants.Like or ReasonConstants.Repost &&
             notification.Notification.ReasonSubject is string { Length: > 0 } subjectUri)
         {
-            var subjectPosts = await _blueskyApiClient.GetPostsAsync(token, [subjectUri]);
+            IReadOnlyList<FeedPost> subjectPosts;
+
+            try
+            {
+                subjectPosts = await _blueskyApiClient.GetPostsAsync(token, [subjectUri]);
+            }
+            catch (Exception e)
+            {
+                var dict = new Dictionary<string, string>
+                {
+                    { "method", "GetPostsAsync" },
+                    { "message", e.Message },
+                };
+                _telemetry.TrackError(e, dict);
+                _telemetry.TrackEvent(TelemetryConstants.ApiError, dict);
+
+                subjectPosts = [];
+            }
+
             notification.SubjectPost = subjectPosts.Count > 0
                 ? subjectPosts[0]
                 : null;

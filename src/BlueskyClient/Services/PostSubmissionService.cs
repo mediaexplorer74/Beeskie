@@ -3,7 +3,9 @@ using Bluesky.NET.Constants;
 using Bluesky.NET.Models;
 using BlueskyClient.Constants;
 using JeniusApps.Common.Settings;
+using JeniusApps.Common.Telemetry;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.Services;
@@ -13,17 +15,20 @@ public class PostSubmissionService : IPostSubmissionService
     private readonly IBlueskyApiClient _blueskyApiClient;
     private readonly IUserSettings _userSettings;
     private readonly IAuthenticationService _authenticationService;
+    private readonly ITelemetry _telemetry;
 
     public event EventHandler<(SubmissionRecord, CreateRecordResponse)>? RecordCreated;
 
     public PostSubmissionService(
         IBlueskyApiClient blueskyApiClient,
         IUserSettings userSettings,
-        IAuthenticationService authenticationService)
+        IAuthenticationService authenticationService,
+        ITelemetry telemetry)
     {
         _blueskyApiClient = blueskyApiClient;
         _userSettings = userSettings;
         _authenticationService = authenticationService;
+        _telemetry = telemetry;
     }
 
     /// <inheritdoc/>
@@ -67,7 +72,24 @@ public class PostSubmissionService : IPostSubmissionService
             }
         };
 
-        CreateRecordResponse? result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, RecordType.Reply);
+        CreateRecordResponse? result = null;
+
+        try
+        {
+            result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, RecordType.Reply);
+        }
+        catch (Exception e)
+        {
+            var dict = new Dictionary<string, string>
+            {
+                { "method", "SubmitPostAsync" },
+                { "recordType", "Reply" },
+                { "message", e.Message },
+            };
+            _telemetry.TrackError(e, dict);
+            _telemetry.TrackEvent(TelemetryConstants.ApiError, dict);
+        }
+
         if (result is not null)
         {
             RecordCreated?.Invoke(this, (newRecord, result));
@@ -104,7 +126,24 @@ public class PostSubmissionService : IPostSubmissionService
             }
         };
 
-        CreateRecordResponse? result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, recordType);
+        CreateRecordResponse? result = null;
+
+        try
+        {
+            result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, recordType);
+        }
+        catch (Exception e)
+        {
+            var dict = new Dictionary<string, string>
+            {
+                { "method", "SubmitPostAsync" },
+                { "recordType", recordType.ToString() },
+                { "message", e.Message },
+            };
+            _telemetry.TrackError(e, dict);
+            _telemetry.TrackEvent(TelemetryConstants.ApiError, dict);
+        }
+
         if (result is not null)
         {
             RecordCreated?.Invoke(this, (newRecord, result));
@@ -137,7 +176,24 @@ public class PostSubmissionService : IPostSubmissionService
             Text = text
         };
 
-        CreateRecordResponse? result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, RecordType.NewPost);
+        CreateRecordResponse? result = null;
+
+        try
+        {
+            result = await _blueskyApiClient.SubmitPostAsync(token, handle, newRecord, RecordType.NewPost);
+        }
+        catch (Exception e)
+        {
+            var dict = new Dictionary<string, string>
+            {
+                { "method", "SubmitPostAsync" },
+                { "recordType", "NewPost" },
+                { "message", e.Message },
+            };
+            _telemetry.TrackError(e, dict);
+            _telemetry.TrackEvent(TelemetryConstants.ApiError, dict);
+        }
+
         if (result is not null)
         {
             RecordCreated?.Invoke(this, (newRecord, result));

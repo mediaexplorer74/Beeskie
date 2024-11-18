@@ -1,6 +1,7 @@
 ﻿using BlueskyClient.Constants;
 using BlueskyClient.Views;
 using JeniusApps.Common.Settings;
+using JeniusApps.Common.Telemetry;
 using JeniusApps.Common.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
@@ -73,6 +74,7 @@ sealed partial class App : Application
 
             Window.Current.Activate();
             ConfigureUI();
+            Services.GetRequiredService<ITelemetry>().TrackEvent(TelemetryConstants.Launched);
         }
 
         return Task.CompletedTask;

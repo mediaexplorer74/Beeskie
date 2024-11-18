@@ -38,6 +38,7 @@ partial class BlueskyApiClient
         catch (Exception e)
         {
             Debug.WriteLine(e);
+            throw;
         }
 
         return [];
@@ -80,6 +81,7 @@ partial class BlueskyApiClient
         catch (Exception e)
         {
             Debug.WriteLine(e);
+            throw;
         }
 
         return null;

@@ -32,6 +32,7 @@ partial class BlueskyApiClient
         catch (Exception e)
         {
             Debug.WriteLine(e);
+            throw;
         }
 
         return [];
