@@ -11,10 +11,52 @@
 
     <Grid CornerRadius="12">
         <Image
+            x:Name="SingleEmbedImage"
             MaxWidth="{x:Bind SingleImageMaxWidth}"
             HorizontalAlignment="Left"
+            x:Load="{x:Bind IsSingleImageEmbed}"
             Source="{x:Bind SingleImage.Thumb}"
-            Stretch="UniformToFill"
-            Visibility="{x:Bind IsSingleImageEmbed}" />
+            Stretch="UniformToFill" />
+
+        <Button
+            Padding="0"
+            Click="OnExternalUrlClicked"
+            Visibility="{x:Bind IsExternalUrl}">
+            <StackPanel>
+                <Image
+                    MaxHeight="300"
+                    Source="{x:Bind ExternalThumb}"
+                    Stretch="UniformToFill" />
+                <TextBlock
+                    Margin="8,8,8,0"
+                    FontWeight="SemiBold"
+                    Text="{x:Bind Embed.External.Title}"
+                    TextTrimming="CharacterEllipsis" />
+                <TextBlock
+                    Margin="8,4,8,0"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    MaxLines="3"
+                    Text="{x:Bind Embed.External.Description}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="WrapWholeWords" />
+                <Rectangle
+                    Height="1"
+                    Margin="0,8,0,0"
+                    HorizontalAlignment="Stretch"
+                    Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
+                <StackPanel Margin="8" Orientation="Horizontal">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="12"
+                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                        Glyph="&#xE128;" />
+                    <TextBlock
+                        Margin="4,0,0,0"
+                        FontSize="12"
+                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                        Text="{x:Bind Embed.External.RootUri}" />
+                </StackPanel>
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

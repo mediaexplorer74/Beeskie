@@ -1,18 +1,8 @@
 ﻿using Bluesky.NET.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 #nullable enable
 
@@ -45,6 +35,14 @@ public sealed partial class PostEmbeds : UserControl
         set => SetValue(EmbedProperty, value);
     }
 
+    private bool IsExternalUrl => Embed?.External?.Uri is not null;
+
+    private string ExternalThumb => Embed?.External?.Thumb ?? "http://localhost";
+
+    private string ExternalTitle => Embed?.External?.Title ?? string.Empty;
+
+    private string ExternalDescription => Embed?.External?.Description ?? string.Empty;
+
     private bool IsSingleImageEmbed => Embed?.Images?.Length == 1;
 
     private ImageEmbed? SingleImage => Embed?.Images is [ImageEmbed image, ..]
@@ -61,5 +59,14 @@ public sealed partial class PostEmbeds : UserControl
     private void UpdateBindings()
     {
         this.Bindings.Update();
+    }
+
+    private async void OnExternalUrlClicked(object sender, RoutedEventArgs e)
+    {
+        if (Embed?.External?.Uri is string { Length: > 0 } uri &&
+            Uri.TryCreate(uri, UriKind.Absolute, out Uri result))
+        {
+            await Launcher.LaunchUriAsync(result);
+        }
     }
 }

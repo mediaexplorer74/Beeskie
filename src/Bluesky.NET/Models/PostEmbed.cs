@@ -8,4 +8,6 @@ public class PostEmbed
     public required string Type { get; init; }
 
     public ImageEmbed[]? Images { get; init; }
+
+    public ExternalEmbed? External { get; init; }
 }
