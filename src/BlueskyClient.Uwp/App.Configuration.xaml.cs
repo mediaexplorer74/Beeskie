@@ -12,11 +12,16 @@ using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Extensions.DependencyInjection;
 using JeniusApps.Common.Settings;
 using JeniusApps.Common.Settings.Uwp;
+using JeniusApps.Common.Telemetry;
 using JeniusApps.Common.Tools;
 using JeniusApps.Common.Tools.Uwp;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Uwp.Helpers;
 using System;
 using System.Collections.Generic;
+using Windows.Storage;
+using Windows.System.Profile;
 
 #nullable enable
 
@@ -51,6 +56,13 @@ partial class App
     {
         ServiceCollection collection = new();
         ConfigureServices(collection);
+
+        collection.AddSingleton<ITelemetry, AppInsightsTelemetry>(s =>
+        {
+            string apiKey = s.GetRequiredService<IAppSettings>().TelemetryApiKey;
+            var context = GetContext();
+            return new AppInsightsTelemetry(apiKey, context: context);
+        });
 
         collection.AddKeyedSingleton<INavigator, Navigator>(NavigationConstants.RootNavigatorKey, (serviceProvider, key) =>
         {
@@ -114,4 +126,32 @@ partial class App
     [Transient(typeof(NotificationsPageViewModel))]
     [Transient(typeof(NewPostViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
+
+    private static TelemetryContext? GetContext()
+    {
+        var context = new TelemetryContext();
+        context.Session.Id = Guid.NewGuid().ToString();
+        context.Component.Version = SystemInformation.Instance.ApplicationVersion.ToFormattedString();
+        context.GlobalProperties.Add("isFirstRun", SystemInformation.Instance.IsFirstRun.ToString());
+
+        if (ApplicationData.Current.LocalSettings.Values[UserSettingsConstants.LocalUserIdKey] is string { Length: > 0 } id)
+        {
+            context.User.Id = id;
+        }
+        else
+        {
+            string userId = Guid.NewGuid().ToString();
+            ApplicationData.Current.LocalSettings.Values[UserSettingsConstants.LocalUserIdKey] = userId;
+            context.User.Id = userId;
+        }
+
+        // Ref: https://learn.microsoft.com/en-us/answers/questions/1563897/uwp-and-winui-how-to-check-my-os-version-through-c
+        ulong version = ulong.Parse(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
+        ulong major = (version & 0xFFFF000000000000L) >> 48;
+        ulong minor = (version & 0x0000FFFF00000000L) >> 32;
+        ulong build = (version & 0x00000000FFFF0000L) >> 16;
+        context.Device.OperatingSystem = $"Windows {major}.{minor}.{build}";
+
+        return context;
+    }
 }

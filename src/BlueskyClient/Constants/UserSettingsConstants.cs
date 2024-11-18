@@ -10,6 +10,11 @@ public sealed class UserSettingsConstants
     public const string LastUsedUserHandleKey = "LastUsedUserHandle";
 
     /// <summary>
+    /// Anonymous ID referencing the local user, for telemetry purposes.
+    /// </summary>
+    public const string LocalUserIdKey = "LocalUserId";
+
+    /// <summary>
     ///  Settings defaults.
     /// </summary>
     public static IReadOnlyDictionary<string, object> Defaults { get; } = new Dictionary<string, object>()

@@ -1,7 +1,9 @@
 ﻿using Bluesky.NET.ApiClients;
 using Bluesky.NET.Constants;
 using Bluesky.NET.Models;
+using BlueskyClient.Constants;
 using BlueskyClient.Services;
+using JeniusApps.Common.Telemetry;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -13,14 +15,17 @@ public class ProfileCache : ICache<Author>
 {
     private readonly IBlueskyApiClient _apiClient;
     private readonly IAuthenticationService _authenticationService;
+    private readonly ITelemetry _telemetry;
     private readonly ConcurrentDictionary<string, CachedItem<Author>> _cache = new();
 
     public ProfileCache(
         IBlueskyApiClient blueskyApiClient,
-        IAuthenticationService authenticationService)
+        IAuthenticationService authenticationService,
+        ITelemetry telemetry)
     {
         _apiClient = blueskyApiClient;
         _authenticationService = authenticationService;
+        _telemetry = telemetry;
     }
 
     public async Task<Author?> GetItemAsync(string handle)
@@ -40,7 +45,23 @@ public class ProfileCache : ICache<Author>
             return null;
         }
 
-        Author? author = await _apiClient.GetAuthorAsync(accessToken, handle);
+        Author? author = null;
+
+        try
+        {
+            author = await _apiClient.GetAuthorAsync(accessToken, handle);
+        }
+        catch (Exception e)
+        {
+            var dict = new Dictionary<string, string>
+            {
+                { "method", "GetAuthorAsync" },
+                { "message", e.Message },
+            };
+            _telemetry.TrackError(e, dict);
+            _telemetry.TrackEvent(TelemetryConstants.ApiError, dict);
+        }
+
         if (author is null)
         {
             return null;
