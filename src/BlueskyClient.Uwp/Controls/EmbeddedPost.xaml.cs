@@ -43,4 +43,6 @@ public sealed partial class EmbeddedPost : UserControl
     public string PostText => Record?.Value?.Text ?? string.Empty;
 
     public PostEmbed? PostEmbed => Record?.Embeds is [PostEmbed first, ..] ? first : null;
+
+    public bool PostEmbedVisible => PostEmbed is not null;
 }

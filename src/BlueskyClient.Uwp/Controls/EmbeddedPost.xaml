@@ -54,7 +54,7 @@
                 x:Name="PostEmbedsControl"
                 Grid.Row="2"
                 Margin="0,12,0,0"
-                x:Load="{x:Bind ex:UIExtensions.CollapsedIfNull(PostEmbed)}"
+                x:Load="{x:Bind PostEmbedVisible}"
                 Embed="{x:Bind PostEmbed}" />
         </Grid>
     </Border>
