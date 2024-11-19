@@ -6,9 +6,9 @@ namespace Bluesky.NET.Models;
 
 public class CreateRecordResponse
 {
-    public required string Uri { get; init; }
+    public string Uri { get; init; } = string.Empty;
 
-    public required string Cid { get; init; }
+    public string Cid { get; init; } = string.Empty;
 
     public string? ValidationStatus { get; init; }
 }

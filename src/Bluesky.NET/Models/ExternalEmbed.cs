@@ -7,7 +7,7 @@ namespace Bluesky.NET.Models;
 
 public class ExternalEmbed
 {
-    public required string Uri { get; init; }
+    public string Uri { get; init; } = string.Empty;
 
     public string Title { get; init; } = string.Empty;
 

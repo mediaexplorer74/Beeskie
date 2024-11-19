@@ -2,9 +2,9 @@
 
 public class ImageEmbed
 {
-    public required string Thumb { get; init; }
+    public string Thumb { get; init; } = string.Empty;
 
-    public required string Fullsize { get; init; }
+    public string Fullsize { get; init; } = string.Empty;
 
     public string Alt { get; init; } = string.Empty;
 

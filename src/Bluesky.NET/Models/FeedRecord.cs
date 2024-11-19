@@ -6,7 +6,7 @@ namespace Bluesky.NET.Models;
 public class FeedRecord
 {
     [JsonPropertyName("$type")]
-    public required string Type { get; init; }
+    public string Type { get; init; } = string.Empty;
 
     public DateTime CreatedAt { get; init; }
 

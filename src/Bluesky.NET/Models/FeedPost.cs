@@ -6,7 +6,7 @@ namespace Bluesky.NET.Models;
 
 public class FeedPost
 {
-    public required string Uri { get; init; }
+    public string Uri { get; init; } = string.Empty;
 
     public string Cid { get; init; } = string.Empty;
 

@@ -4,15 +4,15 @@
 
 public class Notification
 {
-    public required string Cid { get; init; }
+    public string Cid { get; init; } = string.Empty;
 
-    public required Author Author { get; init; }
+    public Author? Author { get; init; }
 
-    public required string Reason { get; init; }
+    public string Reason { get; init; } = string.Empty;
 
-    public required bool IsRead { get; init; }
+    public bool IsRead { get; init; }
 
     public string? ReasonSubject { get; init; }
 
-    public required FeedRecord Record { get; init; }
+    public FeedRecord? Record { get; init; }
 }

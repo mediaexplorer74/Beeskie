@@ -5,7 +5,7 @@ namespace Bluesky.NET.Models;
 public class FeedPostReason
 {
     [JsonPropertyName("$type")]
-    public required string Type { get; init; }
+    public string Type { get; init; } = string.Empty;
 
     public Author? By { get; init; }
 }

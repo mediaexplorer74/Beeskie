@@ -4,7 +4,7 @@
 
 public class FeedItem
 {
-    public required FeedPost Post { get; init; }
+    public FeedPost Post { get; init; } = new();
 
     public FeedPostReason? Reason { get; init; }
 

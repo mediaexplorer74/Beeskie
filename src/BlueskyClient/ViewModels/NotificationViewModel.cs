@@ -2,6 +2,7 @@
 using Bluesky.NET.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BlueskyClient.ViewModels;
 
@@ -15,20 +16,31 @@ public partial class NotificationViewModel : ObservableObject
 
     public Notification Notification { get; }
 
-    public bool AvatarValid => Uri.IsWellFormedUriString(Notification.Author.Avatar, UriKind.Absolute);
+    public bool AvatarValid => IsAvatarValid(Notification.Author);
 
-    public string SafeAvatarUrl => AvatarValid ? Notification.Author.Avatar : "http://local";
+    public string SafeAvatarUrl => IsAvatarValid(Notification.Author) ? Notification.Author.Avatar : "http://local";
 
     public string Reason => Notification.Reason;
 
-    public string CaptionString => Reason switch
+    public string CaptionString
     {
-        ReasonConstants.Follow => $"{Notification.Author.DisplayName} followed you",
-        ReasonConstants.Like => $"{Notification.Author.DisplayName} liked your post",
-        ReasonConstants.Repost => $"{Notification.Author.DisplayName} reposted your post",
-        ReasonConstants.Reply => "Posted a reply",
-        _ => string.Empty
-    };
+        get
+        {
+            if (IsAvatarValid(Notification.Author))
+            {
+                return Reason switch
+                {
+                    ReasonConstants.Follow => $"{Notification.Author.DisplayName} followed you",
+                    ReasonConstants.Like => $"{Notification.Author.DisplayName} liked your post",
+                    ReasonConstants.Repost => $"{Notification.Author.DisplayName} reposted your post",
+                    ReasonConstants.Reply => "Posted a reply",
+                    _ => string.Empty
+                };
+            }
+
+            return string.Empty;
+        }
+    }
 
     public bool IsLike => Reason is ReasonConstants.Like;
 
@@ -39,4 +51,8 @@ public partial class NotificationViewModel : ObservableObject
     private FeedPost? _subjectPost;
 
     public string SubjectText => SubjectPost?.Record?.Text ?? string.Empty;
+
+    private bool IsAvatarValid([NotNullWhen(true)] Author? author) =>
+        author?.Avatar is string avatarUrl &&
+        Uri.IsWellFormedUriString(avatarUrl, UriKind.Absolute);
 }
