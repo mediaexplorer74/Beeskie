@@ -1,4 +1,6 @@
 ﻿using Bluesky.NET.Models;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BlueskyClient.Extensions;
 
@@ -16,4 +18,12 @@ public static class PostExtensions
             ? string.Empty
             : count.ToString();
     }
+
+    public static string SafeAvatarUrl([NotNullWhen(true)] this Author? author) => author?.Avatar is { Length: > 0 } avatar && Uri.IsWellFormedUriString(avatar, UriKind.Absolute)
+        ? avatar
+        : "http://localhost";
+
+    public static string SafeAvatarUrl([NotNullWhen(true)] this FeedPost? post) => SafeAvatarUrl(post?.Author);
+
+    public static string SafeAvatarUrl([NotNullWhen(true)] this FeedRecord? record) => SafeAvatarUrl(record?.Author);
 }

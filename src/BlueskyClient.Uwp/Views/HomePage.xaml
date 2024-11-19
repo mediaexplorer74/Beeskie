@@ -86,6 +86,7 @@
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Orientation="Horizontal">
@@ -107,7 +108,14 @@
                                     Embed="{x:Bind PostEmbed}"
                                     Visibility="{x:Bind ex:UIExtensions.CollapsedIfNull(PostEmbed)}" />
 
-                                <Grid Grid.Row="3" Margin="-12,8,0,0">
+                                <controls:EmbeddedPost
+                                    Grid.Row="3"
+                                    HorizontalAlignment="Stretch"
+                                    Record="{x:Bind QuotedPost}"
+                                    Visibility="{x:Bind ex:UIExtensions.CollapsedIfNull(QuotedPost)}" />
+
+
+                                <Grid Grid.Row="4" Margin="-12,8,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />

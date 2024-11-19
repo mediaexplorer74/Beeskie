@@ -122,6 +122,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EmbeddedPost.xaml.cs">
+      <DependentUpon>EmbeddedPost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PostEmbeds.xaml.cs">
       <DependentUpon>PostEmbeds.xaml</DependentUpon>
     </Compile>
@@ -240,6 +243,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\EmbeddedPost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PostEmbeds.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

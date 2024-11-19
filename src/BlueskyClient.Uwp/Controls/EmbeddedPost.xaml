@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="BlueskyClient.Controls.EmbeddedPost"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="using:JeniusApps.Common.UI.Uwp"
+    xmlns:local="using:BlueskyClient.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+
+    <Button
+        Padding="12"
+        HorizontalAlignment="Stretch"
+        HorizontalContentAlignment="Left">
+        <Grid Visibility="{x:Bind ex:UIExtensions.CollapsedIfNull(Record), Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <winui:PersonPicture
+                    Width="20"
+                    PreferSmallImage="True"
+                    ProfilePicture="{x:Bind Avatar}" />
+
+                <TextBlock
+                    Margin="6,0,0,0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind DisplayName}" />
+
+                <TextBlock
+                    Margin="4,0,0,0"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                    Text="{x:Bind Handle}" />
+            </StackPanel>
+
+            <TextBlock
+                Grid.Row="1"
+                Margin="0,4,0,0"
+                MaxLines="3"
+                Text="{x:Bind PostText}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="WrapWholeWords" />
+        </Grid>
+    </Button>
+</UserControl>

@@ -10,4 +10,11 @@ public class PostEmbed
     public ImageEmbed[]? Images { get; init; }
 
     public ExternalEmbed? External { get; init; }
+
+    public RecordEmbed? Record { get; init; }
+}
+
+public class RecordEmbed
+{
+    public FeedRecord? Record { get; init; }
 }

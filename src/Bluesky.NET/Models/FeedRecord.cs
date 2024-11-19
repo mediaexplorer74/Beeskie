@@ -13,4 +13,10 @@ public class FeedRecord
     public string Text { get; init; } = string.Empty;
 
     public ReplyRecord? Reply { get; init; }
+
+    public PostEmbed[]? Embeds { get; init; }
+
+    public Author? Author { get; init; }
+
+    public FeedRecord? Value { get; init; }
 }
