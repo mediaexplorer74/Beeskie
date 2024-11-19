@@ -1,19 +1,7 @@
 ﻿using Bluesky.NET.Models;
 using BlueskyClient.Extensions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 #nullable enable
 
@@ -53,4 +41,6 @@ public sealed partial class EmbeddedPost : UserControl
     public string DisplayName => Record?.Author?.DisplayName ?? string.Empty;
 
     public string PostText => Record?.Value?.Text ?? string.Empty;
+
+    public PostEmbed? PostEmbed => Record?.Embeds is [PostEmbed first, ..] ? first : null;
 }

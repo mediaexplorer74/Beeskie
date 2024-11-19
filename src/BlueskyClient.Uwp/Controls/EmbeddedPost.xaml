@@ -11,11 +11,13 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Button
-        Padding="12"
-        HorizontalAlignment="Stretch"
-        HorizontalContentAlignment="Left">
-        <Grid Visibility="{x:Bind ex:UIExtensions.CollapsedIfNull(Record), Mode=OneWay}">
+    <Border
+        Padding="16"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="12">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -47,6 +49,13 @@
                 Text="{x:Bind PostText}"
                 TextTrimming="CharacterEllipsis"
                 TextWrapping="WrapWholeWords" />
+
+            <local:PostEmbeds
+                x:Name="PostEmbedsControl"
+                Grid.Row="2"
+                Margin="0,12,0,0"
+                x:Load="{x:Bind ex:UIExtensions.CollapsedIfNull(PostEmbed)}"
+                Embed="{x:Bind PostEmbed}" />
         </Grid>
-    </Button>
+    </Border>
 </UserControl>
