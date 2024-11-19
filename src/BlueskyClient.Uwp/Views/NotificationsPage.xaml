@@ -67,9 +67,9 @@
                         Margin="0,4,0,0"
                         Orientation="Horizontal">
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="{StaticResource FluentUIGlyphs}"
                             FontSize="12"
-                            Glyph="&#xE97A;" />
+                            Glyph="{StaticResource GlyphReply}" />
                         <TextBlock
                             Margin="4,0,0,0"
                             FontSize="12"
@@ -107,10 +107,10 @@
                     Margin="0,4,0,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    FontFamily="Segoe Fluent Icons"
+                    FontFamily="{StaticResource FluentUIGlyphs}"
                     FontSize="24"
                     Foreground="{ThemeResource AccentTextFillColorTertiaryBrush}"
-                    Glyph="&#xE8FA;" />
+                    Glyph="{StaticResource GlyphAddUser}" />
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -153,20 +153,20 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     x:Load="{x:Bind IsLike}"
-                    FontFamily="Segoe Fluent Icons"
+                    FontFamily="{StaticResource FluentUIGlyphs}"
                     FontSize="24"
                     Foreground="Pink"
-                    Glyph="&#xEB52;" />
+                    Glyph="{StaticResource GlyphLikeFilled}" />
                 <FontIcon
                     x:Name="RepostIcon"
                     Margin="0,4,0,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     x:Load="{x:Bind IsRepost}"
-                    FontFamily="Segoe Fluent Icons"
+                    FontFamily="{StaticResource FluentUIGlyphs}"
                     FontSize="24"
                     Foreground="LightGreen"
-                    Glyph="&#xE8EE;" />
+                    Glyph="{StaticResource GlyphRepost}" />
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>

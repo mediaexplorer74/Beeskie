@@ -19,6 +19,18 @@
                             <StaticResource x:Key="DefaultPageBackgroundBrush" ResourceKey="SystemColorWindowColor" />
                         </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
+
+                    <FontFamily x:Key="FluentUIGlyphs">/Assets/fluentui.ttf#Segoe Fluent Icons</FontFamily>
+                    <x:String x:Key="GlyphEarth">&#xE128;</x:String>
+                    <x:String x:Key="GlyphRepost">&#xE8EE;</x:String>
+                    <x:String x:Key="GlyphMessage">&#xE8BD;</x:String>
+                    <x:String x:Key="GlyphLike">&#xEB51;</x:String>
+                    <x:String x:Key="GlyphLikeFilled">&#xEB52;</x:String>
+                    <x:String x:Key="GlyphThreeDots">&#xE712;</x:String>
+                    <x:String x:Key="GlyphNewPost">&#xE929;</x:String>
+                    <x:String x:Key="GlyphReply">&#xE97A;</x:String>
+                    <x:String x:Key="GlyphAddUser">&#xE8FA;</x:String>
+
                 </ResourceDictionary>
             </winui:XamlControlsResources.MergedDictionaries>
         </winui:XamlControlsResources>

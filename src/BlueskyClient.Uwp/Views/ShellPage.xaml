@@ -88,7 +88,7 @@
                                 Style="{StaticResource LeftNavButtonStyle}"
                                 Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(IsSelected), Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="{x:Bind Glyph}" />
+                                    <FontIcon FontFamily="{StaticResource FluentUIGlyphs}" Glyph="{x:Bind Glyph}" />
                                     <TextBlock Margin="12,0,0,0" Text="{x:Bind Text}" />
                                 </StackPanel>
                             </Button>
@@ -97,7 +97,7 @@
                                 Style="{StaticResource LeftNavAccentButtonStyle}"
                                 Visibility="{x:Bind IsSelected, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="{x:Bind Glyph}" />
+                                    <FontIcon FontFamily="{StaticResource FluentUIGlyphs}" Glyph="{x:Bind Glyph}" />
                                     <TextBlock Margin="12,0,0,0" Text="{x:Bind Text}" />
                                 </StackPanel>
                             </Button>
@@ -116,8 +116,8 @@
                 <StackPanel Orientation="Horizontal">
                     <FontIcon
                         VerticalAlignment="Center"
-                        FontFamily="Segoe Fluent Icons"
-                        Glyph="&#xE929;" />
+                        FontFamily="{StaticResource FluentUIGlyphs}"
+                        Glyph="{StaticResource GlyphNewPost}" />
                     <TextBlock
                         Margin="12,0,12,0"
                         VerticalAlignment="Center"

@@ -13,7 +13,7 @@
     <Page.Resources>
         <Style x:Key="PostButtonIconStyle" TargetType="FontIcon">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="FontFamily" Value="Segoe Fluent Icons" />
+            <Setter Property="FontFamily" Value="{StaticResource FluentUIGlyphs}" />
             <Setter Property="Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
         </Style>
         <Style x:Key="PostButtonIconTextStyle" TargetType="TextBlock">
@@ -56,10 +56,10 @@
                             <FontIcon
                                 Margin="0,0,-8,0"
                                 HorizontalAlignment="Right"
-                                FontFamily="Segoe Fluent Icons"
+                                FontFamily="{StaticResource FluentUIGlyphs}"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                Glyph="&#xE8EE;" />
+                                Glyph="{StaticResource GlyphRepost}" />
 
                             <TextBlock
                                 Grid.Column="1"
@@ -117,7 +117,7 @@
 
                                     <HyperlinkButton Command="{x:Bind ReplyCommand}" IsEnabled="{x:Bind ex:UIExtensions.Not(ReplyCommand.IsRunning), Mode=OneWay}">
                                         <StackPanel Orientation="Horizontal">
-                                            <FontIcon Glyph="&#xE8BD;" Style="{StaticResource PostButtonIconStyle}" />
+                                            <FontIcon Glyph="{StaticResource GlyphMessage}" Style="{StaticResource PostButtonIconStyle}" />
                                             <TextBlock
                                                 Style="{StaticResource PostButtonIconTextStyle}"
                                                 Text="{x:Bind ReplyCount, Mode=OneWay}"
@@ -131,12 +131,12 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Grid>
                                                 <FontIcon
-                                                    Glyph="&#xE8EE;"
+                                                    Glyph="{StaticResource GlyphRepost}"
                                                     Style="{StaticResource PostButtonIconStyle}"
                                                     Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(IsReposted), Mode=OneWay}" />
                                                 <FontIcon
                                                     Foreground="LightGreen"
-                                                    Glyph="&#xE8EE;"
+                                                    Glyph="{StaticResource GlyphRepost}"
                                                     Style="{StaticResource PostButtonIconStyle}"
                                                     Visibility="{x:Bind IsReposted, Mode=OneWay}" />
                                             </Grid>
@@ -153,12 +153,12 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Grid>
                                                 <FontIcon
-                                                    Glyph="&#xEB51;"
+                                                    Glyph="{StaticResource GlyphLike}"
                                                     Style="{StaticResource PostButtonIconStyle}"
                                                     Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(IsLiked), Mode=OneWay}" />
                                                 <FontIcon
                                                     Foreground="LightPink"
-                                                    Glyph="&#xEB52;"
+                                                    Glyph="{StaticResource GlyphLikeFilled}"
                                                     Style="{StaticResource PostButtonIconStyle}"
                                                     Visibility="{x:Bind IsLiked, Mode=OneWay}" />
                                             </Grid>
@@ -169,7 +169,7 @@
                                         </StackPanel>
                                     </HyperlinkButton>
                                     <HyperlinkButton Grid.Column="3">
-                                        <FontIcon Glyph="&#xE712;" Style="{StaticResource PostButtonIconStyle}" />
+                                        <FontIcon Glyph="{StaticResource GlyphThreeDots}" Style="{StaticResource PostButtonIconStyle}" />
                                     </HyperlinkButton>
                                 </Grid>
                             </Grid>

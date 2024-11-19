@@ -46,10 +46,10 @@
                     Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
                 <StackPanel Margin="8" Orientation="Horizontal">
                     <FontIcon
-                        FontFamily="Segoe Fluent Icons"
+                        FontFamily="{StaticResource FluentUIGlyphs}"
                         FontSize="12"
                         Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                        Glyph="&#xE128;" />
+                        Glyph="{StaticResource GlyphEarth}" />
                     <TextBlock
                         Margin="4,0,0,0"
                         FontSize="12"
