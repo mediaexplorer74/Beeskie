@@ -42,7 +42,23 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Margin="0,40,0,0">
+        <StackPanel
+            Margin="12,12,0,0"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Image
+                Width="16"
+                Height="16"
+                Source="ms-appx:///Assets/AppLogo100.png" />
+            <TextBlock
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="10"
+                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                Text="{x:Bind DisplayTitle}" />
+        </StackPanel>
+
+        <Grid Margin="0,48,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -51,7 +67,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <Grid Margin="20,0">
+            <Grid Margin="12,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
@@ -76,7 +92,7 @@
 
             <ItemsControl
                 Grid.Row="1"
-                Margin="0,24,0,0"
+                Margin="0,20,0,0"
                 ItemsSource="{x:Bind ViewModel.MenuItems}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="models:MenuItem">
@@ -124,6 +140,15 @@
                         Text="New Post" />
                 </StackPanel>
             </Button>
+
+            <HyperlinkButton
+                Grid.Row="4"
+                Margin="8,0,8,8"
+                HorizontalAlignment="Stretch"
+                Content="Send feedback"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                NavigateUri="mailto:beeskie_app@outlook.com" />
         </Grid>
 
         <Rectangle

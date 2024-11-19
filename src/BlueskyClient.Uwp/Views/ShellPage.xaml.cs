@@ -2,6 +2,7 @@
 using BlueskyClient.ViewModels;
 using JeniusApps.Common.Tools;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -18,6 +19,8 @@ public sealed partial class ShellPage : Page
     }
 
     public ShellPageViewModel ViewModel { get; }
+
+    public string DisplayTitle => $"Beeskie {SystemInformation.Instance.ApplicationVersion.ToFormattedString().TrimEnd('0').TrimEnd('.')}";
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
