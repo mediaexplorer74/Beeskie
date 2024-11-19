@@ -19,9 +19,10 @@
             Stretch="UniformToFill" />
 
         <Button
+            x:Name="ExternalUrlButton"
             Padding="0"
-            Click="OnExternalUrlClicked"
-            Visibility="{x:Bind IsExternalUrl}">
+            x:Load="{x:Bind IsExternalUrl}"
+            Click="OnExternalUrlClicked">
             <StackPanel>
                 <Image
                     MaxHeight="300"
