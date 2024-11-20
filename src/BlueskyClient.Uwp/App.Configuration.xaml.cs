@@ -97,7 +97,8 @@ partial class App
                 serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey),
                 serviceProvider.GetRequiredService<IProfileService>(),
                 serviceProvider.GetRequiredService<IDialogService>(),
-                serviceProvider.GetRequiredService<IAuthenticationService>());
+                serviceProvider.GetRequiredService<IAuthenticationService>(),
+                serviceProvider.GetRequiredService<IImageViewerService>());
         });
 
         collection.AddSingleton<IUserSettings>(_ => new LocalSettings(UserSettingsConstants.Defaults));
@@ -122,6 +123,7 @@ partial class App
     [Singleton(typeof(PostSubmissionService), typeof(IPostSubmissionService))]
     [Singleton(typeof(DialogService), typeof(IDialogService))]
     [Singleton(typeof(AppSettings), typeof(IAppSettings))]
+    [Singleton(typeof(ImageViewerService), typeof(IImageViewerService))]
     [Transient(typeof(HomePageViewModel))]
     [Transient(typeof(NotificationsPageViewModel))]
     [Transient(typeof(NewPostViewModel))]

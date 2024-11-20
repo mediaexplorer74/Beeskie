@@ -1,5 +1,8 @@
 ﻿using Bluesky.NET.Models;
+using BlueskyClient.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,6 +13,8 @@ namespace BlueskyClient.Controls;
 
 public sealed partial class PostEmbeds : UserControl
 {
+    private readonly IImageViewerService _imageViewerService;
+
     public static readonly DependencyProperty EmbedProperty = DependencyProperty.Register(
         nameof(Embed),
         typeof(PostEmbed),
@@ -27,6 +32,7 @@ public sealed partial class PostEmbeds : UserControl
     public PostEmbeds()
     {
         this.InitializeComponent();
+        _imageViewerService = App.Services.GetRequiredService<IImageViewerService>();
     }
 
     public PostEmbed? Embed
@@ -45,6 +51,10 @@ public sealed partial class PostEmbeds : UserControl
 
     private bool IsSingleImageEmbed => Embed?.Images?.Length == 1;
 
+    private bool IsMultiImageEmbed => Embed?.Images?.Length > 1;
+
+    public IReadOnlyList<ImageEmbed> MultiImages => Embed?.Images ?? [];
+
     private ImageEmbed? SingleImage => Embed?.Images is [ImageEmbed image, ..]
         ? image
         : null;
@@ -53,8 +63,6 @@ public sealed partial class PostEmbeds : UserControl
         SingleImage?.AspectRatio is { Height: double height, Width: double width } && height > width
         ? 300
         : double.PositiveInfinity;
-
-    private bool IsMultiImageEmbed => Embed?.Images?.Length > 1;
 
     private void UpdateBindings()
     {
@@ -67,6 +75,39 @@ public sealed partial class PostEmbeds : UserControl
             Uri.TryCreate(uri, UriKind.Absolute, out Uri result))
         {
             await Launcher.LaunchUriAsync(result);
+        }
+    }
+
+    private void OnGridViewImageClicked(object sender, ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is not ImageEmbed imageClicked)
+        {
+            return;
+        }
+
+        var index = 0;
+
+        foreach (var image in MultiImages)
+        {
+            if (image == imageClicked)
+            {
+                break;
+            }
+
+            index++;
+        }
+
+        if (index < MultiImages.Count)
+        {
+            _imageViewerService.RequestImageViewer(MultiImages, launchIndex: index);
+        }
+    }
+
+    private void OnSingleImageClicked(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+    {
+        if (SingleImage is { } image)
+        {
+            _imageViewerService.RequestImageViewer([image]);
         }
     }
 }

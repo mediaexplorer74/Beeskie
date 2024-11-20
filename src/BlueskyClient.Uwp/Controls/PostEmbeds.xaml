@@ -5,18 +5,40 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BlueskyClient.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Bluesky.NET.Models"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Grid CornerRadius="12">
-        <Image
+    <Grid>
+        <Border
             x:Name="SingleEmbedImage"
-            MaxWidth="{x:Bind SingleImageMaxWidth}"
             HorizontalAlignment="Left"
             x:Load="{x:Bind IsSingleImageEmbed}"
-            Source="{x:Bind SingleImage.Thumb}"
-            Stretch="UniformToFill" />
+            CornerRadius="12"
+            Tapped="OnSingleImageClicked">
+            <Image
+                MaxWidth="{x:Bind SingleImageMaxWidth}"
+                Source="{x:Bind SingleImage.Thumb}"
+                Stretch="UniformToFill" />
+        </Border>
+
+        <GridView
+            IsItemClickEnabled="True"
+            ItemClick="OnGridViewImageClicked"
+            ItemsSource="{x:Bind MultiImages}"
+            SelectionMode="None"
+            Visibility="{x:Bind IsMultiImageEmbed}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:ImageEmbed">
+                    <Image
+                        Width="80"
+                        Height="80"
+                        Source="{x:Bind Thumb}"
+                        Stretch="UniformToFill" />
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
 
         <Button
             x:Name="ExternalUrlButton"

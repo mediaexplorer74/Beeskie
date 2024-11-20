@@ -30,6 +30,7 @@
                     <x:String x:Key="GlyphNewPost">&#xE929;</x:String>
                     <x:String x:Key="GlyphReply">&#xE97A;</x:String>
                     <x:String x:Key="GlyphAddUser">&#xE8FA;</x:String>
+                    <x:String x:Key="GlyphBack">&#xE72B;</x:String>
 
                 </ResourceDictionary>
             </winui:XamlControlsResources.MergedDictionaries>
