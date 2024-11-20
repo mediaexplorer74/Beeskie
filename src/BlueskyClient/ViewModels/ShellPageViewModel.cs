@@ -4,6 +4,7 @@ using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JeniusApps.Common.Models;
+using JeniusApps.Common.Settings;
 using JeniusApps.Common.Telemetry;
 using JeniusApps.Common.Tools;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BlueskyClient.ViewModels;
 
 public partial class ShellPageViewModel : ObservableObject
 {
+    private readonly IUserSettings _userSettings;
     private readonly ITelemetry _telemetry;
     private readonly INavigator _contentNavigator;
     private readonly INavigator _rootNavigator;
@@ -24,6 +26,7 @@ public partial class ShellPageViewModel : ObservableObject
     private MenuItem? _lastSelectedMenu;
 
     public ShellPageViewModel(
+        IUserSettings userSettings,
         ITelemetry telemetry,
         INavigator contentNavigator,
         INavigator rootNavigator,
@@ -32,6 +35,7 @@ public partial class ShellPageViewModel : ObservableObject
         IAuthenticationService authenticationService,
         IImageViewerService imageViewerService)
     {
+        _userSettings = userSettings;
         _telemetry = telemetry;
         _contentNavigator = contentNavigator;
         _rootNavigator = rootNavigator;
@@ -60,6 +64,8 @@ public partial class ShellPageViewModel : ObservableObject
 
     public async Task InitializeAsync(string? rawStoredHandle = null)
     {
+        rawStoredHandle ??= _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
+
         if (rawStoredHandle is not { Length: > 0 } storedHandle)
         {
             _telemetry.TrackEvent(TelemetryConstants.AuthFailFromShellPage, new Dictionary<string, string>
