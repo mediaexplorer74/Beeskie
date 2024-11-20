@@ -45,4 +45,6 @@ public sealed partial class EmbeddedPost : UserControl
     public PostEmbed? PostEmbed => Record?.Embeds is [PostEmbed first, ..] ? first : null;
 
     public bool PostEmbedVisible => PostEmbed is not null;
+
+    public int QuotePostMaxLines => PostEmbedVisible ? 3 : 0;
 }

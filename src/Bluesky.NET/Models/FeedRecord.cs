@@ -18,5 +18,7 @@ public class FeedRecord
 
     public Author? Author { get; init; }
 
-    public FeedRecord? Value { get; init; }
+    public FeedRecord? Value { get; init; } // fyi for future, I think this could be anything, not necessarily a record
+
+    public FeedRecord? Record { get; init; }
 }
