@@ -25,12 +25,16 @@ public sealed class AuthenticationService : IAuthenticationService
     }
 
     /// <inheritdoc/>
-    public async Task<bool> TrySilentSignInAsync(string storedUserHandle)
+    public async Task<(bool, string)> TrySilentSignInAsync(string storedUserHandle)
     {
+#if DEBUG
+        //return (false, "debugReturnFalse");
+#endif
+
         var storedRefreshToken = _secureCredentialStorage.GetCredential(storedUserHandle);
         if (storedRefreshToken is not { Length: > 0 } oldRefreshToken)
         {
-            return false;
+            return (false, "emptyStoredRefreshToken");
         }
 
         var authResponse = await _apiClient.RefreshAsync(oldRefreshToken);
@@ -41,7 +45,7 @@ public sealed class AuthenticationService : IAuthenticationService
 
         UpdateStoredToken(storedUserHandle, authResponse);
 
-        return authResponse?.Success is true;
+        return (authResponse?.Success is true, authResponse?.ErrorMessage ?? string.Empty);
     }
 
     /// <inheritdoc/>

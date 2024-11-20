@@ -87,12 +87,14 @@ partial class App
             return new SignInPageViewModel(
                 serviceProvider.GetRequiredService<IAuthenticationService>(),
                 serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey),
-                serviceProvider.GetRequiredService<IUserSettings>());
+                serviceProvider.GetRequiredService<IUserSettings>(),
+                serviceProvider.GetRequiredService<ITelemetry>());
         });
 
         collection.AddTransient((serviceProvider) =>
         {
             return new ShellPageViewModel(
+                serviceProvider.GetRequiredService<ITelemetry>(),
                 serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey),
                 serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey),
                 serviceProvider.GetRequiredService<IProfileService>(),

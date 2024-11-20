@@ -1,5 +1,6 @@
 ﻿using BlueskyClient.Constants;
 using BlueskyClient.ViewModels;
+using JeniusApps.Common.Telemetry;
 using JeniusApps.Common.Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -24,10 +25,11 @@ public sealed partial class ShellPage : Page
 
     public string DisplayTitle => $"Beeskie {SystemInformation.Instance.ApplicationVersion.ToFormattedString().TrimEnd('0').TrimEnd('.')}";
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    protected async override void OnNavigatedTo(NavigationEventArgs e)
     {
+        App.Services.GetRequiredService<ITelemetry>().TrackPageView(nameof(ShellPage));
         App.Services.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey).SetFrame(ContentFrame);
-        _ = ViewModel.InitializeAsync(e.Parameter as string).ConfigureAwait(false);
+        await ViewModel.InitializeAsync(e.Parameter as string).ConfigureAwait(false);
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -4,6 +4,7 @@ using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JeniusApps.Common.Models;
+using JeniusApps.Common.Telemetry;
 using JeniusApps.Common.Tools;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ namespace BlueskyClient.ViewModels;
 
 public partial class ShellPageViewModel : ObservableObject
 {
+    private readonly ITelemetry _telemetry;
     private readonly INavigator _contentNavigator;
     private readonly INavigator _rootNavigator;
     private readonly IProfileService _profileService;
@@ -22,6 +24,7 @@ public partial class ShellPageViewModel : ObservableObject
     private MenuItem? _lastSelectedMenu;
 
     public ShellPageViewModel(
+        ITelemetry telemetry,
         INavigator contentNavigator,
         INavigator rootNavigator,
         IProfileService profileService,
@@ -29,6 +32,7 @@ public partial class ShellPageViewModel : ObservableObject
         IAuthenticationService authenticationService,
         IImageViewerService imageViewerService)
     {
+        _telemetry = telemetry;
         _contentNavigator = contentNavigator;
         _rootNavigator = rootNavigator;
         _profileService = profileService;
@@ -54,20 +58,32 @@ public partial class ShellPageViewModel : ObservableObject
     [ObservableProperty]
     private Author? _currentUser;
 
-    public async Task InitializeAsync(string? storedHandle = null)
+    public async Task InitializeAsync(string? rawStoredHandle = null)
     {
-        if (storedHandle is not null)
+        if (rawStoredHandle is not { Length: > 0 } storedHandle)
         {
-            var signInSuccessful = await _authenticationService.TrySilentSignInAsync(storedHandle);
-            if (!signInSuccessful)
+            _telemetry.TrackEvent(TelemetryConstants.AuthFailFromShellPage, new Dictionary<string, string>
             {
-                await _dialogService.OpenSignInRequiredAsync();
-
-                // go back to sign in page
-                _rootNavigator.NavigateTo(NavigationConstants.SignInPage);
-                return;
-            }
+                { "errorMessage", "emptyStoredHandle" }
+            });
+            await _dialogService.OpenSignInRequiredAsync();
+            _rootNavigator.NavigateTo(NavigationConstants.SignInPage);
+            return;
         }
+
+        (bool signInSuccessful, string errorMessage) = await _authenticationService.TrySilentSignInAsync(storedHandle);
+        if (!signInSuccessful)
+        {
+            _telemetry.TrackEvent(TelemetryConstants.AuthFailFromShellPage, new Dictionary<string, string>
+            {
+                { "errorMessage", errorMessage }
+            });
+            await _dialogService.OpenSignInRequiredAsync();
+            _rootNavigator.NavigateTo(NavigationConstants.SignInPage);
+            return;
+        }
+
+        _telemetry.TrackEvent(TelemetryConstants.AuthSuccessFromShellPage);
 
         _imageViewerService.ImageViewerRequested += OnImageViewerRequested;
 

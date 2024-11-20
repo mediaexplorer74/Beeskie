@@ -7,4 +7,12 @@ public sealed class TelemetryConstants
 
     private const string App = "app:";
     public const string Launched = App + "launched";
+
+    private const string SignInPage = "signInPage:";
+    public const string AuthSuccessFromSignInPage = SignInPage + ":authSuccessful";
+    public const string AuthFailFromSignInPage = SignInPage + ":authFail";
+
+    private const string ShellPage = "shellPage:";
+    public const string AuthSuccessFromShellPage = ShellPage + ":authSuccessful";
+    public const string AuthFailFromShellPage = ShellPage + ":authFail";
 }
