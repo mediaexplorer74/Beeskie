@@ -57,9 +57,9 @@ public partial class SignInPageViewModel : ObservableObject
             ? string.Empty
             : result?.ErrorMessage ?? "Null response";
 
-        if (result?.Success is true)
+        if (result is { Success: true, Handle: string { Length: > 0 } handle })
         {
-            OnSuccessfulSignIn(UserHandleInput);
+            OnSuccessfulSignIn(handle);
         }
 
         SigningIn = false;
