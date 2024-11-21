@@ -16,4 +16,5 @@ public sealed class UrlConstants
     public const string NotificationsPath = "xrpc/app.bsky.notification.listNotifications";
     public const string PostsPath = "xrpc/app.bsky.feed.getPosts";
     public const string CreateRecordPath = "xrpc/com.atproto.repo.createRecord";
+    public const string AuthorFeedPath = "xrpc/app.bsky.feed.getAuthorFeed";
 }

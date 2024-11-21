@@ -79,6 +79,7 @@ partial class App
             {
                 { NavigationConstants.HomePage, typeof(HomePage) },
                 { NavigationConstants.NotificationsPage, typeof(NotificationsPage) },
+                { NavigationConstants.ProfilePage, typeof(ProfilePage) },
             });
         });
 
@@ -129,6 +130,7 @@ partial class App
     [Singleton(typeof(ImageViewerService), typeof(IImageViewerService))]
     [Transient(typeof(HomePageViewModel))]
     [Transient(typeof(NotificationsPageViewModel))]
+    [Transient(typeof(ProfileControlViewModel))]
     [Transient(typeof(NewPostViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 

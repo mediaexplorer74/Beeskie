@@ -1,4 +1,5 @@
-﻿using Bluesky.NET.Models;
+﻿using Bluesky.NET.ApiClients;
+using Bluesky.NET.Models;
 using BlueskyClient.Caches;
 using BlueskyClient.Constants;
 using JeniusApps.Common.Settings;
@@ -13,13 +14,19 @@ public class ProfileService : IProfileService
 {
     private readonly ICache<Author> _profileCache;
     private readonly IUserSettings _userSettings;
+    private readonly IBlueskyApiClient _apiClient;
+    private readonly IAuthenticationService _authenticationService;
 
     public ProfileService(
         ICache<Author> profileCache,
-        IUserSettings userSettings)
+        IUserSettings userSettings,
+        IBlueskyApiClient blueskyApiClient,
+        IAuthenticationService authenticationService)
     {
         _profileCache = profileCache;
         _userSettings = userSettings;
+        _apiClient = blueskyApiClient;
+        _authenticationService = authenticationService;
     }
 
     public async Task<Author?> GetCurrentUserAsync()
@@ -31,5 +38,21 @@ public class ProfileService : IProfileService
         }
 
         return await _profileCache.GetItemAsync(handle);
+    }
+
+    public async Task<IReadOnlyList<FeedItem>> GetProfileFeedAsync(string handle)
+    {
+        if (handle is not { Length: > 0 })
+        {
+            return [];
+        }
+
+        var token = await _authenticationService.TryGetFreshTokenAsync();
+        if (token is not { Length: > 0 })
+        {
+            return [];
+        }
+
+        return await _apiClient.GetAuthorFeedAsync(token, handle);
     }
 }

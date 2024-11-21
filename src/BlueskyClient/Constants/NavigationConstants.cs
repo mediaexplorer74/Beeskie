@@ -13,4 +13,5 @@ public sealed class NavigationConstants
     public const string ShellPage = nameof(ShellPage);
     public const string NotificationsPage = nameof(NotificationsPage);
     public const string HomePage = nameof(HomePage);
+    public const string ProfilePage = nameof(ProfilePage);
 }

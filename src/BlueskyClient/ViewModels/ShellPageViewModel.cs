@@ -46,6 +46,7 @@ public partial class ShellPageViewModel : ObservableObject
 
         MenuItems.Add(new MenuItem(NavigateContentPageCommand, "Home", "\uEA8A", NavigationConstants.HomePage));
         MenuItems.Add(new MenuItem(NavigateContentPageCommand, "Notifications", "\uEA8F", NavigationConstants.NotificationsPage));
+        MenuItems.Add(new MenuItem(NavigateContentPageCommand, "Profile", "\uE77B", NavigationConstants.ProfilePage));
     }
 
     public ObservableCollection<MenuItem> MenuItems = [];

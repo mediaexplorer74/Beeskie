@@ -13,6 +13,8 @@ public class Author
 
     public string Avatar { get; init; } = string.Empty;
 
+    public string Banner { get; init; } = string.Empty;
+
     public string? Description { get; init; }
 
     public int? FollowersCount { get; init; }

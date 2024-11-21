@@ -37,4 +37,29 @@ partial class BlueskyApiClient
 
         return [];
     }
+
+    public async Task<IReadOnlyList<FeedItem>> GetAuthorFeedAsync(string accesstoken, string handle)
+    {
+        var feedUrl = $"{UrlConstants.BlueskyBaseUrl}/{UrlConstants.AuthorFeedPath}?actor={handle}";
+        HttpRequestMessage message = new(HttpMethod.Get, feedUrl);
+        message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accesstoken);
+
+        try
+        {
+            var httpResponse = await _httpClient.SendAsync(message);
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                using Stream contentStream = await httpResponse.Content.ReadAsStreamAsync();
+                FeedResponse? response = JsonSerializer.Deserialize(contentStream, ModelSerializerContext.CaseInsensitive.FeedResponse);
+                return response?.Feed ?? [];
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine(e);
+            throw;
+        }
+
+        return [];
+    }
 }
