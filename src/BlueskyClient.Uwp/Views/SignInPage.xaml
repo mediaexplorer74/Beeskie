@@ -49,6 +49,15 @@
                 IsOpen="{x:Bind ViewModel.ErrorBannerVisible, Mode=OneWay}"
                 Message="{x:Bind ViewModel.SignInErrorMessage, Mode=OneWay}"
                 Severity="Error" />
+
+            <HyperlinkButton
+                Margin="12"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Content="App Password help"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                NavigateUri="https://github.com/jenius-apps/beeskie/blob/main/docs/appPasswordsHelp.md" />
         </Grid>
 
         <Rectangle
