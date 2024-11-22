@@ -1,4 +1,5 @@
 ﻿using BlueskyClient.Constants;
+using BlueskyClient.Models;
 using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -62,9 +63,9 @@ public partial class SignInPageViewModel : ObservableObject
             ? string.Empty
             : result?.ErrorMessage ?? "Null response";
 
-        if (result is { Success: true, Handle: string { Length: > 0 } handle })
+        if (result?.Success is true)
         {
-            OnSuccessfulSignIn(handle);
+            OnSuccessfulSignIn();
         }
 
         SigningIn = false;
@@ -78,13 +79,8 @@ public partial class SignInPageViewModel : ObservableObject
             });
     }
 
-    private void OnSuccessfulSignIn(string userHandle)
+    private void OnSuccessfulSignIn()
     {
-        if (userHandle.Trim() is { Length: > 0 } handle)
-        {
-            _userSettings.Set(UserSettingsConstants.LastUsedUserHandleKey, handle);
-        }
-
-        _navigator.NavigateTo(NavigationConstants.ShellPage);
+        _navigator.NavigateTo(NavigationConstants.ShellPage, new ShellPageNavigationArgs { AlreadySignedIn = true });
     }
 }

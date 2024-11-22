@@ -78,7 +78,7 @@
                     <winui:PersonPicture
                         Width="40"
                         PreferSmallImage="True"
-                        ProfilePicture="{x:Bind ViewModel.CurrentUser.Avatar, Mode=OneWay}" />
+                        ProfilePicture="{x:Bind ViewModel.SafeAvatarUrl, Mode=OneWay}" />
 
                     <StackPanel
                         Grid.Column="1"

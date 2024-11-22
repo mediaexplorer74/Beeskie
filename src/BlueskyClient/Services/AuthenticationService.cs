@@ -1,6 +1,8 @@
 ﻿using Bluesky.NET.ApiClients;
 using Bluesky.NET.Models;
+using BlueskyClient.Constants;
 using BlueskyClient.Tools;
+using JeniusApps.Common.Settings;
 using System;
 using System.Threading.Tasks;
 
@@ -11,62 +13,58 @@ public sealed class AuthenticationService : IAuthenticationService
     private const int TokenHoursToLive = 2; // based on decoded JWT, TTL is 2 hours.
     private readonly IBlueskyApiClient _apiClient;
     private readonly ISecureCredentialStorage _secureCredentialStorage;
+    private readonly IUserSettings _userSettings;
     private string? _accesToken;
     private string? _refreshToken;
     private DateTime? _expirationTime;
-    private string? _signedInUsername;
 
     public AuthenticationService(
         IBlueskyApiClient blueskyApiClient,
-        ISecureCredentialStorage secureCredentialStorage)
+        ISecureCredentialStorage secureCredentialStorage,
+        IUserSettings userSettings)
     {
         _apiClient = blueskyApiClient;
         _secureCredentialStorage = secureCredentialStorage;
+        _userSettings = userSettings;
     }
 
     /// <inheritdoc/>
-    public async Task<(bool, string)> TrySilentSignInAsync(string storedUserHandle)
+    public async Task<(bool, string)> TrySilentSignInAsync()
     {
 #if DEBUG
         //return (false, "debugReturnFalse");
 #endif
-
-        var storedRefreshToken = _secureCredentialStorage.GetCredential(storedUserHandle);
-        if (storedRefreshToken is not { Length: > 0 } oldRefreshToken)
+        string? storedUserHandle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey) ?? string.Empty;
+        string? storedRefreshToken = _secureCredentialStorage.GetCredential(storedUserHandle);
+        if (storedRefreshToken is not { Length: > 0 })
         {
             return (false, "emptyStoredRefreshToken");
         }
 
-        var authResponse = await _apiClient.RefreshAsync(oldRefreshToken);
-        if (authResponse?.Success is true)
-        {
-            _signedInUsername = storedUserHandle;
-        }
-
-        UpdateStoredToken(storedUserHandle, authResponse);
+        var authResponse = await _apiClient.RefreshAsync(storedRefreshToken);
+        UpdateStoredToken(authResponse);
 
         return (authResponse?.Success is true, authResponse?.ErrorMessage ?? string.Empty);
     }
 
     /// <inheritdoc/>
-    public async Task<AuthResponse?> SignInAsync(string rawUserHandle, string rawPassword)
+    public async Task<AuthResponse?> SignInAsync(string rawUserHandleOrEmail, string rawPassword)
     {
-        var handle = rawUserHandle.Trim();
+        var userHandleOrEmail = rawUserHandleOrEmail.Trim();
         var password = rawPassword.Trim();
 
-        if (string.IsNullOrEmpty(handle) || string.IsNullOrEmpty(password))
+        if (string.IsNullOrEmpty(userHandleOrEmail) || string.IsNullOrEmpty(password))
         {
             return null;
         }
 
+        var result = await _apiClient.AuthenticateAsync(userHandleOrEmail, password);
+        UpdateStoredToken(result);
 
-        var result = await _apiClient.AuthenticateAsync(handle, password);
-        if (result?.Success is true)
+        if (result is { Success: true, Handle: string { Length: > 0 } handle })
         {
-            _signedInUsername = handle;
+            _userSettings.Set(UserSettingsConstants.LastUsedUserHandleKey, handle);
         }
-
-        UpdateStoredToken(handle, result);
 
         return result;
     }
@@ -82,7 +80,7 @@ public sealed class AuthenticationService : IAuthenticationService
         if (DateTime.Now >= _expirationTime.Value && _refreshToken is string refreshToken)
         {
             var authResponse = await _apiClient.RefreshAsync(refreshToken);
-            UpdateStoredToken(_signedInUsername, authResponse);
+            UpdateStoredToken(authResponse);
         }
 
         if (DateTime.Now < _expirationTime.Value && _accesToken is string token)
@@ -94,18 +92,20 @@ public sealed class AuthenticationService : IAuthenticationService
         return null;
     }
 
-    private void UpdateStoredToken(string? userHandle, AuthResponse? response)
+    private void UpdateStoredToken(AuthResponse? response)
     {
-        if (response is { Success: true, AccessJwt: string { Length: > 0 } accessToken, RefreshJwt: string { Length: > 0 } refreshToken })
+        if (response is
+            {
+                Success: true,
+                Handle: string { Length: > 0 } handle,
+                AccessJwt: string { Length: > 0 } accessToken,
+                RefreshJwt: string { Length: > 0 } refreshToken
+            })
         {
             _accesToken = accessToken;
             _refreshToken = refreshToken;
             _expirationTime = DateTime.Now.AddHours(TokenHoursToLive);
-
-            if (userHandle is not null)
-            {
-                _secureCredentialStorage.SetCredential(userHandle, refreshToken);
-            }
+            _secureCredentialStorage.SetCredential(handle, refreshToken);
         }
     }
 }

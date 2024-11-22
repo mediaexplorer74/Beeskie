@@ -1,4 +1,4 @@
-# Beeskie v0.6.7 (Beta) - main branch
+# Beeskie v0.6.8 (Beta) - main branch
 ![](Images/logo.png)
 
 My RnD of Beeskie, modern uwp app for BlueSky social network.  The main gool is to do src code Andromeda-compatible (see https://github.com/mediaexplorer74/Andromeda  for details / my samples/dev kit)!
@@ -35,10 +35,11 @@ Beeskie (Beta) on Microsoft Store: https://apps.microsoft.com/store/detail/9PCGN
 - Min. Win. OS build: 17134 (Hello, Microsoft WCOS!) 
 
 ## Status / my 2 cents
-- Micro-research of source code
+- Micro-research + fork(ing) of original source code
 - Min. win sdk downshifted to 17134 !
 - Draft. Prototype / Pre-Pre-Pre-Alpha version. Still exploring modern-ui & mvvm "magic"...
-- some common tools experiments / patches
+- Some common tools experiments / patches
+- I injected all fresh c# code & xaml fixes of original version 0.6.8 into my fork. 
 
 ## Caution
 - I noticed that src code uses some "dev telemetry". It's question of your "login-password" security, I think. I have no time to fix cut off that deal. 
