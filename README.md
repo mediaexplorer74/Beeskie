@@ -31,12 +31,12 @@ Beeskie (Beta) on Microsoft Store: https://apps.microsoft.com/store/detail/9PCGN
 - Platforms: UWP only
 - Targets: x64; x64; ARM
 - OSes: Windows 11 (however, W10M Andromeda is good mobile case too)))
-- Win. SDK used: 19041 
+- Win. SDK used: 22621 
 - Min. Win. OS build: 17134 (Hello, Microsoft WCOS!) 
 
 ## Status / my 2 cents
-- Micro-research of scr code
-- win sdk 22000 -> 17xxx
+- Micro-research of source code
+- Min. win sdk downshifted to 17134 !
 - Draft. Prototype / Pre-Pre-Pre-Alpha version. Still exploring modern-ui & mvvm "magic"...
 - some common tools experiments / patches
 
