@@ -1,4 +1,4 @@
-# Beeskie v0.6.x (Beta) - master branch
+# Beeskie v0.6.7 (Beta) - main branch
 ![](Images/logo.png)
 
 My RnD of Beeskie, modern uwp app for BlueSky social network.  The main gool is to do src code Andromeda-compatible (see https://github.com/mediaexplorer74/Andromeda  for details / my samples/dev kit)!
