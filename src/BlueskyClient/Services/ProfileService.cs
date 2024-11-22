@@ -3,9 +3,7 @@ using Bluesky.NET.Models;
 using BlueskyClient.Caches;
 using BlueskyClient.Constants;
 using JeniusApps.Common.Settings;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.Services;
@@ -31,13 +29,13 @@ public class ProfileService : IProfileService
 
     public async Task<Author?> GetCurrentUserAsync()
     {
-        var handle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
-        if (handle is null)
+        string? identifier = _userSettings.Get<string>(UserSettingsConstants.SignedInDIDKey);
+        if (identifier is null)
         {
             return null;
         }
 
-        return await _profileCache.GetItemAsync(handle);
+        return await _profileCache.GetItemAsync(identifier);
     }
 
     public async Task<IReadOnlyList<FeedItem>> GetProfileFeedAsync(string handle)

@@ -12,9 +12,9 @@ namespace Bluesky.NET.ApiClients;
 
 partial class BlueskyApiClient
 {
-    public async Task<Author?> GetAuthorAsync(string accessToken, string handle)
+    public async Task<Author?> GetAuthorAsync(string accessToken, string identifier)
     {
-        var timelineUrl = $"{UrlConstants.BlueskyBaseUrl}/{UrlConstants.ProfilePath}?actor={handle}";
+        var timelineUrl = $"{UrlConstants.BlueskyBaseUrl}/{UrlConstants.ProfilePath}?actor={identifier}";
         HttpRequestMessage message = new(HttpMethod.Get, timelineUrl);
         message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 

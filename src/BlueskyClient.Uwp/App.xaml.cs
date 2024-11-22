@@ -60,9 +60,9 @@ sealed partial class App : Application
 
             if (rootFrame.Content is null)
             {
-                var storedHandle = Services.GetRequiredService<IUserSettings>().Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
+                var storedHandle = Services.GetRequiredService<IUserSettings>().Get<string>(UserSettingsConstants.SignedInDIDKey);
 
-                if (string.IsNullOrEmpty(storedHandle) || storedHandle?.Contains("@") is true)
+                if (string.IsNullOrEmpty(storedHandle))
                 {
                     rootFrame.Navigate(typeof(SignInPage));
                 }

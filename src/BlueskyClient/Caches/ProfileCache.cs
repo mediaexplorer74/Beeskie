@@ -28,9 +28,9 @@ public class ProfileCache : ICache<Author>
         _telemetry = telemetry;
     }
 
-    public async Task<Author?> GetItemAsync(string handle)
+    public async Task<Author?> GetItemAsync(string identifier)
     {
-        if (_cache.TryGetValue(handle, out CachedItem<Author> cachedResult) &&
+        if (_cache.TryGetValue(identifier, out CachedItem<Author> cachedResult) &&
             DateTime.Now < cachedResult.ExpirationTime)
         {
             return cachedResult.Data;
@@ -49,7 +49,7 @@ public class ProfileCache : ICache<Author>
 
         try
         {
-            author = await _apiClient.GetAuthorAsync(accessToken, handle);
+            author = await _apiClient.GetAuthorAsync(accessToken, identifier);
         }
         catch (Exception e)
         {
@@ -73,7 +73,7 @@ public class ProfileCache : ICache<Author>
             ExpirationTime = DateTime.Now.AddHours(UrlConstants.OnlineDataHoursToLive)
         };
 
-        _cache.AddOrUpdate(handle, newCachedItem, (key, item) => newCachedItem);
+        _cache.AddOrUpdate(identifier, newCachedItem, (key, item) => newCachedItem);
         return author;
     }
 

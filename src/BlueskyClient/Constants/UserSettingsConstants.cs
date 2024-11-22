@@ -5,9 +5,14 @@ namespace BlueskyClient.Constants;
 public sealed class UserSettingsConstants
 {
     /// <summary>
-    /// Remembers the last user handle that signed in.
+    /// Remembers the signed-in DID identifier.
     /// </summary>
-    public const string LastUsedUserHandleKey = "LastUsedUserHandle";
+    public const string SignedInDIDKey = "SignedInDID";
+
+    /// <summary>
+    /// Remembers the handle or email used by the user to sign in.
+    /// </summary>
+    public const string LastUsedUserIdentifierInputKey = "LastUsedUserIdentifierInputKey";
 
     /// <summary>
     /// Anonymous ID referencing the local user, for telemetry purposes.
@@ -19,6 +24,7 @@ public sealed class UserSettingsConstants
     /// </summary>
     public static IReadOnlyDictionary<string, object> Defaults { get; } = new Dictionary<string, object>()
     {
-        { LastUsedUserHandleKey, string.Empty },
+        { LastUsedUserIdentifierInputKey, string.Empty },
+        { SignedInDIDKey, string.Empty },
     };
 }

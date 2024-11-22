@@ -41,7 +41,7 @@ public class PostSubmissionService : IPostSubmissionService
         }
 
         var token = await _authenticationService.TryGetFreshTokenAsync();
-        var handle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
+        var handle = _userSettings.Get<string>(UserSettingsConstants.SignedInDIDKey);
 
         if (token is null || handle is null)
         {
@@ -109,7 +109,7 @@ public class PostSubmissionService : IPostSubmissionService
         }
 
         var token = await _authenticationService.TryGetFreshTokenAsync();
-        var handle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
+        var handle = _userSettings.Get<string>(UserSettingsConstants.SignedInDIDKey);
 
         if (token is null || handle is null)
         {
@@ -162,7 +162,7 @@ public class PostSubmissionService : IPostSubmissionService
         }
 
         var token = await _authenticationService.TryGetFreshTokenAsync();
-        var handle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
+        var handle = _userSettings.Get<string>(UserSettingsConstants.SignedInDIDKey);
 
         if (token is null || handle is null)
         {

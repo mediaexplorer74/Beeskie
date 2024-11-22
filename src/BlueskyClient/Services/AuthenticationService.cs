@@ -34,7 +34,7 @@ public sealed class AuthenticationService : IAuthenticationService
 #if DEBUG
         //return (false, "debugReturnFalse");
 #endif
-        string? storedUserHandle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey) ?? string.Empty;
+        string? storedUserHandle = _userSettings.Get<string>(UserSettingsConstants.SignedInDIDKey) ?? string.Empty;
         string? storedRefreshToken = _secureCredentialStorage.GetCredential(storedUserHandle);
         if (storedRefreshToken is not { Length: > 0 })
         {
@@ -50,7 +50,7 @@ public sealed class AuthenticationService : IAuthenticationService
     /// <inheritdoc/>
     public async Task<AuthResponse?> SignInAsync(string rawUserHandleOrEmail, string rawPassword)
     {
-        var userHandleOrEmail = rawUserHandleOrEmail.Trim();
+        var userHandleOrEmail = rawUserHandleOrEmail.Trim().TrimStart('@');
         var password = rawPassword.Trim();
 
         if (string.IsNullOrEmpty(userHandleOrEmail) || string.IsNullOrEmpty(password))
@@ -61,9 +61,9 @@ public sealed class AuthenticationService : IAuthenticationService
         var result = await _apiClient.AuthenticateAsync(userHandleOrEmail, password);
         UpdateStoredToken(result);
 
-        if (result is { Success: true, Handle: string { Length: > 0 } handle })
+        if (result is { Success: true, Did: string { Length: > 0 } did })
         {
-            _userSettings.Set(UserSettingsConstants.LastUsedUserHandleKey, handle);
+            _userSettings.Set(UserSettingsConstants.SignedInDIDKey, did);
         }
 
         return result;
@@ -96,14 +96,14 @@ public sealed class AuthenticationService : IAuthenticationService
     {
         if (response is { 
                 Success: true,
-                Handle: string { Length: > 0 } handle,
+                Did: string { Length: > 0 } did,
                 AccessJwt: string { Length: > 0 } accessToken,
                 RefreshJwt: string { Length: > 0 } refreshToken })
         {
             _accesToken = accessToken;
             _refreshToken = refreshToken;
             _expirationTime = DateTime.Now.AddHours(TokenHoursToLive);
-            _secureCredentialStorage.SetCredential(handle, refreshToken);
+            _secureCredentialStorage.SetCredential(did, refreshToken);
         }
     }
 }

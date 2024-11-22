@@ -29,7 +29,7 @@ public partial class SignInPageViewModel : ObservableObject
         _userSettings = userSettings;
         _telemetry = telemetry;
 
-        UserHandleInput = userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey) ?? string.Empty;
+        UserHandleInput = userSettings.Get<string>(UserSettingsConstants.LastUsedUserIdentifierInputKey) ?? string.Empty;
     }
 
     [ObservableProperty]
@@ -65,7 +65,12 @@ public partial class SignInPageViewModel : ObservableObject
 
         if (result?.Success is true)
         {
-            OnSuccessfulSignIn();
+            _userSettings.Set(UserSettingsConstants.LastUsedUserIdentifierInputKey, UserHandleInput);
+
+            _navigator.NavigateTo(NavigationConstants.ShellPage, new ShellPageNavigationArgs 
+            { 
+                AlreadySignedIn = true 
+            });
         }
 
         SigningIn = false;
@@ -81,6 +86,5 @@ public partial class SignInPageViewModel : ObservableObject
 
     private void OnSuccessfulSignIn()
     {
-        _navigator.NavigateTo(NavigationConstants.ShellPage, new ShellPageNavigationArgs { AlreadySignedIn = true });
     }
 }
