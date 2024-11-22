@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="3f0e2c34-cf68-46e7-a834-87bed10fad7d"
+    Name="JeniusApps.BeeskieV0p6"
     Publisher="CN=0B44CA61-7898-42FE-825C-ADA43BC01A93"
-    Version="0.6.8.0" />
+    Version="0.6.7.0" />
 
-  <mp:PhoneIdentity PhoneProductId="37ca6a7c-c70c-48bb-8290-04de0c8cf186" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="37ca6a77-c70c-48bb-8290-04de0c8cf187" PhonePublisherId="00700022-0107-0006-0e34-000010000006"/>
 
   <Properties>
     <DisplayName>Beeskie</DisplayName>
@@ -45,11 +45,16 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="transparent"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="portrait"/>
+          <uap:Rotation Preference="landscapeFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <uap:Capability Name="removableStorage"/>
   </Capabilities>
 </Package>

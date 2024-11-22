@@ -11,14 +11,14 @@ public interface IBlueskyApiClient
     /// Retrieves authenticated tokens that can be used
     /// for other API calls that require auth.
     /// </summary>
-    /// <param name="userHandle">The user's handle or email address or DID.</param>
+    /// <param name="userHandle">The user's handle or email address.</param>
     /// <param name="appPassword">An app password provided by the user.</param>
     /// <returns>An <see cref="AuthResponse"/>.</returns>
-    Task<AuthResponse?> AuthenticateAsync(string identifier, string appPassword);
+    Task<AuthResponse?> AuthenticateAsync(string userHandle, string appPassword);
     Task<IReadOnlyList<FeedItem>> GetTimelineAsync(string accesstoken);
     Task<AuthResponse?> RefreshAsync(string refreshToken);
 
-    Task<Author?> GetAuthorAsync(string accessToken, string identifier);
+    Task<Author?> GetAuthorAsync(string accessToken, string handle);
 
     Task<IReadOnlyList<Notification>> GetNotificationsAsync(string accessToken);
     Task<IReadOnlyList<FeedPost>> GetPostsAsync(string accessToken, IReadOnlyList<string> atUriList);

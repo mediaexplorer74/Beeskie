@@ -1,7 +1,5 @@
 ﻿using Bluesky.NET.Models;
 using BlueskyClient.Constants;
-using BlueskyClient.Extensions;
-using BlueskyClient.Models;
 using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -63,38 +61,36 @@ public partial class ShellPageViewModel : ObservableObject
     private int _imageViewerIndex;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SafeAvatarUrl))]
     private Author? _currentUser;
 
-    public string SafeAvatarUrl => CurrentUser.SafeAvatarUrl();
-
-    public async Task InitializeAsync(ShellPageNavigationArgs args)
+    public async Task InitializeAsync(string? rawStoredHandle = null)
     {
-        bool shouldAbortToSignInPage;
+        rawStoredHandle ??= _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
 
-        if (args.AlreadySignedIn)
+        if (rawStoredHandle is not { Length: > 0 } storedHandle)
         {
-            string? testToken = await _authenticationService.TryGetFreshTokenAsync();
-            shouldAbortToSignInPage = string.IsNullOrEmpty(testToken);
-        }
-        else
-        {
-            (bool signInSuccessful, string errorMessage) = await _authenticationService.TrySilentSignInAsync();
-            shouldAbortToSignInPage = !signInSuccessful;
-
-            if (signInSuccessful)
+            _telemetry.TrackEvent(TelemetryConstants.AuthFailFromShellPage, new Dictionary<string, string>
             {
-                _telemetry.TrackEvent(TelemetryConstants.AuthSuccessFromShellPage);
-            }
-        }
-
-        if (shouldAbortToSignInPage)
-        {
-            _telemetry.TrackEvent(TelemetryConstants.AuthFailFromShellPage);
+                { "errorMessage", "emptyStoredHandle" }
+            });
             await _dialogService.OpenSignInRequiredAsync();
             _rootNavigator.NavigateTo(NavigationConstants.SignInPage);
             return;
         }
+
+        (bool signInSuccessful, string errorMessage) = await _authenticationService.TrySilentSignInAsync(storedHandle);
+        if (!signInSuccessful)
+        {
+            _telemetry.TrackEvent(TelemetryConstants.AuthFailFromShellPage, new Dictionary<string, string>
+            {
+                { "errorMessage", errorMessage }
+            });
+            await _dialogService.OpenSignInRequiredAsync();
+            _rootNavigator.NavigateTo(NavigationConstants.SignInPage);
+            return;
+        }
+
+        _telemetry.TrackEvent(TelemetryConstants.AuthSuccessFromShellPage);
 
         _imageViewerService.ImageViewerRequested += OnImageViewerRequested;
 

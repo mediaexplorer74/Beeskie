@@ -2,7 +2,6 @@
 
 public class AuthResponse
 {
-    public string? Did { get; init; }
     public bool Success { get; set; }
     public string? Handle { get; set; }
     public string? Email { get; set; }

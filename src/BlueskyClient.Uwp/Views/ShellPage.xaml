@@ -5,6 +5,7 @@
     xmlns:apiModels="using:Bluesky.NET.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="using:JeniusApps.Common.UI.Uwp"
+    xmlns:local="using:BlueskyClient.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:JeniusApps.Common.Models"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
@@ -77,7 +78,7 @@
                     <winui:PersonPicture
                         Width="40"
                         PreferSmallImage="True"
-                        ProfilePicture="{x:Bind ViewModel.SafeAvatarUrl, Mode=OneWay}" />
+                        ProfilePicture="{x:Bind ViewModel.CurrentUser.Avatar, Mode=OneWay}" />
 
                     <StackPanel
                         Grid.Column="1"

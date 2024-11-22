@@ -1,5 +1,4 @@
 ﻿using BlueskyClient.Constants;
-using BlueskyClient.Models;
 using BlueskyClient.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,7 +28,7 @@ public partial class SignInPageViewModel : ObservableObject
         _userSettings = userSettings;
         _telemetry = telemetry;
 
-        UserHandleInput = userSettings.Get<string>(UserSettingsConstants.LastUsedUserIdentifierInputKey) ?? string.Empty;
+        UserHandleInput = userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey) ?? string.Empty;
     }
 
     [ObservableProperty]
@@ -63,14 +62,9 @@ public partial class SignInPageViewModel : ObservableObject
             ? string.Empty
             : result?.ErrorMessage ?? "Null response";
 
-        if (result?.Success is true)
+        if (result is { Success: true, Handle: string { Length: > 0 } handle })
         {
-            _userSettings.Set(UserSettingsConstants.LastUsedUserIdentifierInputKey, UserHandleInput);
-
-            _navigator.NavigateTo(NavigationConstants.ShellPage, new ShellPageNavigationArgs 
-            { 
-                AlreadySignedIn = true 
-            });
+            OnSuccessfulSignIn(handle);
         }
 
         SigningIn = false;
@@ -84,7 +78,13 @@ public partial class SignInPageViewModel : ObservableObject
             });
     }
 
-    private void OnSuccessfulSignIn()
+    private void OnSuccessfulSignIn(string userHandle)
     {
+        if (userHandle.Trim() is { Length: > 0 } handle)
+        {
+            _userSettings.Set(UserSettingsConstants.LastUsedUserHandleKey, handle);
+        }
+
+        _navigator.NavigateTo(NavigationConstants.ShellPage);
     }
 }

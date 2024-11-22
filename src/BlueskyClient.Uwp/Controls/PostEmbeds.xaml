@@ -45,7 +45,7 @@
             Padding="0"
             x:Load="{x:Bind IsExternalUrl}"
             Click="OnExternalUrlClicked">
-            <StackPanel CornerRadius="4,4,0,0">
+            <StackPanel>
                 <Image
                     MaxHeight="300"
                     Source="{x:Bind ExternalThumb}"

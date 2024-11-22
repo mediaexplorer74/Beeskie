@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <LangVersion>latest</LangVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.3.2" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-    <PackageReference Include="JeniusApps.Common" Version="0.0.41-preview" />
+    <PackageReference Include="CommunityToolkit.Diagnostics" Version="7.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="PolySharp" Version="1.14.1">
       <PrivateAssets>all</PrivateAssets>
@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bluesky.NET\Bluesky.NET.csproj" />
+    <ProjectReference Include="..\JeniusApps.Common\JeniusApps.Common.csproj" />
   </ItemGroup>
 
     <!-- MSBuild properties to customize the generation from PolySharp -->
