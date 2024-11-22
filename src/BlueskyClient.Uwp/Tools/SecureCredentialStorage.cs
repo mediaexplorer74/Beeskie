@@ -24,6 +24,11 @@ public sealed class SecureCredentialStorage : ISecureCredentialStorage
 
     public string? GetCredential(string key)
     {
+        if (string.IsNullOrEmpty(key))
+        {
+            return null;
+        }
+
         try
         {
             PasswordVault vault = new();

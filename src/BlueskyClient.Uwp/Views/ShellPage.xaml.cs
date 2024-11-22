@@ -1,4 +1,5 @@
 ﻿using BlueskyClient.Constants;
+using BlueskyClient.Models;
 using BlueskyClient.ViewModels;
 using JeniusApps.Common.Telemetry;
 using JeniusApps.Common.Tools;
@@ -29,7 +30,7 @@ public sealed partial class ShellPage : Page
     {
         App.Services.GetRequiredService<ITelemetry>().TrackPageView(nameof(ShellPage));
         App.Services.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey).SetFrame(ContentFrame);
-        await ViewModel.InitializeAsync(e.Parameter as string).ConfigureAwait(false);
+        await ViewModel.InitializeAsync(e.Parameter as ShellPageNavigationArgs ?? new()).ConfigureAwait(false);
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
