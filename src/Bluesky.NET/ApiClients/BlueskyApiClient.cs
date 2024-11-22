@@ -23,13 +23,13 @@ public partial class BlueskyApiClient : IBlueskyApiClient
     }
 
     /// <inheritdoc/>
-    public async Task<AuthResponse?> AuthenticateAsync(string userHandle, string appPassword)
+    public async Task<AuthResponse?> AuthenticateAsync(string identifer, string appPassword)
     {
         var authUrl = $"{UrlConstants.BlueskyBaseUrl}/{UrlConstants.AuthPath}";
 
         var requestBody = new AuthRequestBody
         {
-            Identifier = userHandle,
+            Identifier = identifer,
             Password = appPassword
         };
 
