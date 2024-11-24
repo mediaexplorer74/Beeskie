@@ -32,6 +32,7 @@ I quickly researched Beeskie's solution structure. It consists of 3 .net-standar
 - Some common tools experiments / patches
 - I fixing app crash(ing) after start.
 - I detected that ShellPage & control "15063-compatibility" mismatch still there (app crashes after login)
+- I create Wiki with "How to use .NET Standard 2.0 under UWP <= 10.0.15063" item. 
  
 
 ## Caution
