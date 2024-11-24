@@ -28,7 +28,7 @@ Beeskie (Beta) on Microsoft Store: https://apps.microsoft.com/store/detail/9PCGN
 
 ## Tech/dev details
 - Platforms: UWP only
-- Targets: x64; x64; ARM
+- Targets: x86; x64; ARM; ARM64 (maybe)
 - OSes: Windows 11 (however, W10M Andromeda is good mobile case too)))
 - Win. SDK used: 22621 
 - Min. Win. OS build: 17134 (Hello, Microsoft WCOS!) 
