@@ -8,9 +8,9 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="ME.BeeskieV0p7p0"
+    Name="ME.BeeskieV0p7p1"
     Publisher="CN=Admin"
-    Version="0.7.0.0" />
+    Version="0.7.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="ddca6a77-c70c-48bb-8290-04de0c8cf777" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -21,7 +21,7 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17134.0" MaxVersionTested="10.0.22000.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.16299.0" MaxVersionTested="10.0.19041.0" />
   </Dependencies>
 
   <Resources>

@@ -1,4 +1,4 @@
-# Beeskie v0.7.0 (Beta) - andromeda branch
+# Beeskie v0.7.1 (Beta) - andromeda branch
 ![](Images/logo.png)
 
 My RnD of Beeskie, modern uwp app for BlueSky social network.  The main gool is to do src code Andromeda-compatible (see https://github.com/mediaexplorer74/Andromeda  for details / my samples/dev kit)!
@@ -24,14 +24,17 @@ Beeskie (Beta) on Microsoft Store: https://apps.microsoft.com/store/detail/9PCGN
 
 ## Screenshots
 ![](Images/shot01.png)
+![](Images/shot02.png)
+
+(Chuwi / Qumo 8008w as Andromeda / Microsoft Courier)
 
 
 ## Tech/dev details
 - Platforms: UWP only
 - Targets: x86; x64; ARM; ARM64 (maybe)
 - OSes: Windows 11 (however, W10M Andromeda is good mobile case too)))
-- Win. SDK used: 22621 
-- Min. Win. OS build: 17134 (Hello, Microsoft WCOS!) 
+- Win. SDK used: 19041 
+- Min. Win. OS build: 16299 (Hello, Microsoft WCOS!) 
 
 ## Status / my 2 cents
 - Micro-research + fork(ing) of original source code
