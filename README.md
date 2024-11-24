@@ -1,68 +1,52 @@
-# Beeskie v0.6.8 (Beta) - main branch
+# Beeskie v0.7.0 (experimental) - fluent branch
 ![](Images/logo.png)
 
-My RnD of Beeskie, modern uwp app for BlueSky social network.  The main gool is to do src code Andromeda-compatible (see https://github.com/mediaexplorer74/Andromeda  for details / my samples/dev kit)!
+My RnD of Beeskie, modern uwp app for BlueSky social network.  The main gool is to do Beeskie's src code W10M-compatible via very non-trivial "special mechanics".
  
-## About (words of the author)
-"
+## Intro ("Preface of research")
 
-*Introduction*
+A few days ago I found [Beeskie project](https://github.com/jenius-apps/beeskie/). It is a free and open source third-party app for Bluesky. 
+The app is currently in public beta. However, you can (may) download Beeskie (Beta) on [Microsoft Store](https://apps.microsoft.com/store/detail/9PCGNR7QHQGP?cid=github) just at now. The Beeskie's author Daniel from Jenius Apps, great developer of many cool apps such as Ambie Sounds. All is really cool, but I detected one great problem: all Daniel's projects are good only for x86/x64 "PC architecture". No ARM (mobile) compatibility. I decided to research & fix this deal a liitle :) So, my goal is to "partially adapt" Beeskie's code to sweet old lost broken cancelled Windows 10 Mobile OS. I focused only on "max. versions" of W10M - builds 15063 and above.
 
-Beeskie is a free and open source third-party app for Bluesky. Big kudos to the team that built the Bluesky APIs, which Beeskie relies on heavily. The APIs are extremely thorough and they're very friendly to third-party apps. 
-
-*Current status: Beta*
-
-The app is currently in public beta. You can write new posts, reply, repost, and like. You can view some notifications and you can see some embedded images. While it's still in very early days, app development is moving very fast and new features are added on a daily basis. 
-
-*How can I help?*
-
-Download the app from the store by clicking the badge above, follow [Beeskie on Bluesky](https://bsky.app/profile/beeskieapp.bsky.social), and send feedback to that handle! While I know there are many things missing still, it will be valuable if you tell me 3 things that you absolutely need ASAP in order to use the app on a more consistent basis. This will help me prioritize the features. Of course, you can let me know of other issues such as bugs. Lastly, you can also create an issue in this repo to submit any feedback. Thanks for your help!
-
-Beeskie (Beta) on Microsoft Store: https://apps.microsoft.com/store/detail/9PCGNR7QHQGP?cid=github
-"
- - Daniel from Jenius Apps
+## Research
+I quickly researched Beeskie's solution structure. It consists of 2 .net-standard 2.0-based "modules" (projects) and 2 uwp-based ones (min. win os build = 17xxx or even 18xxx). I changed 17xxx to 16299, and symplified code a little to support 16299. Ok, what else? Yesterday I accidentally came across an anomaly in the code of the Beeskie analogue called Uni Sky.  I suddenly discovered that a developer with the nickname [WamWooWam](https://github.com/WamWooWam) uses some secret mechanics to launch projects compiled for 16299 and net 2.0 on winphones! I couldn't believe my eyes and created an [issue](https://github.com/UnicordDev/UniSky/issues/7). The man replied to me (for which I thank him very much!) that I need to read this [gist](https://gist.github.com/WamWooWam/e72e5137606f7c59ed657db6587cd5e8). I researched this random find, and so I decided to try to apply this secret knowledge to the Beeskie project. Result: yea, it works/ operates!!! Mama mia :)  
 
 ## Screenshots
 ![](Images/shot01.png)
 ![](Images/shot02.png)
-
+![](Images/shot03.png)
+![](Images/shot04.png)
+![](Images/shot05.png)
 
 ## Tech/dev details
 - Platforms: UWP only
-- Targets: x64; x64; ARM
-- OSes: Windows 11 (however, W10M Andromeda is good mobile case too)))
+- Targets: x86; x64; ARM (and ARM64 potentially)
+- OSes: Windows 10 (Mobile)
 - Win. SDK used: 22621 
-- Min. Win. OS build: 17134 (Hello, Microsoft WCOS!) 
+- Min. Win. OS build: tecnically 16299 / really 15063 !  
 
 ## Status / my 2 cents
-- Micro-research + fork(ing) of original source code
+- Cloning original source code, (re)searching xaml "15063-compatibility"
 - Min. win sdk downshifted to 17134 !
 - Draft. Prototype / Pre-Pre-Pre-Alpha version. Still exploring modern-ui & mvvm "magic"...
 - Some common tools experiments / patches
-- I injected all fresh c# code & xaml fixes of original version 0.6.8 into my fork. 
+- I fixing app crash(ing) after start.
+- I detected that ShellPage & control "15063-compatibility" mismatch still there (app crashes after login)
+ 
 
 ## Caution
 - I noticed that src code uses some "dev telemetry". It's question of your "login-password" security, I think. I have no time to fix cut off that deal. 
 - Please use special "app password" for your own app tests. 
 
-### Bluesky App Passwords
 
-App passwords are codes that Bluesky generates for you which you can use for third-party apps, such as Beeskie. It is **not** that same as your Bluesky account password.
-
-### How to start with BlueSky social network and how to generate an App Password
-
-- Register your account on the official website https://bsky.app.
-- Login to the official website https://bsky.app.
-- Open settings from the left sidebar menu.
-- Click "Privacy and security".
-- Click "App passwords".
-- Click "Add App Password". Bluesky will generate a new code and display it on screen. 
-- Start Beeskie app. Copy that code and paste it into Beeskie in the app password field. 
-- Field "handle" means word construction like "youraccountname.bsky.social". However, your email can substitute this handle.
+## ToDo
+- Use some telemetry to "emulate" app debug
 
 ## References
 - https://github.com/jenius-apps/beeskie/ Original Beeskie project
 - https://github.com/jenius-apps/ Jenius Apps, Beeskie's creators/dev team 
+- https://github.com/UnicordDev/UniSky/ UniSky, W10M-compatible BlueSky client by Thomas May aka WamWooWam   
+
 
 ## Licensing
 MIT License
