@@ -25,7 +25,7 @@ public sealed partial class ShellPage : Page
     public ShellPageViewModel ViewModel { get; }
 
     public string DisplayTitle 
-        => $"Beeskie v0.7.0";//{SystemInformation.Instance.ApplicationVersion.ToFormattedString().TrimEnd('0').TrimEnd('.')}";
+        => $"Beeskie v0.7.1";//{SystemInformation.Instance.ApplicationVersion.ToFormattedString().TrimEnd('0').TrimEnd('.')}";
 
     protected async override void OnNavigatedTo(NavigationEventArgs e)
     {
