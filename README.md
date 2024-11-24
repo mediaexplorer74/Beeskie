@@ -1,4 +1,4 @@
-# Beeskie v0.6.8 (Beta) - main branch
+# Beeskie v0.7.0 (Beta) - andromeda branch
 ![](Images/logo.png)
 
 My RnD of Beeskie, modern uwp app for BlueSky social network.  The main gool is to do src code Andromeda-compatible (see https://github.com/mediaexplorer74/Andromeda  for details / my samples/dev kit)!
@@ -24,7 +24,6 @@ Beeskie (Beta) on Microsoft Store: https://apps.microsoft.com/store/detail/9PCGN
 
 ## Screenshots
 ![](Images/shot01.png)
-![](Images/shot02.png)
 
 
 ## Tech/dev details
@@ -45,24 +44,15 @@ Beeskie (Beta) on Microsoft Store: https://apps.microsoft.com/store/detail/9PCGN
 - I noticed that src code uses some "dev telemetry". It's question of your "login-password" security, I think. I have no time to fix cut off that deal. 
 - Please use special "app password" for your own app tests. 
 
-### Bluesky App Passwords
-
-App passwords are codes that Bluesky generates for you which you can use for third-party apps, such as Beeskie. It is **not** that same as your Bluesky account password.
-
-### How to start with BlueSky social network and how to generate an App Password
-
-- Register your account on the official website https://bsky.app.
-- Login to the official website https://bsky.app.
-- Open settings from the left sidebar menu.
-- Click "Privacy and security".
-- Click "App passwords".
-- Click "Add App Password". Bluesky will generate a new code and display it on screen. 
-- Start Beeskie app. Copy that code and paste it into Beeskie in the app password field. 
-- Field "handle" means word construction like "youraccountname.bsky.social". However, your email can substitute this handle.
+## TODO
+- Return my Lumia 950 to "W10M build 17686" and take some photos of "Beeskie on Andromeda"... ;) 
 
 ## References
 - https://github.com/jenius-apps/beeskie/ Original Beeskie project
 - https://github.com/jenius-apps/ Jenius Apps, Beeskie's creators/dev team 
+- https://github.com/Ritsu909/Andromeda_17686
+- https://github.com/Empyreal96/AndromedaOS_16266
+- https://github.com/mediaexplorer74/Andromeda
 
 ## Licensing
 MIT License

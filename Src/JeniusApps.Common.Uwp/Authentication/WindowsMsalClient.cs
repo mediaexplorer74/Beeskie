@@ -27,10 +27,11 @@ public class WindowsMsalClient : IMsalClient
         _telemetry = telemetry;
         _clientId = clientId;
 
+        //RnD
         _msalSdkClient = PublicClientApplicationBuilder
             .Create(_clientId)
             .WithAuthority(authorityUrl)
-            .WithBroker() // See note below.
+            //.WithBroker() // See note below.
             .Build();
 
         // ****** WithBroker notes ******
