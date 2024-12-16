@@ -26,22 +26,19 @@ I quickly researched Beeskie's solution structure. It consists of 3 .net-standar
 - Min. Win. OS build: tecnically 16299 / really 15063 !  
 
 ## Status / my 2 cents
-- Cloning original source code, (re)searching xaml "15063-compatibility"
-- Min. win sdk downshifted to 17134 !
+- Original 0.7.5 cloned 90 % ("as is")m UI not adapted to mobile mode
+- Min. win sdk downshifted to 16299
 - Draft. Prototype / Pre-Pre-Pre-Alpha version. Still exploring modern-ui & mvvm "magic"...
 - Some common tools experiments / patches
 - I fixing app crash(ing) after start.
-- I detected that ShellPage & control "15063-compatibility" mismatch still there (app crashes after login)
+- I detected that ShellPage & control "15063-compatibility" mismatch still there (app crashes exactly on start!)
 - I create Wiki with "How to use .NET Standard 2.0 under UWP <= 10.0.15063" item. 
  
 
-## Caution
-- I noticed that src code uses some "dev telemetry". It's question of your "login-password" security, I think. I have no time to fix cut off that deal. 
-- Please use special "app password" for your own app tests. 
-
-
 ## ToDo
+- Fix bugs (app start fail, etc.)
 - Use some telemetry to "emulate" app debug
+- Adapt UI to mobile
 
 ## References
 - https://github.com/jenius-apps/beeskie/ Original Beeskie project
@@ -56,6 +53,6 @@ MIT License
 AS IS. No support. RnD only / DIY
 
 ## .
-[m][e] November 2024
+[m][e] December 2024
 
 
