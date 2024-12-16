@@ -11,12 +11,6 @@ The app is currently in public beta. However, you can (may) download Beeskie (Be
 ## Research
 I quickly researched Beeskie's solution structure. It consists of 3 .net-standard 2.0-based "modules" (projects) and 2 uwp-based ones (min. win os build = 17xxx or even 18xxx). I changed 17xxx to 16299, and symplified code a little to support 16299. Ok, what else? Yesterday I accidentally came across an anomaly in the code of the Beeskie analogue called Uni Sky.  I suddenly discovered that a developer with the nickname [WamWooWam](https://github.com/WamWooWam) uses some secret mechanics to launch projects compiled for 16299 and net 2.0 on winphones! I couldn't believe my eyes and created an [issue](https://github.com/UnicordDev/UniSky/issues/7). The man replied to me (for which I thank him very much!) that I need to read this [gist](https://gist.github.com/WamWooWam/e72e5137606f7c59ed657db6587cd5e8). I researched this random find, and so I decided to try to apply this secret knowledge to the Beeskie project. Result: yea, it works/ operates!!! Mama mia :)  
 
-## Screenshots
-![](Images/shot01.png)
-![](Images/shot02.png)
-![](Images/shot03.png)
-![](Images/shot04.png)
-![](Images/shot05.png)
 
 ## Tech/dev details
 - Platforms: UWP only
