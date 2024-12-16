@@ -6,18 +6,47 @@
     xmlns:ex="using:JeniusApps.Common.UI.Uwp"
     xmlns:local="using:BlueskyClient.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BlueskyClient.Models"
+    xmlns:strings="using:BlueskyClient.Strings"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid MinHeight="360">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{x:Bind ViewModel.IsLowCharactersRemaining, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CharsRemainingText.FontWeight" Value="SemiBold" />
+                        <Setter Target="CharsRemainingText.Foreground" Value="{ThemeResource SystemFillColorCautionBrush}" />
+                        <Setter Target="CharsProgressRingBackplate.Foreground" Value="{ThemeResource SystemFillColorCautionBackgroundBrush}" />
+                        <Setter Target="CharsProgressRing.Foreground" Value="{ThemeResource SystemFillColorCautionBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{x:Bind ViewModel.IsNoCharactersRemaining, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CharsRemainingText.FontWeight" Value="SemiBold" />
+                        <Setter Target="CharsRemainingText.Foreground" Value="{ThemeResource SystemFillColorCriticalBrush}" />
+                        <Setter Target="CharsProgressRingBackplate.Foreground" Value="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
+                        <Setter Target="CharsProgressRing.Foreground" Value="{ThemeResource SystemFillColorCriticalBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <Grid Margin="0,0,0,20" Visibility="{x:Bind ex:UIExtensions.CollapsedIfNull(ViewModel.TargetPost), Mode=OneWay}">
             <Grid.ColumnDefinitions>
@@ -32,18 +61,17 @@
                 VerticalAlignment="Stretch"
                 Fill="{ThemeResource TextFillColorTertiaryBrush}" />
 
-
             <winui:PersonPicture
                 Width="40"
                 VerticalAlignment="Top"
                 PreferSmallImage="True"
-                ProfilePicture="{x:Bind ViewModel.TargetAvatar, Mode=OneWay}" />
+                ProfilePicture="{x:Bind ViewModel.ReplyTargetAuthorViewModel.AvatarUrl, Mode=OneWay}" />
 
             <StackPanel
                 Grid.Column="1"
                 Margin="12,0,0,0"
                 VerticalAlignment="Center">
-                <TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.TargetName, Mode=OneWay}" />
+                <TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.ReplyTargetAuthorViewModel.DisplayName, Mode=OneWay}" />
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                     MaxLines="4"
@@ -58,35 +86,114 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
             <winui:PersonPicture
                 Width="40"
                 PreferSmallImage="True"
-                ProfilePicture="{x:Bind ViewModel.Avatar, Mode=OneWay}" />
+                ProfilePicture="{x:Bind ViewModel.AuthorViewModel.AvatarUrl, Mode=OneWay}" />
 
             <StackPanel
                 Grid.Column="1"
                 Margin="12,0,0,0"
                 VerticalAlignment="Center">
-                <TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Author.DisplayName, Mode=OneWay}" />
+                <TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.AuthorViewModel.DisplayName, Mode=OneWay}" />
                 <TextBlock
                     Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                    Text="{x:Bind ViewModel.Author.AtHandle, Mode=OneWay}"
+                    Text="{x:Bind ViewModel.AuthorViewModel.AtHandle, Mode=OneWay}"
                     TextTrimming="CharacterEllipsis" />
             </StackPanel>
+
+            <TextBlock
+                x:Name="CharsRemainingText"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Text="{x:Bind ViewModel.CharactersRemaining.ToString(), Mode=OneWay}"
+                Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(ViewModel.Uploading), Mode=OneWay}" />
+
+            <TextBlock
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Text="{x:Bind strings:Resources.UploadingText}"
+                Visibility="{x:Bind ViewModel.Uploading, Mode=OneWay}" />
+
+            <Grid Grid.Column="3" Margin="8,0,0,0">
+                <winui:ProgressRing
+                    x:Name="CharsProgressRingBackplate"
+                    Width="20"
+                    Height="20"
+                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                    IsIndeterminate="False"
+                    Opacity="0.5"
+                    Value="100" />
+                <winui:ProgressRing
+                    x:Name="CharsProgressRing"
+                    Width="20"
+                    Height="20"
+                    Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                    IsIndeterminate="{x:Bind ViewModel.Uploading, Mode=OneWay}"
+                    Maximum="300"
+                    Value="{x:Bind InputTextBox.Text.Length, Mode=OneWay}" />
+            </Grid>
         </Grid>
 
         <TextBox
+            x:Name="InputTextBox"
             Grid.Row="2"
-            MinHeight="300"
             MaxHeight="360"
             Margin="0,12,0,0"
             HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             AcceptsReturn="True"
-            MaxLength="500"
-            PlaceholderText="What's up?"
+            MaxLength="360"
+            Paste="OnPasteDetected"
+            PlaceholderText="{x:Bind strings:Resources.NewPostPlaceholder}"
             Text="{x:Bind ViewModel.InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap" />
+
+        <GridView
+            Grid.Row="3"
+            Margin="0,12,0,-24"
+            ItemsSource="{x:Bind ViewModel.Images}"
+            SelectionMode="None"
+            Visibility="{x:Bind ViewModel.ImageListVisible, Mode=OneWay}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="models:FutureAccessImage">
+                    <local:LocalImagePreview ImageReference="{x:Bind}" />
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <Grid Grid.Row="4" Margin="0,24,0,-20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Rectangle
+                Grid.ColumnSpan="3"
+                Height="1"
+                Margin="-24,0,-24,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+            <StackPanel Margin="-8,4,0,0" Orientation="Horizontal">
+                <Button
+                    Width="40"
+                    Height="40"
+                    Padding="4"
+                    AutomationProperties.Name="{x:Bind strings:Resources.ImageSelectText}"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Command="{x:Bind ViewModel.AddImageCommand}"
+                    ToolTipService.ToolTip="{x:Bind strings:Resources.ImageSelectText}">
+                    <FontIcon Glyph="{StaticResource GlyphPhoto}" />
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

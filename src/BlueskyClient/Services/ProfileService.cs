@@ -2,10 +2,10 @@
 using Bluesky.NET.Models;
 using BlueskyClient.Caches;
 using BlueskyClient.Constants;
+using FluentResults;
 using JeniusApps.Common.Settings;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.Services;
@@ -31,13 +31,13 @@ public class ProfileService : IProfileService
 
     public async Task<Author?> GetCurrentUserAsync()
     {
-        var handle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
-        if (handle is null)
+        string? identifier = _userSettings.Get<string>(UserSettingsConstants.SignedInDIDKey);
+        if (identifier is null)
         {
             return null;
         }
 
-        return await _profileCache.GetItemAsync(handle);
+        return await _profileCache.GetItemAsync(identifier, default);
     }
 
     public async Task<IReadOnlyList<FeedItem>> GetProfileFeedAsync(string handle)
@@ -47,12 +47,34 @@ public class ProfileService : IProfileService
             return [];
         }
 
-        var token = await _authenticationService.TryGetFreshTokenAsync();
-        if (token is not { Length: > 0 })
+        Result<string> tokenResult = await _authenticationService.TryGetFreshTokenAsync();
+        if (tokenResult.IsFailed)
         {
             return [];
         }
 
-        return await _apiClient.GetAuthorFeedAsync(token, handle);
+        return await _apiClient.GetAuthorFeedAsync(tokenResult.Value, handle);
+    }
+
+    /// <inheritdoc/>
+    public async Task<bool> FollowActorAsync(string subjectDid, CancellationToken ct)
+    {
+        if (subjectDid is not { Length: > 0 })
+        {
+            return false;
+        }
+
+        Author? currentUser = await GetCurrentUserAsync();
+        var tokenResult = await _authenticationService.TryGetFreshTokenAsync();
+        if (tokenResult.IsFailed || currentUser?.Handle is not { Length: > 0 } handle)
+        {
+            return false;
+        }
+
+        return await _apiClient.FollowActorAsync(
+            tokenResult.Value,
+            handle,
+            subjectDid,
+            ct);
     }
 }

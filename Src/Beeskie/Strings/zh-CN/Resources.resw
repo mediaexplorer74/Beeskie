@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppPasswordHelpText" xml:space="preserve">
+    <value>什么是应用程序密码？</value>
+  </data>
+  <data name="BackText" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="FollowersText" xml:space="preserve">
+    <value>追随 者</value>
+  </data>
+  <data name="FollowingText" xml:space="preserve">
+    <value>以后</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>家</value>
+  </data>
+  <data name="IdentifierBoxPlaceholder" xml:space="preserve">
+    <value>Bluesky 电子邮件或用户名</value>
+  </data>
+  <data name="ManageAccountText" xml:space="preserve">
+    <value>管理账户</value>
+  </data>
+  <data name="NewPostPlaceholder" xml:space="preserve">
+    <value>怎么了？</value>
+  </data>
+  <data name="NewPostText" xml:space="preserve">
+    <value>新帖子</value>
+  </data>
+  <data name="NotificationsFollowedText" xml:space="preserve">
+    <value>{0}关注了你</value>
+  </data>
+  <data name="NotificationsLikedText" xml:space="preserve">
+    <value>{0}赞了您的帖子</value>
+  </data>
+  <data name="NotificationsRepostedText" xml:space="preserve">
+    <value>{0} 重新发布了您的帖子</value>
+  </data>
+  <data name="NotificationsText" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="OkayText" xml:space="preserve">
+    <value>好</value>
+  </data>
+  <data name="PasswordBoxPlaceholder" xml:space="preserve">
+    <value>您的特殊 App 专用密码</value>
+  </data>
+  <data name="PostedReplyText" xml:space="preserve">
+    <value>已发布回复</value>
+  </data>
+  <data name="PostsText" xml:space="preserve">
+    <value>职位</value>
+  </data>
+  <data name="ProfileText" xml:space="preserve">
+    <value>轮廓</value>
+  </data>
+  <data name="RepostCaption" xml:space="preserve">
+    <value>转载于 {0}</value>
+  </data>
+  <data name="SendFeedbackText" xml:space="preserve">
+    <value>发送反馈</value>
+  </data>
+  <data name="SessionTimeoutDialogMessage" xml:space="preserve">
+    <value>您的会话已过期，您需要重新登录。</value>
+  </data>
+  <data name="SessionTimeoutDialogTitle" xml:space="preserve">
+    <value>需要登录</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="SignOutDialogMessage" xml:space="preserve">
+    <value>是否确定？您将返回到登录页面。</value>
+  </data>
+  <data name="SignOutDialogTitle" xml:space="preserve">
+    <value>注销</value>
+  </data>
+  <data name="SignOutText" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="StarterPackByText" xml:space="preserve">
+    <value>{0} 的入门包</value>
+  </data>
+  <data name="SubmitText" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="ImageSelectText" xml:space="preserve">
+    <value>添加图片</value>
+  </data>
+  <data name="UploadingText" xml:space="preserve">
+    <value>上传</value>
+  </data>
+  <data name="FeedsText" xml:space="preserve">
+    <value>饲料</value>
+  </data>
+  <data name="LikeText" xml:space="preserve">
+    <value>喜欢</value>
+  </data>
+  <data name="ReplyText" xml:space="preserve">
+    <value>答</value>
+  </data>
+  <data name="RepostText" xml:space="preserve">
+    <value>转贴</value>
+  </data>
+  <data name="FollowingFeedName" xml:space="preserve">
+    <value>以后</value>
+  </data>
+  <data name="MyFeedsSubtitle" xml:space="preserve">
+    <value>您保存的所有源都集中在一个位置</value>
+  </data>
+  <data name="MyFeedsTitle" xml:space="preserve">
+    <value>我的源</value>
+  </data>
+  <data name="PinnedFeedsSubtitle" xml:space="preserve">
+    <value>选择源以更改视图</value>
+  </data>
+  <data name="PinnedFeedsTitle" xml:space="preserve">
+    <value>固定源</value>
+  </data>
+  <data name="RefreshText" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="SearchText" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="SortLatestText" xml:space="preserve">
+    <value>最近的</value>
+  </data>
+  <data name="SortTopText" xml:space="preserve">
+    <value>返回页首</value>
+  </data>
+  <data name="SearchTabAutomationName" xml:space="preserve">
+    <value>排序选项</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="RecentSearchesText" xml:space="preserve">
+    <value>最近搜索</value>
+  </data>
+  <data name="RecentSearchesPlaceholder" xml:space="preserve">
+    <value>您最近的搜索将在此处显示。开始搜索吧！</value>
+  </data>
+  <data name="SearchPagePlaceholder1" xml:space="preserve">
+    <value>你还在等什么？</value>
+  </data>
+  <data name="SearchPagePlaceholder2" xml:space="preserve">
+    <value>开始搜索吧！</value>
+  </data>
+  <data name="FollowText" xml:space="preserve">
+    <value>跟随</value>
+  </data>
+  <data name="SuggestedAccountsSubtitle" xml:space="preserve">
+    <value>关注更多帐户以了解您的兴趣并建立您的网络。</value>
+  </data>
+  <data name="SuggestedAccountsTitle" xml:space="preserve">
+    <value>建议的账户</value>
+  </data>
+  <data name="PeopleText" xml:space="preserve">
+    <value>人</value>
+  </data>
+  <data name="PinToHomeText" xml:space="preserve">
+    <value>固定到主页</value>
+    <comment>Pinning or bookmarking a feed so you can see it from the home page</comment>
+  </data>
+</root>

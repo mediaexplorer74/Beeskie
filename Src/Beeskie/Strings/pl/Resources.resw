@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppPasswordHelpText" xml:space="preserve">
+    <value>Czym jest hasło do aplikacji?</value>
+  </data>
+  <data name="BackText" xml:space="preserve">
+    <value>Wstecz</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="FollowersText" xml:space="preserve">
+    <value>obserwujących</value>
+  </data>
+  <data name="FollowingText" xml:space="preserve">
+    <value>obserwowanych</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>Główna</value>
+  </data>
+  <data name="IdentifierBoxPlaceholder" xml:space="preserve">
+    <value>Adres e-mail lub nazwa użytkownika Bluesky</value>
+  </data>
+  <data name="ManageAccountText" xml:space="preserve">
+    <value>Zarządzaj kontem</value>
+  </data>
+  <data name="NewPostPlaceholder" xml:space="preserve">
+    <value>Co tam?</value>
+  </data>
+  <data name="NewPostText" xml:space="preserve">
+    <value>Nowy post</value>
+  </data>
+  <data name="NotificationsFollowedText" xml:space="preserve">
+    <value>{0} teraz Cię obserwuje</value>
+  </data>
+  <data name="NotificationsLikedText" xml:space="preserve">
+    <value>{0} lubi Twój post</value>
+  </data>
+  <data name="NotificationsRepostedText" xml:space="preserve">
+    <value>{0} zrepostował(a) Twój post</value>
+  </data>
+  <data name="NotificationsText" xml:space="preserve">
+    <value>Powiadomienia</value>
+  </data>
+  <data name="OkayText" xml:space="preserve">
+    <value>Okej</value>
+  </data>
+  <data name="PasswordBoxPlaceholder" xml:space="preserve">
+    <value>Twoje specjalne hasło do aplikacji</value>
+  </data>
+  <data name="PostedReplyText" xml:space="preserve">
+    <value>Dodał(a) odpowiedź</value>
+  </data>
+  <data name="PostsText" xml:space="preserve">
+    <value>Posty</value>
+  </data>
+  <data name="ProfileText" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="RepostCaption" xml:space="preserve">
+    <value>Repostowane przez {0}</value>
+  </data>
+  <data name="SendFeedbackText" xml:space="preserve">
+    <value>Wyślij opinię</value>
+  </data>
+  <data name="SessionTimeoutDialogMessage" xml:space="preserve">
+    <value>Twoja sesja wygasła i musisz zalogować się ponownie.</value>
+  </data>
+  <data name="SessionTimeoutDialogTitle" xml:space="preserve">
+    <value>Wymagane logowanie</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>Rejestracja</value>
+  </data>
+  <data name="SignOutDialogMessage" xml:space="preserve">
+    <value>Na pewno? Nastąpi powrót do strony logowania.</value>
+  </data>
+  <data name="SignOutDialogTitle" xml:space="preserve">
+    <value>Wylogowywanie</value>
+  </data>
+  <data name="SignOutText" xml:space="preserve">
+    <value>Wyloguj się</value>
+  </data>
+  <data name="StarterPackByText" xml:space="preserve">
+    <value>Pakiet startowy od {0}</value>
+  </data>
+  <data name="SubmitText" xml:space="preserve">
+    <value>Prześlij</value>
+  </data>
+  <data name="ImageSelectText" xml:space="preserve">
+    <value>Dodaj obraz</value>
+  </data>
+  <data name="UploadingText" xml:space="preserve">
+    <value>Przesyłanie</value>
+  </data>
+  <data name="FeedsText" xml:space="preserve">
+    <value>Kanały</value>
+  </data>
+  <data name="LikeText" xml:space="preserve">
+    <value>Lubić</value>
+  </data>
+  <data name="ReplyText" xml:space="preserve">
+    <value>Odpowiedź</value>
+  </data>
+  <data name="FollowingFeedName" xml:space="preserve">
+    <value>Następujący</value>
+  </data>
+  <data name="MyFeedsSubtitle" xml:space="preserve">
+    <value>Wszystkie zapisane kanały w jednym miejscu</value>
+  </data>
+  <data name="MyFeedsTitle" xml:space="preserve">
+    <value>Moje kanały informacyjne</value>
+  </data>
+  <data name="PinnedFeedsSubtitle" xml:space="preserve">
+    <value>Wybierz plik danych, aby zmienić widok</value>
+  </data>
+  <data name="PinnedFeedsTitle" xml:space="preserve">
+    <value>Przypięte kanały informacyjne</value>
+  </data>
+  <data name="RefreshText" xml:space="preserve">
+    <value>Odświeżyć</value>
+  </data>
+  <data name="SearchText" xml:space="preserve">
+    <value>Szukać</value>
+  </data>
+  <data name="SortLatestText" xml:space="preserve">
+    <value>Najnowszy</value>
+  </data>
+  <data name="SortTopText" xml:space="preserve">
+    <value>Do góry</value>
+  </data>
+  <data name="SearchTabAutomationName" xml:space="preserve">
+    <value>Opcje sortowania</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Usunąć</value>
+  </data>
+  <data name="RecentSearchesText" xml:space="preserve">
+    <value>Ostatnie wyszukiwania</value>
+  </data>
+  <data name="RecentSearchesPlaceholder" xml:space="preserve">
+    <value>W tym miejscu pojawią się Twoje ostatnie wyszukiwania. Zacznij szukać!</value>
+  </data>
+  <data name="SearchPagePlaceholder1" xml:space="preserve">
+    <value>Na co czekasz?</value>
+  </data>
+  <data name="SearchPagePlaceholder2" xml:space="preserve">
+    <value>Zacznij szukać!</value>
+  </data>
+  <data name="FollowText" xml:space="preserve">
+    <value>Następować</value>
+  </data>
+  <data name="SuggestedAccountsSubtitle" xml:space="preserve">
+    <value>Obserwuj więcej kont, aby połączyć się ze swoimi zainteresowaniami i zbudować swoją sieć.</value>
+  </data>
+  <data name="SuggestedAccountsTitle" xml:space="preserve">
+    <value>Sugerowane konta</value>
+  </data>
+  <data name="PeopleText" xml:space="preserve">
+    <value>Lud</value>
+  </data>
+  <data name="PinToHomeText" xml:space="preserve">
+    <value>Przypnij do ekranu głównego</value>
+    <comment>Pinning or bookmarking a feed so you can see it from the home page</comment>
+  </data>
+</root>

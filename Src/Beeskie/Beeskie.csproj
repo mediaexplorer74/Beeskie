@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{FEBDF715-48BB-46F2-ABC6-6FF32131B5B0}</ProjectGuid>
+    <ProjectGuid>{2F0DEF6B-3D93-4DB8-905B-19E3983A0BBD}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlueskyClient</RootNamespace>
@@ -119,7 +119,6 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
     <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -136,13 +135,35 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
+  <PropertyGroup Label="MultilingualAppToolkit">
+    <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
+    <MultilingualFallbackLanguage>en-US</MultilingualFallbackLanguage>
+    <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
+    <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.Configuration.xaml.cs" />
+    <Compile Include="App.Configuration.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Collections\PaginatedCollection.cs" />
+    <Compile Include="Constants\StringShortcuts.cs" />
     <Compile Include="Controls\EmbeddedPost.xaml.cs">
       <DependentUpon>EmbeddedPost.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FacetTextBlock.xaml.cs">
+      <DependentUpon>FacetTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FeedItemShimmer.xaml.cs">
+      <DependentUpon>FeedItemShimmer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LocalImagePreview.xaml.cs">
+      <DependentUpon>LocalImagePreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostEmbeds.xaml.cs">
+      <DependentUpon>PostEmbeds.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NewPostControl.xaml.cs">
       <DependentUpon>NewPostControl.xaml</DependentUpon>
@@ -151,19 +172,26 @@
       <DependentUpon>NewPostDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NotificationTemplateSelector.cs" />
-    <Compile Include="Controls\PostEmbeds.xaml.cs">
-      <DependentUpon>PostEmbeds.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ProfileControl.xaml.cs">
       <DependentUpon>ProfileControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\ListViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceDictionaries\FeedItemTemplateResource.xaml.cs">
       <DependentUpon>FeedItemTemplateResource.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Strings\en-US\Resources.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resw</DependentUpon>
+    </Compile>
     <Compile Include="Tools\AppSettings.cs" />
-    <Compile Include="Tools\SecureCredentialStorage.cs" />
+    <Compile Include="Tools\FileReaderWriter.cs" />
+    <Compile Include="Tools\FutureAccessFilePicker.cs" />
+    <Compile Include="Views\FeedsPage.xaml.cs">
+      <DependentUpon>FeedsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -173,12 +201,16 @@
     <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellPage.xaml.cs">
       <DependentUpon>ShellPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsCredentialStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -186,56 +218,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\custom-twitter\LargeTile.scale-100.png" />
-    <Content Include="Assets\custom-twitter\LargeTile.scale-125.png" />
-    <Content Include="Assets\custom-twitter\LargeTile.scale-150.png" />
-    <Content Include="Assets\custom-twitter\LargeTile.scale-200.png" />
-    <Content Include="Assets\custom-twitter\LargeTile.scale-400.png" />
-    <Content Include="Assets\custom-twitter\SmallTile.scale-100.png" />
-    <Content Include="Assets\custom-twitter\SmallTile.scale-125.png" />
-    <Content Include="Assets\custom-twitter\SmallTile.scale-150.png" />
-    <Content Include="Assets\custom-twitter\SmallTile.scale-200.png" />
-    <Content Include="Assets\custom-twitter\SmallTile.scale-400.png" />
-    <Content Include="Assets\custom-twitter\SplashScreen.scale-100.png" />
-    <Content Include="Assets\custom-twitter\SplashScreen.scale-125.png" />
-    <Content Include="Assets\custom-twitter\SplashScreen.scale-150.png" />
-    <Content Include="Assets\custom-twitter\SplashScreen.scale-200.png" />
-    <Content Include="Assets\custom-twitter\SplashScreen.scale-400.png" />
-    <Content Include="Assets\custom-twitter\Square150x150Logo.scale-100.png" />
-    <Content Include="Assets\custom-twitter\Square150x150Logo.scale-125.png" />
-    <Content Include="Assets\custom-twitter\Square150x150Logo.scale-150.png" />
-    <Content Include="Assets\custom-twitter\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\custom-twitter\Square150x150Logo.scale-400.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-unplated_targetsize-16.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-unplated_targetsize-24.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-unplated_targetsize-256.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-unplated_targetsize-32.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.altform-unplated_targetsize-48.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.scale-100.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.scale-125.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.scale-150.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.scale-400.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.targetsize-16.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.targetsize-24.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.targetsize-256.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.targetsize-32.png" />
-    <Content Include="Assets\custom-twitter\Square44x44Logo.targetsize-48.png" />
-    <Content Include="Assets\custom-twitter\StoreLogo.scale-100.png" />
-    <Content Include="Assets\custom-twitter\StoreLogo.scale-125.png" />
-    <Content Include="Assets\custom-twitter\StoreLogo.scale-150.png" />
-    <Content Include="Assets\custom-twitter\StoreLogo.scale-200.png" />
-    <Content Include="Assets\custom-twitter\StoreLogo.scale-400.png" />
-    <Content Include="Assets\custom-twitter\Wide310x150Logo.scale-100.png" />
-    <Content Include="Assets\custom-twitter\Wide310x150Logo.scale-125.png" />
-    <Content Include="Assets\custom-twitter\Wide310x150Logo.scale-150.png" />
-    <Content Include="Assets\custom-twitter\Wide310x150Logo.scale-200.png" />
-    <Content Include="Assets\custom-twitter\Wide310x150Logo.scale-400.png" />
+    <Content Include="Assets\AppLogo100.png" />
+    <Content Include="Assets\AppLogo300.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
@@ -277,6 +261,7 @@
     <Content Include="Assets\StoreLogo.scale-150.png" />
     <Content Include="Assets\StoreLogo.scale-200.png" />
     <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\ExternalThumbnailFallback.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
@@ -290,6 +275,81 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\EmbeddedPost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FacetTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FeedItemShimmer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LocalImagePreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostEmbeds.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NewPostControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NewPostDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProfileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionaries\FeedItemTemplateResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FeedsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShellPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SignInPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.3.2</Version>
     </PackageReference>
@@ -302,9 +362,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug">
       <Version>9.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.14</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
       <Version>6.1.1</Version>
     </PackageReference>
@@ -313,6 +370,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
       <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="FluentResults">
+      <Version>3.16.0</Version>
+    </PackageReference>
+    <PackageReference Include="PolySharp">
+      <Version>1.15.0</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.7.3</Version>
@@ -325,69 +390,12 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Resources\en-GB\custom-twitter\Resources.resw" />
-    <PRIResource Include="Resources\en-GB\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <SDKReference Include="WindowsDesktop, Version=10.0.19041.0">
       <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.19041.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="Controls\EmbeddedPost.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\NewPostControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\NewPostDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\PostEmbeds.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ProfileControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ResourceDictionaries\FeedItemTemplateResource.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\HomePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\NotificationsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ProfilePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ShellPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SignInPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\fluentui.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bluesky.NET\Bluesky.NET.csproj">
@@ -408,7 +416,38 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Resources\en-GB\appsettings.resw" />
+    <PRIResource Include="appsettings.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-US\Resources.resw">
+      <SubType>Designer</SubType>
+      <Generator>ReswPlusGenerator</Generator>
+      <LastGenOutput>Resources.generated.cs</LastGenOutput>
+    </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\es\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <XliffResource Include="MultilingualResources\BlueskyClient.Uwp.es.xlf" />
+    <XliffResource Include="MultilingualResources\BlueskyClient.Uwp.ja.xlf" />
+    <XliffResource Include="MultilingualResources\BlueskyClient.Uwp.pl.xlf" />
+    <XliffResource Include="MultilingualResources\BlueskyClient.Uwp.uk.xlf" />
+    <XliffResource Include="MultilingualResources\BlueskyClient.Uwp.zh-CN.xlf" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\pl\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\ja\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\uk\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Beeskie_TemporaryKey.pfx" />
@@ -417,6 +456,10 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.PriResources.targets')" />
+  <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets')" Label="MultilingualAppToolkit">
+    <Warning Text="$(MSBuildProjectFile) is Multilingual build enabled, but the Multilingual App Toolkit is unavailable during the build. If building with Visual Studio, please check to ensure that toolkit is properly installed." />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

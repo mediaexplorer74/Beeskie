@@ -1,11 +1,13 @@
 ﻿using Bluesky.NET.Models;
+using FluentResults;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.Services;
 
 public interface IAuthenticationService
 {
-    Task<AuthResponse?> SignInAsync(string rawUserHandle, string rawPassword);
-    Task<string?> TryGetFreshTokenAsync();
-    Task<(bool, string)> TrySilentSignInAsync();
+    Task<Result<AuthResponse>> SignInAsync(string rawUserHandle, string rawPassword);
+    void SignOut();
+    Task<Result<string>> TryGetFreshTokenAsync();
+    Task<Result<AuthResponse>> TrySilentSignInAsync();
 }

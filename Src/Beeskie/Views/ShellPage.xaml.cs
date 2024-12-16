@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
@@ -24,8 +25,7 @@ public sealed partial class ShellPage : Page
 
     public ShellPageViewModel ViewModel { get; }
 
-    public string DisplayTitle 
-        => $"Beeskie v0.7.1";//{SystemInformation.Instance.ApplicationVersion.ToFormattedString().TrimEnd('0').TrimEnd('.')}";
+    public string DisplayTitle => $"Beeskie 0.7.5";//{SystemInformation.Instance.ApplicationVersion.ToFormattedString().TrimEnd('0').TrimEnd('.')}";
 
     protected async override void OnNavigatedTo(NavigationEventArgs e)
     {
@@ -43,8 +43,8 @@ public sealed partial class ShellPage : Page
     {
         if (e.Key is VirtualKey.Escape)
         {
-            ViewModel.CloseImageViewerCommand.Execute(null);
             e.Handled = true;
+            ViewModel.CloseImageViewerCommand.Execute("escapeKey");
         }
     }
 
@@ -52,8 +52,21 @@ public sealed partial class ShellPage : Page
     {
         if (e.OriginalSource is Grid g && g == SmokeGrid)
         {
-            ViewModel.CloseImageViewerCommand.Execute(null);
             e.Handled = true;
+            ViewModel.CloseImageViewerCommand.Execute("backgroundClicked");
+        }
+    }
+
+    private void OnFeedbackClicked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+    {
+        App.Services.GetRequiredService<ITelemetry>().TrackEvent(TelemetryConstants.FeedbackClicked);
+    }
+
+    private void OnProfileControlClicked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+    {
+        if (sender is Button b)
+        {
+            FlyoutBase.ShowAttachedFlyout(b);
         }
     }
 }

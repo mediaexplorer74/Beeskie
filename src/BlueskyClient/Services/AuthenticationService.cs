@@ -1,10 +1,12 @@
 ﻿using Bluesky.NET.ApiClients;
 using Bluesky.NET.Models;
 using BlueskyClient.Constants;
-using BlueskyClient.Tools;
+using FluentResults;
 using JeniusApps.Common.Settings;
+using JeniusApps.Common.Tools;
 using System;
 using System.Threading.Tasks;
+
 
 namespace BlueskyClient.Services;
 
@@ -29,75 +31,110 @@ public sealed class AuthenticationService : IAuthenticationService
     }
 
     /// <inheritdoc/>
-    public async Task<(bool, string)> TrySilentSignInAsync()
+    public async Task<Result<AuthResponse>> TrySilentSignInAsync()
     {
 #if DEBUG
         //return (false, "debugReturnFalse");
 #endif
-        string? storedUserHandle = _userSettings.Get<string>(UserSettingsConstants.LastUsedUserHandleKey) ?? string.Empty;
-        string? storedRefreshToken = _secureCredentialStorage.GetCredential(storedUserHandle);
+        string? storedDid = _userSettings.Get<string>(UserSettingsConstants.SignedInDIDKey) ?? string.Empty;
+        string? storedRefreshToken = _secureCredentialStorage.GetCredential(storedDid);
         if (storedRefreshToken is not { Length: > 0 })
         {
-            return (false, "emptyStoredRefreshToken");
+            return Result.Fail<AuthResponse>("Stored refresh token was empty.");
         }
 
-        var authResponse = await _apiClient.RefreshAsync(storedRefreshToken);
-        UpdateStoredToken(authResponse);
-
-        return (authResponse?.Success is true, authResponse?.ErrorMessage ?? string.Empty);
-    }
-
-    /// <inheritdoc/>
-    public async Task<AuthResponse?> SignInAsync(string rawUserHandleOrEmail, string rawPassword)
-    {
-        var userHandleOrEmail = rawUserHandleOrEmail.Trim();
-        var password = rawPassword.Trim();
-
-        if (string.IsNullOrEmpty(userHandleOrEmail) || string.IsNullOrEmpty(password))
+        // Get a new token via the refresh token.
+        Result<AuthResponse> result = await _apiClient.RefreshAsync(storedRefreshToken);
+        if (result.IsSuccess)
         {
-            return null;
+            UpdateStoredToken(result.Value);
         }
 
-        var result = await _apiClient.AuthenticateAsync(userHandleOrEmail, password);
-        UpdateStoredToken(result);
-
-        if (result is { Success: true, Handle: string { Length: > 0 } handle })
+        // If the refresh token was already expired, then used the stored app password.
+        string? storedAppPassword = _secureCredentialStorage.GetCredential(AppPasswordCredentialKey(storedDid));
+        if (storedAppPassword is { Length: > 0 })
         {
-            _userSettings.Set(UserSettingsConstants.LastUsedUserHandleKey, handle);
+            result = await SignInWithValidatedCredentialsAsync(storedDid, 
+                storedAppPassword);
         }
 
         return result;
     }
 
-    public async Task<string?> TryGetFreshTokenAsync()
+    /// <inheritdoc/>
+    public void SignOut()
+    {
+        string? storedDid = _userSettings.Get<string>(
+            UserSettingsConstants.SignedInDIDKey);
+        if (storedDid is { Length: > 0 })
+        {
+            _secureCredentialStorage.SetCredential(storedDid, string.Empty);
+            _secureCredentialStorage.SetCredential(AppPasswordCredentialKey(storedDid), 
+                string.Empty);
+        }
+
+        _userSettings.Set(UserSettingsConstants.LocalUserIdKey, string.Empty);
+        _userSettings.Set(UserSettingsConstants.SignedInDIDKey, string.Empty);
+        _accesToken = null;
+        _refreshToken = null;
+        _expirationTime = null;
+    }
+
+    /// <inheritdoc/>
+    public async Task<Result<AuthResponse>> SignInAsync(string rawUserHandleOrEmail, string rawPassword)
+    {
+        var userHandleOrEmail = rawUserHandleOrEmail.Trim().TrimStart('@');
+        var password = rawPassword.Trim();
+
+        if (string.IsNullOrEmpty(userHandleOrEmail) || string.IsNullOrEmpty(password))
+        {
+            return Result.Fail<AuthResponse>("Empty identifier or password");
+        }
+
+        return await SignInWithValidatedCredentialsAsync(userHandleOrEmail, password);
+    }
+
+    public async Task<Result<string>> TryGetFreshTokenAsync()
     {
         if (_accesToken is null || _refreshToken is null || _expirationTime is null)
         {
             // Not initialized at all. Need to perform sign in.
-            return null;
+            return Result.Fail<string>("Not initialized yet. Try authenticating explicitly or silently.");
         }
 
+        // First, if the current token is expired, use the refresh token to retrieve a new token.
+        // If the token isn't expired, then just skip this refresh.
         if (DateTime.Now >= _expirationTime.Value && _refreshToken is string refreshToken)
         {
-            var authResponse = await _apiClient.RefreshAsync(refreshToken);
-            UpdateStoredToken(authResponse);
+            Result<AuthResponse> authResponse = await _apiClient.RefreshAsync(refreshToken);
+
+            if (authResponse.IsSuccess)
+            {
+                UpdateStoredToken(authResponse.Value);
+            }
         }
 
+        // At this point, if the token is still valid, return it.
         if (DateTime.Now < _expirationTime.Value && _accesToken is string token)
         {
-            return token;
+            return Result.Ok(token);
         }
 
-        // Everything failed, so return null.
-        return null;
+        // If the refresh failed and the token is still not valid, do a full silient auth.
+        var result = await TrySilentSignInAsync();
+        if (result.IsSuccess && result.Value.AccessJwt is string newToken)
+        {
+            return Result.Ok(newToken);
+        }
+
+        return Result.Fail<string>(result.Errors);
     }
 
-    private void UpdateStoredToken(AuthResponse? response)
+    private void UpdateStoredToken(AuthResponse response)
     {
         if (response is
             {
-                Success: true,
-                Handle: string { Length: > 0 } handle,
+                Did: string { Length: > 0 } did,
                 AccessJwt: string { Length: > 0 } accessToken,
                 RefreshJwt: string { Length: > 0 } refreshToken
             })
@@ -105,7 +142,31 @@ public sealed class AuthenticationService : IAuthenticationService
             _accesToken = accessToken;
             _refreshToken = refreshToken;
             _expirationTime = DateTime.Now.AddHours(TokenHoursToLive);
-            _secureCredentialStorage.SetCredential(handle, refreshToken);
+            _secureCredentialStorage.SetCredential(did, refreshToken);
         }
     }
+
+    private async Task<Result<AuthResponse>> SignInWithValidatedCredentialsAsync(
+        string identifier, string password)
+    {
+        Result<AuthResponse> result = await _apiClient.AuthenticateAsync(identifier, 
+            password);
+
+        if (result.IsSuccess)
+        {
+            UpdateStoredToken(result.Value);
+
+            if (result.Value is { Did: string { Length: > 0 } did })
+            {
+                _userSettings.Set(UserSettingsConstants.SignedInDIDKey, did);
+                _secureCredentialStorage.SetCredential(AppPasswordCredentialKey(did), 
+                    password);
+            }
+        }
+
+        return result;
+    }
+
+
+    private static string AppPasswordCredentialKey(string did) => $"{did}-appPassword";
 }

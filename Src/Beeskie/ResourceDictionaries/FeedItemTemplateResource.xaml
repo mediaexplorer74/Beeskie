@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="using:JeniusApps.Common.UI.Uwp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:strings="using:BlueskyClient.Strings"
     xmlns:vm="using:BlueskyClient.ViewModels">
 
     <Style x:Key="PostButtonIconStyle" TargetType="FontIcon">
@@ -19,8 +20,77 @@
         <Setter Property="Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
     </Style>
 
+    <DataTemplate x:Key="ActorTemplate" x:DataType="vm:AuthorViewModel">
+        <Grid
+            Grid.Row="1"
+            Padding="0,0,0,12"
+            BorderBrush="{ThemeResource AppBarBackgroundThemeBrush}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <PersonPicture
+                Grid.RowSpan="3"
+                Width="48"
+                Height="48"
+                Margin="0,0,12,0"
+                VerticalAlignment="Top"
+                ProfilePicture="{x:Bind AvatarUrl, Mode=OneWay}" />
+
+            <TextBlock
+                Grid.Column="1"
+                FontWeight="SemiBold"
+                Text="{x:Bind DisplayName}"
+                TextTrimming="CharacterEllipsis" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                Text="{x:Bind AtHandle}"
+                TextTrimming="CharacterEllipsis" />
+
+            <Button
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                MinWidth="80"
+                VerticalAlignment="Stretch"
+                AutomationProperties.Name="{x:Bind strings:Resources.FollowText}"
+                Command="{x:Bind FollowCommand}"
+                Style="{StaticResource AccentButtonStyle}">
+                <Grid>
+                    <TextBlock
+                        Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
+                        Text="{x:Bind strings:Resources.FollowText}"
+                        Visibility="{x:Bind ex:UIExtensions.InvertBoolToVis(AlreadyFollowed), Mode=OneWay}" />
+                    <FontIcon
+                        Glyph="{StaticResource GlyphCheckMark}"
+                        Visibility="{x:Bind AlreadyFollowed, Mode=OneWay}" />
+                </Grid>
+            </Button>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="0,8,0,0"
+                MaxLines="4"
+                Text="{x:Bind Description}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="WrapWholeWords" />
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="FeedItemTemplate" x:DataType="vm:FeedItemViewModel">
-        <Grid MaxWidth="600">
+        <Grid MaxWidth="{StaticResource FeedMaxWidth}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
@@ -36,8 +106,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!--FontFamily="{StaticResource FluentUIGlyphs}"-->
-                    <FontIcon
+                <FontIcon
                     Margin="0,0,-8,0"
                     HorizontalAlignment="Right"
                     FontSize="12"
@@ -61,7 +130,7 @@
                     Width="48"
                     Height="48"
                     VerticalAlignment="Top"
-                    ProfilePicture="{x:Bind FeedItem.Post.Author.Avatar}" />
+                    ProfilePicture="{x:Bind AuthorViewModel.AvatarUrl, Mode=OneWay}" />
 
                 <Grid Grid.Column="1" Margin="12,0,0,0">
                     <Grid.RowDefinitions>
@@ -73,17 +142,19 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind FeedItem.Post.Author.DisplayName}" />
+                        <TextBlock FontWeight="SemiBold" Text="{x:Bind AuthorViewModel.DisplayName, Mode=OneWay}" />
                         <TextBlock
                             Margin="4,0,0,0"
                             Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                            Text="{x:Bind FeedItem.Post.Author.AtHandle}" />
+                            Text="{x:Bind AuthorViewModel.AtHandle, Mode=OneWay}" />
+                        <TextBlock
+                            Margin="4,0"
+                            Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                            Text="•" />
+                        <TextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}" Text="{x:Bind TimeSinceCreation}" />
                     </StackPanel>
 
-                    <TextBlock
-                        Grid.Row="1"
-                        Text="{x:Bind FeedItem.Post.Record.Text}"
-                        TextWrapping="WrapWholeWords" />
+                    <controls:FacetTextBlock Grid.Row="1" Record="{x:Bind Post.Record}" />
 
                     <controls:PostEmbeds
                         Grid.Row="2"
@@ -106,7 +177,10 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <HyperlinkButton Command="{x:Bind ReplyCommand}" IsEnabled="{x:Bind ex:UIExtensions.Not(ReplyCommand.IsRunning), Mode=OneWay}">
+                        <HyperlinkButton
+                            AutomationProperties.Name="{x:Bind strings:Resources.ReplyText}"
+                            Command="{x:Bind ReplyCommand}"
+                            IsEnabled="{x:Bind ex:UIExtensions.Not(ReplyCommand.IsRunning), Mode=OneWay}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon Glyph="{StaticResource GlyphMessage}" Style="{StaticResource PostButtonIconStyle}" />
                                 <TextBlock
@@ -117,6 +191,7 @@
                         </HyperlinkButton>
                         <HyperlinkButton
                             Grid.Column="1"
+                            AutomationProperties.Name="{x:Bind strings:Resources.RepostText}"
                             Command="{x:Bind RepostCommand}"
                             IsEnabled="{x:Bind ex:UIExtensions.Not(RepostCommand.IsRunning), Mode=OneWay}">
                             <StackPanel Orientation="Horizontal">
@@ -139,6 +214,7 @@
                         </HyperlinkButton>
                         <HyperlinkButton
                             Grid.Column="2"
+                            AutomationProperties.Name="{x:Bind strings:Resources.LikeText}"
                             Command="{x:Bind LikeCommand}"
                             IsEnabled="{x:Bind ex:UIExtensions.Not(LikeCommand.IsRunning), Mode=OneWay}">
                             <StackPanel Orientation="Horizontal">

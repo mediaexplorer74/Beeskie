@@ -1,4 +1,4 @@
-# Beeskie v0.7.1 (experimental) - fluent branch
+# Beeskie v0.7.5 (experimental) - fluent branch
 ![](Images/logo.png)
 
 My RnD of Beeskie, modern uwp app for BlueSky social network.  The main gool is to do Beeskie's src code W10M-compatible via very non-trivial "special mechanics".
@@ -13,20 +13,25 @@ I quickly researched Beeskie's solution structure. It consists of 3 .net-standar
 
 ## Screenshots
 ![](Images/shot01.png)
+![](Images/shot02.png)
+![](Images/shot03.png)
+![](Images/shot04.png)
+![](Images/shot05.png)
 
 ## Tech/dev details
 - Platforms: UWP only
 - Targets: x86; x64; ARM (and ARM64 potentially)
 - OSes: Windows 10 (Mobile)
-- Win. SDK used: 1941 
+- Win. SDK used: 19041 
 - Min. Win. OS build: tecnically 16299 / really 15063 !  
 
 ## Status / my 2 cents
 - Cloning original source code, (re)searching xaml "15063-compatibility"
-- Min. win sdk downshifted to 16299
+- Min. win sdk downshifted to 17134 !
+- Draft. Prototype / Pre-Pre-Pre-Alpha version. Still exploring modern-ui & mvvm "magic"...
 - Some common tools experiments / patches
-- I fixing app crash(ing) after start. But only login page live at now :(
-- I detected that ShellPage & control "15063-compatibility" mismatch still there (app crashes after login!)
+- I fixing app crash(ing) after start.
+- I detected that ShellPage & control "15063-compatibility" mismatch still there (app crashes after login)
 - I create Wiki with "How to use .NET Standard 2.0 under UWP <= 10.0.15063" item. 
  
 
@@ -36,8 +41,7 @@ I quickly researched Beeskie's solution structure. It consists of 3 .net-standar
 
 
 ## ToDo
-- Use some telemetry to "emulate" app debug xaml error, etc.
-- Adapt UI to small-sized mobile devices...
+- Use some telemetry to "emulate" app debug
 
 ## References
 - https://github.com/jenius-apps/beeskie/ Original Beeskie project

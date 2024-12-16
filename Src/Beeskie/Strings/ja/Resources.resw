@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppPasswordHelpText" xml:space="preserve">
+    <value>アプリパスワードとは?</value>
+  </data>
+  <data name="BackText" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>閉める</value>
+  </data>
+  <data name="FeedsText" xml:space="preserve">
+    <value>フィード</value>
+  </data>
+  <data name="FollowersText" xml:space="preserve">
+    <value>取り巻き</value>
+  </data>
+  <data name="FollowingFeedName" xml:space="preserve">
+    <value>次</value>
+  </data>
+  <data name="FollowingText" xml:space="preserve">
+    <value>次</value>
+  </data>
+  <data name="HomeText" xml:space="preserve">
+    <value>家</value>
+  </data>
+  <data name="IdentifierBoxPlaceholder" xml:space="preserve">
+    <value>Blueskyのメールアドレスまたはユーザー名</value>
+  </data>
+  <data name="ImageSelectText" xml:space="preserve">
+    <value>画像を追加</value>
+  </data>
+  <data name="LikeText" xml:space="preserve">
+    <value>という感じで</value>
+  </data>
+  <data name="ManageAccountText" xml:space="preserve">
+    <value>アカウントの管理</value>
+  </data>
+  <data name="MyFeedsSubtitle" xml:space="preserve">
+    <value>保存したすべてのフィードを 1 か所にまとめる</value>
+  </data>
+  <data name="MyFeedsTitle" xml:space="preserve">
+    <value>マイフィード</value>
+  </data>
+  <data name="NewPostPlaceholder" xml:space="preserve">
+    <value>最近どうですか。</value>
+  </data>
+  <data name="NewPostText" xml:space="preserve">
+    <value>新しい投稿</value>
+  </data>
+  <data name="NotificationsFollowedText" xml:space="preserve">
+    <value>{0}あなたをフォローしました</value>
+  </data>
+  <data name="NotificationsLikedText" xml:space="preserve">
+    <value>{0}あなたの投稿をいいねしました</value>
+  </data>
+  <data name="NotificationsRepostedText" xml:space="preserve">
+    <value>{0}投稿を再投稿しました</value>
+  </data>
+  <data name="NotificationsText" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="OkayText" xml:space="preserve">
+    <value>大丈夫です</value>
+  </data>
+  <data name="PasswordBoxPlaceholder" xml:space="preserve">
+    <value>特別なアプリパスワード</value>
+  </data>
+  <data name="PinnedFeedsSubtitle" xml:space="preserve">
+    <value>フィードを選択してビューを変更する</value>
+  </data>
+  <data name="PinnedFeedsTitle" xml:space="preserve">
+    <value>ピン留めされたフィード</value>
+  </data>
+  <data name="PostedReplyText" xml:space="preserve">
+    <value>返信を投稿しました</value>
+  </data>
+  <data name="PostsText" xml:space="preserve">
+    <value>楨</value>
+  </data>
+  <data name="ProfileText" xml:space="preserve">
+    <value>プロフィール</value>
+  </data>
+  <data name="ReplyText" xml:space="preserve">
+    <value>答える</value>
+  </data>
+  <data name="RepostCaption" xml:space="preserve">
+    <value>再投稿 {0}</value>
+  </data>
+  <data name="RepostText" xml:space="preserve">
+    <value>再</value>
+  </data>
+  <data name="SendFeedbackText" xml:space="preserve">
+    <value>フィードバックの送信</value>
+  </data>
+  <data name="SessionTimeoutDialogMessage" xml:space="preserve">
+    <value>セッションの有効期限が切れたため、再度サインインする必要があります。</value>
+  </data>
+  <data name="SessionTimeoutDialogTitle" xml:space="preserve">
+    <value>サインインが必要です</value>
+  </data>
+  <data name="SignInText" xml:space="preserve">
+    <value>サインイン</value>
+  </data>
+  <data name="SignOutDialogMessage" xml:space="preserve">
+    <value>確かですか。サインイン ページに戻ります。</value>
+  </data>
+  <data name="SignOutDialogTitle" xml:space="preserve">
+    <value>サインアウト</value>
+  </data>
+  <data name="SignOutText" xml:space="preserve">
+    <value>サインアウト</value>
+  </data>
+  <data name="StarterPackByText" xml:space="preserve">
+    <value>スターターパック by {0}</value>
+  </data>
+  <data name="SubmitText" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="UploadingText" xml:space="preserve">
+    <value>アップロード</value>
+  </data>
+  <data name="RefreshText" xml:space="preserve">
+    <value>リフレッシュ</value>
+  </data>
+  <data name="SearchText" xml:space="preserve">
+    <value>捜索</value>
+  </data>
+  <data name="SortLatestText" xml:space="preserve">
+    <value>最新</value>
+  </data>
+  <data name="SortTopText" xml:space="preserve">
+    <value>ページのトップへ</value>
+  </data>
+  <data name="SearchTabAutomationName" xml:space="preserve">
+    <value>並べ替えオプション</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="RecentSearchesText" xml:space="preserve">
+    <value>最近の検索</value>
+  </data>
+  <data name="RecentSearchesPlaceholder" xml:space="preserve">
+    <value>最近の検索内容がここに表示されます。検索を始めましょう!</value>
+  </data>
+  <data name="SearchPagePlaceholder1" xml:space="preserve">
+    <value>何をためらっているんですか。</value>
+  </data>
+  <data name="SearchPagePlaceholder2" xml:space="preserve">
+    <value>検索を始めましょう!</value>
+  </data>
+  <data name="FollowText" xml:space="preserve">
+    <value>従う</value>
+  </data>
+  <data name="SuggestedAccountsSubtitle" xml:space="preserve">
+    <value>より多くのアカウントをフォローして、興味のあるつながりを深め、ネットワークを構築しましょう。</value>
+  </data>
+  <data name="SuggestedAccountsTitle" xml:space="preserve">
+    <value>おすすめのアカウント</value>
+  </data>
+  <data name="PeopleText" xml:space="preserve">
+    <value>人</value>
+  </data>
+  <data name="PinToHomeText" xml:space="preserve">
+    <value>ホームにピン留め</value>
+    <comment>Pinning or bookmarking a feed so you can see it from the home page</comment>
+  </data>
+</root>

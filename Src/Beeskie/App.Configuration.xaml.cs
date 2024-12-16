@@ -17,7 +17,7 @@ using JeniusApps.Common.Tools;
 using JeniusApps.Common.Tools.Uwp;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.DependencyInjection;
-//using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.Helpers;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;
@@ -39,8 +39,7 @@ partial class App
 
             if (serviceProvider is null)
             {
-                ThrowHelper.ThrowInvalidOperationException(
-                    "The service provider is not initialized");
+                ThrowHelper.ThrowInvalidOperationException("The service provider is not initialized");
             }
 
             return serviceProvider;
@@ -65,8 +64,7 @@ partial class App
             return new AppInsightsTelemetry(apiKey, context: context);
         });
 
-        collection.AddKeyedSingleton<INavigator, Navigator>(
-            NavigationConstants.RootNavigatorKey, (serviceProvider, key) =>
+        collection.AddKeyedSingleton<INavigator, Navigator>(NavigationConstants.RootNavigatorKey, (serviceProvider, key) =>
         {
             return new Navigator(new Dictionary<string, Type>
             {
@@ -75,14 +73,15 @@ partial class App
             });
         });
 
-        collection.AddKeyedSingleton<INavigator, Navigator>(
-            NavigationConstants.ContentNavigatorKey, (serviceProvider, key) =>
+        collection.AddKeyedSingleton<INavigator, Navigator>(NavigationConstants.ContentNavigatorKey, (serviceProvider, key) =>
         {
             return new Navigator(new Dictionary<string, Type>
             {
                 { NavigationConstants.HomePage, typeof(HomePage) },
                 { NavigationConstants.NotificationsPage, typeof(NotificationsPage) },
                 { NavigationConstants.ProfilePage, typeof(ProfilePage) },
+                { NavigationConstants.FeedsPage, typeof(FeedsPage) },
+                { NavigationConstants.SearchPage, typeof(SearchPage) },
             });
         });
 
@@ -90,8 +89,7 @@ partial class App
         {
             return new SignInPageViewModel(
                 serviceProvider.GetRequiredService<IAuthenticationService>(),
-                serviceProvider.GetRequiredKeyedService<INavigator>(
-                    NavigationConstants.RootNavigatorKey),
+                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey),
                 serviceProvider.GetRequiredService<IUserSettings>(),
                 serviceProvider.GetRequiredService<ITelemetry>());
         });
@@ -99,20 +97,22 @@ partial class App
         collection.AddTransient((serviceProvider) =>
         {
             return new ShellPageViewModel(
-                serviceProvider.GetRequiredService<IUserSettings>(),
+                serviceProvider.GetRequiredService<ILocalizer>(),
                 serviceProvider.GetRequiredService<ITelemetry>(),
-                serviceProvider.GetRequiredKeyedService<INavigator>(
-                    NavigationConstants.ContentNavigatorKey),
-                serviceProvider.GetRequiredKeyedService<INavigator>(
-                    NavigationConstants.RootNavigatorKey),
+                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.ContentNavigatorKey),
+                serviceProvider.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey),
                 serviceProvider.GetRequiredService<IProfileService>(),
                 serviceProvider.GetRequiredService<IDialogService>(),
                 serviceProvider.GetRequiredService<IAuthenticationService>(),
-                serviceProvider.GetRequiredService<IImageViewerService>());
+                serviceProvider.GetRequiredService<IImageViewerService>(),
+                serviceProvider.GetRequiredService<IAuthorViewModelFactory>(),
+                serviceProvider.GetRequiredService<INotificationsService>());
         });
 
-        collection.AddSingleton<IUserSettings>(_ => 
-                       new LocalSettings(UserSettingsConstants.Defaults));
+        collection.AddSingleton<ISecureCredentialStorage>(
+            _ => new WindowsCredentialStorage("blueskyClientCredentials"));
+        collection.AddSingleton<IUserSettings>(
+            _ => new LocalSettings(UserSettingsConstants.Defaults));
 
         IServiceProvider provider = collection.BuildServiceProvider();
         return provider;
@@ -125,44 +125,59 @@ partial class App
     [Singleton(typeof(BlueskyApiClient), typeof(IBlueskyApiClient))]
     [Singleton(typeof(AuthenticationService), typeof(IAuthenticationService))]
     [Singleton(typeof(TimelineService), typeof(ITimelineService))]
+    [Singleton(typeof(SearchService), typeof(ISearchService))]
+    [Singleton(typeof(DiscoverService), typeof(IDiscoverService))]
     [Singleton(typeof(FeedItemViewModelFactory), typeof(IFeedItemViewModelFactory))]
     [Singleton(typeof(NotificationViewModelFactory), typeof(INotificationViewModelFactory))]
-    [Singleton(typeof(SecureCredentialStorage), typeof(ISecureCredentialStorage))]
+    [Singleton(typeof(FeedGeneratorViewModelFactory), typeof(IFeedGeneratorViewModelFactory))]
+    [Singleton(typeof(AuthorViewModelFactory), typeof(IAuthorViewModelFactory))]
     [Singleton(typeof(NotificationsService), typeof(INotificationsService))]
     [Singleton(typeof(ProfileCache), typeof(ICache<Author>))]
+    [Singleton(typeof(FeedGeneratorCache), typeof(ICache<FeedGenerator>))]
     [Singleton(typeof(ProfileService), typeof(IProfileService))]
+    [Singleton(typeof(FeedGeneratorService), typeof(IFeedGeneratorService))]
     [Singleton(typeof(PostSubmissionService), typeof(IPostSubmissionService))]
     [Singleton(typeof(DialogService), typeof(IDialogService))]
     [Singleton(typeof(AppSettings), typeof(IAppSettings))]
     [Singleton(typeof(ImageViewerService), typeof(IImageViewerService))]
+    [Singleton(typeof(ReswLocalizer), typeof(ILocalizer))]
+    [Singleton(typeof(FileReaderWriter), typeof(IFileReadWriter))]
+    [Singleton(typeof(FutureAccessFilePicker), typeof(IFutureAccessFilePicker))]
+    [Singleton(typeof(UploadBlobService), typeof(IUploadBlobService))]
+    [Singleton(typeof(FacetService), typeof(IFacetService))]
     [Transient(typeof(HomePageViewModel))]
     [Transient(typeof(NotificationsPageViewModel))]
     [Transient(typeof(ProfileControlViewModel))]
     [Transient(typeof(NewPostViewModel))]
+    [Transient(typeof(FeedsPageViewModel))]
+    [Transient(typeof(SearchPageViewModel))]
     private static partial void ConfigureServices(IServiceCollection services);
 
     private static TelemetryContext? GetContext()
     {
         var context = new TelemetryContext();
         context.Session.Id = Guid.NewGuid().ToString();
-        context.Component.Version = "0.6";
-        //SystemInformation.Instance.ApplicationVersion.ToFormattedString();
-        context.GlobalProperties.Add("isFirstRun",
-            /*SystemInformation.Instance.IsFirstRun.ToString()*/"true");
 
-        if (ApplicationData.Current.LocalSettings
-            .Values[UserSettingsConstants.LocalUserIdKey] is string { Length: > 0 } id)
+        context.Component.Version = "0.7.5";
+        //SystemInformation.Instance.ApplicationVersion.ToFormattedString();
+
+        context.GlobalProperties.Add("isFirstRun",
+            "true"//SystemInformation.Instance.IsFirstRun.ToString()
+        );
+
+        if (ApplicationData.Current.LocalSettings.Values[
+            UserSettingsConstants.LocalUserIdKey] is string { Length: > 0 } id)
         {
             context.User.Id = id;
         }
         else
         {
             string userId = Guid.NewGuid().ToString();
-            ApplicationData.Current.LocalSettings
-                .Values[UserSettingsConstants.LocalUserIdKey] = userId;
+            ApplicationData.Current.LocalSettings.Values[UserSettingsConstants.LocalUserIdKey] = userId;
             context.User.Id = userId;
         }
 
+        // Ref: https://learn.microsoft.com/en-us/answers/questions/1563897/uwp-and-winui-how-to-check-my-os-version-through-c
         ulong version = ulong.Parse(AnalyticsInfo.VersionInfo.DeviceFamilyVersion);
         ulong major = (version & 0xFFFF000000000000L) >> 48;
         ulong minor = (version & 0x0000FFFF00000000L) >> 32;

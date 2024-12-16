@@ -8,7 +8,18 @@ public class FeedRecord
     [JsonPropertyName("$type")]
     public string Type { get; init; } = string.Empty;
 
-    public DateTime CreatedAt { get; init; }
+    public string? Uri { get; init; }
+
+    public string? Cid { get; init; }
+
+    [JsonPropertyName("createdAt")]
+    public DateTime CreatedAtUtc { get; init; }
+
+    public string? Description { get; init; }
+
+    public string? Name { get; init; }
+
+    public DateTime UpdatedAt { get; init; }
 
     public string Text { get; init; } = string.Empty;
 
@@ -21,4 +32,8 @@ public class FeedRecord
     public FeedRecord? Value { get; init; } // fyi for future, I think this could be anything, not necessarily a record
 
     public FeedRecord? Record { get; init; }
+
+    public Author? Creator { get; init; }
+
+    public Facet[]? Facets { get; init; }
 }

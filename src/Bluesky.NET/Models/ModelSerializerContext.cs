@@ -5,13 +5,20 @@ namespace Bluesky.NET.Models;
 
 [JsonSerializable(typeof(AuthResponse))]
 [JsonSerializable(typeof(AuthRequestBody))]
+[JsonSerializable(typeof(FeedGenerator[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(PreferenceItem[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(PreferenceFeedInfo[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(FeedItem[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(FeedPost[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(Notification[]), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(FeedResponse), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(TypedItem), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
+[JsonSerializable(typeof(PreferenceItemSavedFeeds), GenerationMode = JsonSourceGenerationMode.Metadata)] // Only used to deserialize
 [JsonSerializable(typeof(FeedRecord[]))]
 [JsonSerializable(typeof(Author))]
 [JsonSerializable(typeof(Notification))]
+[JsonSerializable(typeof(FollowRecordBody))]
+[JsonSerializable(typeof(FollowRecord))]
 [JsonSerializable(typeof(CreateRecordBody))]
 [JsonSerializable(typeof(CreateRecordResponse))]
 [JsonSerializable(typeof(PostEmbed))]
@@ -21,6 +28,10 @@ namespace Bluesky.NET.Models;
 [JsonSerializable(typeof(FeedPostReason))]
 [JsonSerializable(typeof(ImageEmbed))]
 [JsonSerializable(typeof(AspectRatio))]
+[JsonSerializable(typeof(BlobRef))]
+[JsonSerializable(typeof(Blob))]
+[JsonSerializable(typeof(SubmissionImageBlob))]
+[JsonSerializable(typeof(UpdateSeenBody))]
 public sealed partial class ModelSerializerContext : JsonSerializerContext
 {
     /// <summary>
@@ -32,7 +43,7 @@ public sealed partial class ModelSerializerContext : JsonSerializerContext
     /// A case insensitive variant of <see cref="Default"/>.
     /// </summary>
     public static ModelSerializerContext CaseInsensitive => _caseInsensitive ??= new ModelSerializerContext(new JsonSerializerOptions(s_defaultOptions) 
-    { 
+    {
         PropertyNameCaseInsensitive = true,
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,

@@ -8,6 +8,7 @@ namespace JeniusApps.Common.Models
     /// </summary>
     public class MenuItem : ObservableObject
     {
+        public int BadgeCount;
         private bool _isSelected;
 
         /// <summary>

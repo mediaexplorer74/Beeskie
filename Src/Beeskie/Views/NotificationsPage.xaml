@@ -11,7 +11,6 @@
 
     <Page.Resources>
         <GridLength x:Key="LeftGutterWidth">60</GridLength>
-        <x:Double x:Key="ItemMaxWidth">600</x:Double>
         <x:Double x:Key="GutterGapSpacing">20</x:Double>
 
         <controls:NotificationTemplateSelector
@@ -23,50 +22,59 @@
 
         <DataTemplate x:Name="FallbackTemplate" x:DataType="vm:NotificationViewModel">
             <StackPanel
-                MaxWidth="{StaticResource ItemMaxWidth}"
+                MaxWidth="{StaticResource FeedMaxWidth}"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal"
                 Spacing="12">
-                <TextBlock Text="{x:Bind Notification.Author.AtHandle}" />
+                <TextBlock Text="{x:Bind AuthorViewModel.AtHandle}" />
                 <TextBlock Text="{x:Bind Notification.Reason}" />
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Name="ReplyTemplate" x:DataType="vm:NotificationViewModel">
-            <Grid MaxWidth="{StaticResource ItemMaxWidth}" ColumnSpacing="{StaticResource GutterGapSpacing}">
+            <Grid
+                MaxWidth="{StaticResource FeedMaxWidth}"
+                BorderBrush="{ThemeResource AppBarBackgroundThemeBrush}"
+                ColumnSpacing="{StaticResource GutterGapSpacing}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{StaticResource LeftGutterWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+
+                <Rectangle
+                    Grid.ColumnSpan="2"
+                    Margin="0,-12"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Fill="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    Visibility="{x:Bind Unseen, Mode=OneWay}" />
 
                 <PersonPicture
                     Width="48"
                     Margin="0,4,0,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    ProfilePicture="{x:Bind SafeAvatarUrl}" />
+                    ProfilePicture="{x:Bind AuthorViewModel.AvatarUrl}" />
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind Notification.Author.DisplayName}" />
+                        <TextBlock FontWeight="SemiBold" Text="{x:Bind AuthorViewModel.DisplayName}" />
                         <TextBlock
                             Margin="4,0,0,0"
                             Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                            Text="{x:Bind Notification.Author.AtHandle}" />
+                            Text="{x:Bind AuthorViewModel.AtHandle}" />
                     </StackPanel>
 
                     <StackPanel
                         Grid.Row="1"
                         Margin="0,4,0,0"
                         Orientation="Horizontal">
-                        <!--FontFamily="{StaticResource FluentUIGlyphs}"-->
                         <FontIcon
                             FontSize="12"
                             Glyph="{StaticResource GlyphReply}" />
@@ -83,28 +91,29 @@
                         MaxLines="10"
                         Text="{x:Bind Notification.Record.Text}"
                         TextWrapping="WrapWholeWords" />
-
-                    <Rectangle
-                        Grid.Row="3"
-                        Height="1"
-                        Margin="0,20,60,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Bottom"
-                        Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
-
                 </Grid>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Name="FollowTemplate" x:DataType="vm:NotificationViewModel">
-            <Grid MaxWidth="{StaticResource ItemMaxWidth}" ColumnSpacing="{StaticResource GutterGapSpacing}">
+            <Grid
+                MaxWidth="{StaticResource FeedMaxWidth}"
+                BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                ColumnSpacing="{StaticResource GutterGapSpacing}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{StaticResource LeftGutterWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!--FontFamily="{StaticResource FluentUIGlyphs}"-->
-                 <FontIcon
+                <Rectangle
+                    Grid.ColumnSpan="2"
+                    Margin="0,-12"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Fill="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    Visibility="{x:Bind Unseen, Mode=OneWay}" />
+
+                <FontIcon
                     Margin="0,4,0,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
@@ -116,39 +125,39 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
                     <PersonPicture
                         Width="32"
                         HorizontalAlignment="Left"
-                        ProfilePicture="{x:Bind SafeAvatarUrl}" />
+                        ProfilePicture="{x:Bind AuthorViewModel.AvatarUrl}" />
                     <TextBlock
                         Grid.Row="1"
                         Margin="0,8,0,0"
                         Text="{x:Bind CaptionString}" />
-
-                    <Rectangle
-                        Grid.Row="2"
-                        Height="1"
-                        Margin="0,20,60,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Bottom"
-                        Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
-
                 </Grid>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Name="LikeRepostTemplate" x:DataType="vm:NotificationViewModel">
-            <Grid MaxWidth="{StaticResource ItemMaxWidth}" ColumnSpacing="{StaticResource GutterGapSpacing}">
+            <Grid
+                MaxWidth="{StaticResource FeedMaxWidth}"
+                BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                ColumnSpacing="{StaticResource GutterGapSpacing}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{StaticResource LeftGutterWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!--FontFamily="{StaticResource FluentUIGlyphs}"-->
-                    <FontIcon
+                <Rectangle
+                    Grid.ColumnSpan="2"
+                    Margin="0,-12"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Fill="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    Visibility="{x:Bind Unseen, Mode=OneWay}" />
+
+                <FontIcon
                     x:Name="LikeIcon"
                     Margin="0,4,0,0"
                     HorizontalAlignment="Right"
@@ -157,9 +166,7 @@
                     FontSize="24"
                     Foreground="Pink"
                     Glyph="{StaticResource GlyphLikeFilled}" />
-
-                <!--FontFamily="{StaticResource FluentUIGlyphs}"-->
-                    <FontIcon
+                <FontIcon
                     x:Name="RepostIcon"
                     Margin="0,4,0,0"
                     HorizontalAlignment="Right"
@@ -174,13 +181,12 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
                     <PersonPicture
                         Width="32"
                         HorizontalAlignment="Left"
-                        ProfilePicture="{x:Bind SafeAvatarUrl}" />
+                        ProfilePicture="{x:Bind AuthorViewModel.AvatarUrl}" />
                     <TextBlock
                         Grid.Row="1"
                         Margin="0,8,0,0"
@@ -193,14 +199,6 @@
                         MaxLines="4"
                         Text="{x:Bind SubjectText, Mode=OneWay}"
                         TextWrapping="WrapWholeWords" />
-
-                    <Rectangle
-                        Grid.Row="3"
-                        Height="1"
-                        Margin="0,20,60,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Bottom"
-                        Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -216,7 +214,7 @@
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Padding" Value="20,0,20,20" />
+                    <Setter Property="Padding" Value="0" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

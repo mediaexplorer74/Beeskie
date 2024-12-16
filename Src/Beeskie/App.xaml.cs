@@ -4,10 +4,13 @@ using JeniusApps.Common.Settings;
 using JeniusApps.Common.Telemetry;
 using JeniusApps.Common.Tools;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources.Core;
+using Windows.Storage.AccessCache;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -25,8 +28,7 @@ sealed partial class App : Application
     {
         get
         {
-            string flowDirectionSetting 
-                = ResourceContext.GetForCurrentView().QualifierValues["LayoutDirection"];
+            string flowDirectionSetting = ResourceContext.GetForCurrentView().QualifierValues["LayoutDirection"];
             return flowDirectionSetting == "RTL";
         }
     }
@@ -34,26 +36,40 @@ sealed partial class App : Application
     public App()
     {
         this.InitializeComponent();
+        this.Suspending += OnSuspending;
+        this.UnhandledException += OnUnhandledException;
+    }
+
+    private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        if (_serviceProvider is { } serviceProvider)
+        {
+            var telemetry = serviceProvider.GetRequiredService<ITelemetry>();
+            telemetry.TrackError(e.Exception);
+            await telemetry.FlushAsync();
+        }
+    }
+
+    private async void OnSuspending(object sender, SuspendingEventArgs e)
+    {
+        var d = e.SuspendingOperation.GetDeferral();
+        StorageApplicationPermissions.FutureAccessList.Clear();
+
+        if (_serviceProvider is { } serviceProvider)
+        {
+            await serviceProvider.GetRequiredService<ITelemetry>().FlushAsync();
+        }
+        d.Complete();
     }
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
-        try
-        {
-            await ActivateAsync(args);
-        }
-        catch { }
+        await ActivateAsync(args);
     }
 
     private Task ActivateAsync(LaunchActivatedEventArgs args)
     {
-        _serviceProvider = default;
-
-        try
-        {
-            _serviceProvider = ConfigureServices();
-        }
-        catch { }
+        _serviceProvider = ConfigureServices();
 
         if (Window.Current.Content is not Frame rootFrame)
         {
@@ -62,10 +78,7 @@ sealed partial class App : Application
         }
 
         AppFrame = rootFrame;
-
-        INavigator navigator = Services.GetRequiredKeyedService<INavigator>(
-                NavigationConstants.RootNavigatorKey);
-      
+        var navigator = Services.GetRequiredKeyedService<INavigator>(NavigationConstants.RootNavigatorKey);
         navigator.SetFrame(rootFrame);
 
         if (args.PrelaunchActivated is false)
@@ -74,16 +87,9 @@ sealed partial class App : Application
 
             if (rootFrame.Content is null)
             {
-                string? storedHandle = default;
+                var storedHandle = Services.GetRequiredService<IUserSettings>().Get<string>(UserSettingsConstants.SignedInDIDKey);
 
-                try
-                {
-                    storedHandle = Services.GetRequiredService<IUserSettings>()
-                        .Get<string>(UserSettingsConstants.LastUsedUserHandleKey);
-                }
-                catch { }
-
-                if (string.IsNullOrEmpty(storedHandle) || storedHandle?.Contains("@") is true)
+                if (string.IsNullOrEmpty(storedHandle))
                 {
                     rootFrame.Navigate(typeof(SignInPage));
                 }
@@ -94,18 +100,8 @@ sealed partial class App : Application
             }
 
             Window.Current.Activate();
-
-            try
-            {
-                ConfigureUI();
-            }
-            catch { }
-
-            try
-            {
-                Services.GetRequiredService<ITelemetry>().TrackEvent(TelemetryConstants.Launched);
-            }
-            catch { }
+            ConfigureUI();
+            Services.GetRequiredService<ITelemetry>().TrackEvent(TelemetryConstants.Launched);
         }
 
         return Task.CompletedTask;
@@ -120,24 +116,17 @@ sealed partial class App : Application
                 rootFrame.FlowDirection = FlowDirection.RightToLeft;
             }
 
-            try
-            {
-                CustomizeTitleBar(darkTheme: rootFrame.ActualTheme is ElementTheme.Dark);
-            }
-            catch { }
+            CustomizeTitleBar(darkTheme: rootFrame.ActualTheme is ElementTheme.Dark);
         }
     }
 
     private void CustomizeTitleBar(bool darkTheme)
     {
-        try
-        {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            ApplicationViewTitleBar viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonForegroundColor = darkTheme ? Colors.LightGray : Colors.Black;
-        }
-        catch { }
+        CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
+        var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+        viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
+        viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        viewTitleBar.ButtonForegroundColor = darkTheme ? Colors.LightGray : Colors.Black;
     }
 }

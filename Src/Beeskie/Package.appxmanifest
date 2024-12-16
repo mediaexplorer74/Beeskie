@@ -4,23 +4,23 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
-  IgnorableNamespaces="uap mp">
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  IgnorableNamespaces="uap mp uap5">
 
   <Identity
-    Name="ME.BeeskieV0p7p1"
+    Name="ME.BeeskyV1p7p5"
     Publisher="CN=Admin"
-    Version="0.7.1.0" />
+    Version="0.7.5.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ddca6a77-c70c-48bb-8290-04de0c8cf777" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="37ca6a7c-c73c-48bb-8293-04de0c8cf175" PhonePublisherId="00000000-0035-0505-0000-000000010505"/>
 
   <Properties>
-    <DisplayName>ms-resource:AppName</DisplayName>
+    <DisplayName>Beeskie</DisplayName>
     <PublisherDisplayName>Admin</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
-  <Dependencies>
+   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.15063.0" MaxVersionTested="10.0.19041.0" />
   </Dependencies>
 
@@ -31,26 +31,25 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="BlueskyClient.App">
+      EntryPoint="BlueskyClient.Uwp.App">
       <uap:VisualElements
-        DisplayName="ms-resource:AppName"
+        DisplayName="Beeskie"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Beeskie"
+        Description="Beeskie, uwp client app for Bluesky social network"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" ShortName="ms-resource:AppName">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Beeskie" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo"/>
-            <uap:ShowOn Tile="square310x310Logo"/>
             <uap:ShowOn Tile="wide310x150Logo"/>
+            <uap:ShowOn Tile="square310x310Logo"/>
           </uap:ShowNameOnTiles>
         </uap:DefaultTile >
-        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0085ff" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="transparent" uap5:Optional="true"/>
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/>
           <uap:Rotation Preference="portrait"/>
-          <uap:Rotation Preference="landscapeFlipped"/>
-        </uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscapeFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

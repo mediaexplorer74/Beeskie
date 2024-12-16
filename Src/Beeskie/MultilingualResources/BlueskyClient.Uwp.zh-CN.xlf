@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="zh-CN" original="BLUESKYCLIENT.UWP/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="1.0.0.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="BLUESKYCLIENT.UWP/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="AppPasswordHelpText" translate="yes" xml:space="preserve">
+          <source>What's an App Password?</source>
+          <target state="translated">什么是应用程序密码？</target>
+        </trans-unit>
+        <trans-unit id="BackText" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="translated">返回</target>
+        </trans-unit>
+        <trans-unit id="CancelText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">取消</target>
+        </trans-unit>
+        <trans-unit id="CloseText" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="translated">关闭</target>
+        </trans-unit>
+        <trans-unit id="FollowersText" translate="yes" xml:space="preserve">
+          <source>followers</source>
+          <target state="translated">追随 者</target>
+        </trans-unit>
+        <trans-unit id="FollowingText" translate="yes" xml:space="preserve">
+          <source>following</source>
+          <target state="translated">以后</target>
+        </trans-unit>
+        <trans-unit id="HomeText" translate="yes" xml:space="preserve">
+          <source>Home</source>
+          <target state="translated">家</target>
+        </trans-unit>
+        <trans-unit id="IdentifierBoxPlaceholder" translate="yes" xml:space="preserve">
+          <source>Bluesky email or username</source>
+          <target state="translated">Bluesky 电子邮件或用户名</target>
+        </trans-unit>
+        <trans-unit id="ManageAccountText" translate="yes" xml:space="preserve">
+          <source>Manage account</source>
+          <target state="translated">管理账户</target>
+        </trans-unit>
+        <trans-unit id="NewPostPlaceholder" translate="yes" xml:space="preserve">
+          <source>What's up?</source>
+          <target state="translated">怎么了？</target>
+        </trans-unit>
+        <trans-unit id="NewPostText" translate="yes" xml:space="preserve">
+          <source>New Post</source>
+          <target state="translated">新帖子</target>
+        </trans-unit>
+        <trans-unit id="NotificationsFollowedText" translate="yes" xml:space="preserve">
+          <source>{0} followed you</source>
+          <target state="translated">{0}关注了你</target>
+        </trans-unit>
+        <trans-unit id="NotificationsLikedText" translate="yes" xml:space="preserve">
+          <source>{0} liked your post</source>
+          <target state="translated">{0}赞了您的帖子</target>
+        </trans-unit>
+        <trans-unit id="NotificationsRepostedText" translate="yes" xml:space="preserve">
+          <source>{0} reposted your post</source>
+          <target state="translated">{0} 重新发布了您的帖子</target>
+        </trans-unit>
+        <trans-unit id="NotificationsText" translate="yes" xml:space="preserve">
+          <source>Notifications</source>
+          <target state="translated">通知</target>
+        </trans-unit>
+        <trans-unit id="OkayText" translate="yes" xml:space="preserve">
+          <source>Okay</source>
+          <target state="translated">好</target>
+        </trans-unit>
+        <trans-unit id="PasswordBoxPlaceholder" translate="yes" xml:space="preserve">
+          <source>Your special App Password</source>
+          <target state="translated">您的特殊 App 专用密码</target>
+        </trans-unit>
+        <trans-unit id="PostedReplyText" translate="yes" xml:space="preserve">
+          <source>Posted a reply</source>
+          <target state="translated">已发布回复</target>
+        </trans-unit>
+        <trans-unit id="PostsText" translate="yes" xml:space="preserve">
+          <source>posts</source>
+          <target state="translated">职位</target>
+        </trans-unit>
+        <trans-unit id="ProfileText" translate="yes" xml:space="preserve">
+          <source>Profile</source>
+          <target state="translated">轮廓</target>
+        </trans-unit>
+        <trans-unit id="RepostCaption" translate="yes" xml:space="preserve">
+          <source>Reposted by {0}</source>
+          <target state="translated">转载于 {0}</target>
+        </trans-unit>
+        <trans-unit id="SendFeedbackText" translate="yes" xml:space="preserve">
+          <source>Send feedback</source>
+          <target state="translated">发送反馈</target>
+        </trans-unit>
+        <trans-unit id="SessionTimeoutDialogMessage" translate="yes" xml:space="preserve">
+          <source>Your session expired, and you'll need to sign in again.</source>
+          <target state="translated">您的会话已过期，您需要重新登录。</target>
+        </trans-unit>
+        <trans-unit id="SessionTimeoutDialogTitle" translate="yes" xml:space="preserve">
+          <source>Sign in required</source>
+          <target state="translated">需要登录</target>
+        </trans-unit>
+        <trans-unit id="SignInText" translate="yes" xml:space="preserve">
+          <source>Sign in</source>
+          <target state="translated">登录</target>
+        </trans-unit>
+        <trans-unit id="SignOutDialogMessage" translate="yes" xml:space="preserve">
+          <source>Are you sure? You will return to the sign in page.</source>
+          <target state="translated">是否确定？您将返回到登录页面。</target>
+        </trans-unit>
+        <trans-unit id="SignOutDialogTitle" translate="yes" xml:space="preserve">
+          <source>Signing out</source>
+          <target state="translated">注销</target>
+        </trans-unit>
+        <trans-unit id="SignOutText" translate="yes" xml:space="preserve">
+          <source>Sign out</source>
+          <target state="translated">登出</target>
+        </trans-unit>
+        <trans-unit id="StarterPackByText" translate="yes" xml:space="preserve">
+          <source>Starter pack by {0}</source>
+          <target state="translated">{0} 的入门包</target>
+        </trans-unit>
+        <trans-unit id="SubmitText" translate="yes" xml:space="preserve">
+          <source>Submit</source>
+          <target state="translated">提交</target>
+        </trans-unit>
+        <trans-unit id="ImageSelectText" translate="yes" xml:space="preserve">
+          <source>Add image</source>
+          <target state="translated">添加图片</target>
+        </trans-unit>
+        <trans-unit id="UploadingText" translate="yes" xml:space="preserve">
+          <source>Uploading</source>
+          <target state="translated">上传</target>
+        </trans-unit>
+        <trans-unit id="FeedsText" translate="yes" xml:space="preserve">
+          <source>Feeds</source>
+          <target state="translated">饲料</target>
+        </trans-unit>
+        <trans-unit id="LikeText" translate="yes" xml:space="preserve">
+          <source>Like</source>
+          <target state="translated">喜欢</target>
+        </trans-unit>
+        <trans-unit id="ReplyText" translate="yes" xml:space="preserve">
+          <source>Reply</source>
+          <target state="translated">答</target>
+        </trans-unit>
+        <trans-unit id="RepostText" translate="yes" xml:space="preserve">
+          <source>Repost</source>
+          <target state="translated">转贴</target>
+        </trans-unit>
+        <trans-unit id="FollowingFeedName" translate="yes" xml:space="preserve">
+          <source>Following</source>
+          <target state="translated">以后</target>
+        </trans-unit>
+        <trans-unit id="MyFeedsSubtitle" translate="yes" xml:space="preserve">
+          <source>All the feeds you've saved, all in one place</source>
+          <target state="translated">您保存的所有源都集中在一个位置</target>
+        </trans-unit>
+        <trans-unit id="MyFeedsTitle" translate="yes" xml:space="preserve">
+          <source>My Feeds</source>
+          <target state="translated">我的源</target>
+        </trans-unit>
+        <trans-unit id="PinnedFeedsSubtitle" translate="yes" xml:space="preserve">
+          <source>Select a feed to change your view</source>
+          <target state="translated">选择源以更改视图</target>
+        </trans-unit>
+        <trans-unit id="PinnedFeedsTitle" translate="yes" xml:space="preserve">
+          <source>Pinned Feeds</source>
+          <target state="translated">固定源</target>
+        </trans-unit>
+        <trans-unit id="RefreshText" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="translated">刷新</target>
+        </trans-unit>
+        <trans-unit id="SearchText" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="translated">搜索</target>
+        </trans-unit>
+        <trans-unit id="SortLatestText" translate="yes" xml:space="preserve">
+          <source>Latest</source>
+          <target state="translated">最近的</target>
+        </trans-unit>
+        <trans-unit id="SortTopText" translate="yes" xml:space="preserve">
+          <source>Top</source>
+          <target state="translated">返回页首</target>
+        </trans-unit>
+        <trans-unit id="SearchTabAutomationName" translate="yes" xml:space="preserve">
+          <source>Sorting options</source>
+          <target state="translated">排序选项</target>
+        </trans-unit>
+        <trans-unit id="DeleteText" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">删除</target>
+        </trans-unit>
+        <trans-unit id="RecentSearchesText" translate="yes" xml:space="preserve">
+          <source>Recent searches</source>
+          <target state="translated">最近搜索</target>
+        </trans-unit>
+        <trans-unit id="RecentSearchesPlaceholder" translate="yes" xml:space="preserve">
+          <source>Your recent searches will appear here. Start searching!</source>
+          <target state="translated">您最近的搜索将在此处显示。开始搜索吧！</target>
+        </trans-unit>
+        <trans-unit id="SearchPagePlaceholder1" translate="yes" xml:space="preserve">
+          <source>What are you waiting for?</source>
+          <target state="translated">你还在等什么？</target>
+        </trans-unit>
+        <trans-unit id="SearchPagePlaceholder2" translate="yes" xml:space="preserve">
+          <source>Start searching!</source>
+          <target state="translated">开始搜索吧！</target>
+        </trans-unit>
+        <trans-unit id="FollowText" translate="yes" xml:space="preserve">
+          <source>Follow</source>
+          <target state="translated">跟随</target>
+        </trans-unit>
+        <trans-unit id="SuggestedAccountsSubtitle" translate="yes" xml:space="preserve">
+          <source>Follow more accounts to get connected to your interests and build your network.</source>
+          <target state="translated">关注更多帐户以了解您的兴趣并建立您的网络。</target>
+        </trans-unit>
+        <trans-unit id="SuggestedAccountsTitle" translate="yes" xml:space="preserve">
+          <source>Suggested accounts</source>
+          <target state="translated">建议的账户</target>
+        </trans-unit>
+        <trans-unit id="PeopleText" translate="yes" xml:space="preserve">
+          <source>People</source>
+          <target state="translated">人</target>
+        </trans-unit>
+        <trans-unit id="PinToHomeText" translate="yes" xml:space="preserve">
+          <source>Pin to Home</source>
+          <target state="translated">固定到主页</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Pinning or bookmarking a feed so you can see it from the home page</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

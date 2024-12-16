@@ -3,10 +3,12 @@ using Bluesky.NET.Constants;
 using Bluesky.NET.Models;
 using BlueskyClient.Constants;
 using BlueskyClient.Services;
+using FluentResults;
 using JeniusApps.Common.Telemetry;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlueskyClient.Caches;
@@ -28,9 +30,10 @@ public class ProfileCache : ICache<Author>
         _telemetry = telemetry;
     }
 
-    public async Task<Author?> GetItemAsync(string handle)
+    public async Task<Author?> GetItemAsync(string identifier, CancellationToken ct)
     {
-        if (_cache.TryGetValue(handle, out CachedItem<Author> cachedResult) &&
+        ct.ThrowIfCancellationRequested();
+        if (_cache.TryGetValue(identifier, out CachedItem<Author> cachedResult) &&
             DateTime.Now < cachedResult.ExpirationTime)
         {
             return cachedResult.Data;
@@ -39,8 +42,8 @@ public class ProfileCache : ICache<Author>
         // At this point, either the data doesn't exist or it's expired.
         // Regardless, get fresh data.
 
-        var accessToken = await _authenticationService.TryGetFreshTokenAsync();
-        if (accessToken is null)
+        Result<string> accessTokenResult = await _authenticationService.TryGetFreshTokenAsync();
+        if (accessTokenResult.IsFailed)
         {
             return null;
         }
@@ -49,7 +52,7 @@ public class ProfileCache : ICache<Author>
 
         try
         {
-            author = await _apiClient.GetAuthorAsync(accessToken, handle);
+            author = await _apiClient.GetAuthorAsync(accessTokenResult.Value, identifier);
         }
         catch (Exception e)
         {
@@ -73,16 +76,16 @@ public class ProfileCache : ICache<Author>
             ExpirationTime = DateTime.Now.AddHours(UrlConstants.OnlineDataHoursToLive)
         };
 
-        _cache.AddOrUpdate(handle, newCachedItem, (key, item) => newCachedItem);
+        _cache.AddOrUpdate(identifier, newCachedItem, (key, item) => newCachedItem);
         return author;
     }
 
-    public Task<IReadOnlyDictionary<string, Author>> GetItemsAsync()
+    public Task<IReadOnlyDictionary<string, Author>> GetItemsAsync(CancellationToken ct)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IReadOnlyDictionary<string, Author>> GetItemsAsync(IReadOnlyList<string> ids)
+    public Task<IReadOnlyDictionary<string, Author>> GetItemsAsync(IReadOnlyList<string> ids, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
